@@ -992,9 +992,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/admin-ai-action-logs.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/admin-ai-action-logs.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 68 个文件/199 个测试，E2E 33 个测试）。  
   **提交记录：** 已提交到本地 Git：`3165f07 feat(ai): add admin action logs page`；计划状态补充提交 `c195866 docs(plan): record M7-16 commit status`；GitHub push 已完成。
 
-- [ ] M7-17 E2E：AI 确认与拒绝  
+- [x] M7-17 E2E：AI 确认与拒绝  
   **流程：** 家长请假确认、老师反馈草稿、管理员高风险拒绝。  
-  **测试：** Playwright 通过。
+  **测试：** Playwright 通过。  
+  **完成记录：** 2026-05-03 新增 `tests/e2e/ai-confirmation-and-refusal-flow.spec.ts`，串通 `/parent` 家长 AI 请假确认卡片、`/teacher` 老师 AI 反馈草稿确认卡片和 `/admin/ai-assistant` 管理端高风险拒绝卡片；家长请假确认卡片明确“确认前不会创建请假记录”、确认后状态为“请假”，老师反馈草稿保持草稿且家长不可见，高风险“把欠费改成 0”继续拒绝并引导 `/admin/billing` 人工复核。  
+  **TDD 记录：** 先新增 M7-17 E2E 并运行失败，失败原因为家长端缺少“家长 AI 请假确认卡片”；最小接入家长确认卡片和老师反馈草稿卡片后聚焦 E2E 通过。  
+  **测试命令：** `npm run test:e2e -- tests/e2e/ai-confirmation-and-refusal-flow.spec.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 68 个文件/199 个测试，E2E 34 个测试）。  
+  **提交记录：** 已提交到本地 Git：`1a56efe test(ai): cover confirmation and refusal flow`；GitHub push 待完成。
 
 ---
 
