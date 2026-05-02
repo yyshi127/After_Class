@@ -1012,9 +1012,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/design-tokens.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 69 个文件/202 个测试，E2E 34 个测试）。  
   **提交记录：** 已提交并推送 GitHub：`bfdc118 feat(ui): add design token contract`。
 
-- [ ] M8-02 管理端首页看板 UI  
+- [x] M8-02 管理端首页看板 UI  
   **内容：** KPI、趋势、风险、待处理事项、校区筛选。  
-  **测试：** 1440px、1024px 响应式正常。
+  **测试：** 1440px、1024px 响应式正常。  
+  **完成记录：** 2026-05-03 升级管理端首页看板 UI，补齐首页看板校区筛选、关键 KPI、出勤与毛利趋势、运营风险和待处理事项区域；`/admin` 接入演示数据，保持家长端财务隔离不受影响。新增 1024px 与 1440px Playwright 响应式检查，验证管理端首页无横向溢出。  
+  **TDD 记录：** 先扩展 `tests/unit/admin-dashboard.test.tsx` 并新增 `tests/e2e/admin-dashboard-responsive.spec.ts`；聚焦单测 RED 失败于缺少“首页看板校区筛选”和响应式 shell；最小实现 dashboard UI 与页面演示数据后聚焦单测和 E2E 均通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/admin-dashboard.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/admin-dashboard-responsive.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 69 个文件/204 个测试，E2E 36 个测试）。  
+  **提交记录：** 已提交到本地 Git：`95b45d1 feat(ui): improve admin dashboard`；GitHub push 待完成。
 
 - [ ] M8-03 管理端 AI 经营助手 UI  
   **内容：** 对话、数据卡片、确认/拒绝卡片、快捷问题。  
