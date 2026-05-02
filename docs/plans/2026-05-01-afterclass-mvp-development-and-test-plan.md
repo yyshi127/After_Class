@@ -636,9 +636,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/feedback.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 28 个文件/95 个测试，E2E 15 个测试）。  
   **提交记录：** 已提交到本地 Git；GitHub 远端待用户提供仓库或完成 SSH key 授权.
 
-- [ ] M4-03 老师端选择学生上传作业  
+- [x] M4-03 老师端选择学生上传作业  
   **内容：** 班级 → 学生 → 作业图片上传。  
-  **测试：** 老师不能给非负责学生上传作业。
+  **测试：** 老师不能给非负责学生上传作业。  
+  **完成记录：** 2026-05-02 新增 `domain/teacher/homework-upload.ts` 作业上传草稿服务、`TeacherHomeworkUploadPage` 老师端上传作业页面和 `/teacher/homework-upload` 路由；老师只能看到负责班级/学生，上传作业仅生成私有原图 metadata 与未发布 `HomeworkReview` 草稿。  
+  **TDD 记录：** 先新增 `tests/unit/teacher-homework-upload.test.tsx` 并运行失败，失败原因为上传作业组件/domain helper 不存在；实现后单元测试通过。随后新增 `tests/e2e/teacher-homework-upload.spec.ts` 覆盖老师端上传页面，先因可见学生文本定位失败，补充页面可上传学生摘要后 E2E 通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/teacher-homework-upload.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-homework-upload.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`。  
+  **提交记录：** 待本轮质量门禁通过后提交。
 
 - [ ] M4-04 作业原图展示与批改画布  
   **内容：** 显示图片、支持区域框坐标。  
