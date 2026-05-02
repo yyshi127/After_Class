@@ -1066,7 +1066,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-03 新增 `ParentAiAssistantCard` 并接入家长首页，提供文字指令输入、语音入口、到托/作业/服务有效期查询结果，以及请假确认卡片。中风险请假继续明确“确认前不会创建请假记录”，确认和取消按钮均为移动端触控友好；查询结果不展示余额、欠费金额或经营数据。
   **TDD 记录：** 新增 `tests/unit/parent-ai-assistant-card.test.tsx` 和 `tests/e2e/parent-ai-assistant-ui.spec.ts` 覆盖文字/语音入口、查询结果和确认/取消路径。首次全量 E2E 因 AI 查询结果复用完整“当前服务有效期至 2026-05-31”与服务有效期卡片重复导致旧测试 strict-mode 冲突，已将 AI 查询结果服务文案收敛为“有效至 2026-05-31”并复跑失败用例通过；拍照签到流失败为并发瞬时问题，聚焦复跑和最终全量门禁均通过。
   **测试命令：** `npm run test:unit -- tests/unit/parent-ai-assistant-card.test.tsx`、`npm run test:e2e -- tests/e2e/parent-ai-assistant-ui.spec.ts tests/e2e/ai-confirmation-and-refusal-flow.spec.ts`、`npm run test:e2e -- tests/e2e/parent-service-validity.spec.ts tests/e2e/billing-settlement-visibility-flow.spec.ts tests/e2e/parent-ai-assistant-ui.spec.ts tests/e2e/photo-check-in-notification-flow.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 73 个文件/211 个测试，E2E 42 个测试）。
-  **提交记录：** 已提交到本地 Git：`fb9e054 feat(ui): add parent ai assistant`；GitHub push 待完成.
+  **提交记录：** 已提交并推送 GitHub：`fb9e054 feat(ui): add parent ai assistant`；计划状态补充提交 `f80eb07 docs(plan): record M8-08 completion`。
 
 - [ ] M8-09 家长端作业详情 UI  
   **内容：** 原图、批改图、三类点评、错题摘要。  
