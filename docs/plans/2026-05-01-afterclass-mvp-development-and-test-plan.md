@@ -660,9 +660,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/ai-mistake-suggestion.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 31 个文件/105 个测试，E2E 17 个测试）。  
   **提交记录：** 已提交并推送 GitHub：`cae2bea feat(homework): add AI mistake suggestion stub`。
 
-- [ ] M4-06 老师确认/修改/忽略圈错区域  
+- [x] M4-06 老师确认/修改/忽略圈错区域  
   **内容：** 只有确认区域进入批改图和错题本。  
-  **测试：** 未确认 AI 区域不会发布。
+  **测试：** 未确认 AI 区域不会发布。  
+  **完成记录：** 2026-05-02 新增 `domain/homework/mistake-area-confirmation.ts` 老师圈错区域决策 service，支持确认、修改、忽略 AI 圈错区域；只有确认/修改区域进入 `teacherConfirmedAreas` 与错题本候选，忽略和未确认 AI 区域不会发布。新增 `TeacherMistakeAreaReviewPanel` 并接入 `/teacher/homework-correction`，展示确认/修改/忽略操作入口和发布限制说明。  
+  **TDD 记录：** 先新增 `tests/unit/homework-mistake-area-confirmation.test.tsx` 并运行失败，失败原因为决策 service 与确认组件不存在；随后新增 `tests/e2e/teacher-homework-mistake-area-confirmation.spec.ts` 并确认老师批改页缺少“AI 圈错确认”失败；实现 service、组件与页面接入后单元测试和 E2E 均通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/homework-mistake-area-confirmation.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-homework-mistake-area-confirmation.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 32 个文件/108 个测试，E2E 18 个测试）。  
+  **提交记录：** 已提交到本地 Git：`9fb7962 feat(homework): complete M4-06 mistake area confirmation`；GitHub push 待执行。
 
 - [ ] M4-07 三类点评编辑器  
   **内容：** 行为表现、作业完成、知识掌握；AI 草稿可编辑。  
