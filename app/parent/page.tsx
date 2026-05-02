@@ -1,3 +1,4 @@
+import { ParentAiAssistantCard } from '@/components/parent/parent-ai-assistant-card';
 import { ParentHomeSafetyCard } from '@/components/parent/parent-home-safety-card';
 import { ParentHomeworkFeedbackCard } from '@/components/parent/parent-homework-feedback-card';
 import { ParentMistakeSummaryCard } from '@/components/parent/parent-mistake-summary-card';
@@ -216,27 +217,14 @@ export default function ParentPage() {
 
         <ParentHomeSafetyCard cards={safetyCards} />
         {guardianLeaveConfirmation && guardianLeaveAttendanceDraft ? (
-          <section
-            aria-label="家长 AI 请假确认卡片"
-            className="rounded-neu bg-surface p-6 shadow-neu"
-          >
-            <p className="text-sm font-semibold text-primary">AI 请假确认</p>
-            <h2 className="mt-2 font-heading text-2xl font-bold">请确认 AI 生成的请假申请</h2>
-            <div className="mt-4 rounded-2xl bg-background/70 p-4 text-sm leading-6 text-muted">
-              <p>原始指令：{guardianLeaveConfirmation.rawInput}</p>
-              <p>{guardianLeaveConfirmation.summary}</p>
-              <p>确认前不会创建请假记录，也不会通知老师。</p>
-              <p>确认后状态：{guardianLeaveAttendanceDraft.status}</p>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-3">
-              <button className="min-h-11 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white shadow-soft" type="button">
-                确认创建请假申请
-              </button>
-              <button className="min-h-11 rounded-full border border-border px-4 py-3 text-sm font-semibold text-muted" type="button">
-                取消
-              </button>
-            </div>
-          </section>
+          <ParentAiAssistantCard
+            attendanceStatus={safetyCards[0]?.status === '已到' ? '已到托管中心，可查看到托照片' : '暂未确认到托'}
+            confirmationSummary={guardianLeaveConfirmation.summary}
+            confirmedStatus={guardianLeaveAttendanceDraft.status}
+            homeworkStatus={parentHomeworkFeedback ? '今日作业反馈已发布' : '等待老师发布'}
+            rawInput={guardianLeaveConfirmation.rawInput}
+            serviceStatus={parentServiceValidities[0] ? `有效至 ${parentServiceValidities[0].validUntil.toISOString().slice(0, 10)}` : '暂无服务有效期记录'}
+          />
         ) : null}
         <ParentServiceValidityCard validities={parentServiceValidities} />
         <ParentHomeworkFeedbackCard feedback={parentHomeworkFeedback} />
