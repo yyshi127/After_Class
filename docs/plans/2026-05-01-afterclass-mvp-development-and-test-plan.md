@@ -698,7 +698,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/admin/homework-feedback-progress.ts` 管理端作业反馈进度聚合 helper、`AdminHomeworkFeedbackProgress` 进度表组件和 `/admin/homework-feedback` 路由；按校区/班级/托管类型展示待批改、待发布、已发布和发布率，并复用 `canAccessCampus` 确保校区管理员只能看到授权校区。  
   **TDD 记录：** 先新增 `tests/unit/admin-homework-feedback-progress.test.tsx` 并运行失败，失败原因为组件/domain helper 不存在；先新增 `tests/e2e/admin-homework-feedback-progress.spec.ts` 并确认 `/admin/homework-feedback` 缺少页面失败；实现 domain、组件和路由后聚焦单元/E2E 均通过。  
   **测试命令：** `npm run test:unit -- tests/unit/admin-homework-feedback-progress.test.tsx`、`npm run test:e2e -- tests/e2e/admin-homework-feedback-progress.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 36 个文件/121 个测试，E2E 22 个测试）。  
-  **提交记录：** 已提交到本地 Git：`086e343 feat(admin): complete M4-10 homework feedback progress`；GitHub push 待执行。
+  **提交记录：** 已提交到本地 Git：`086e343 feat(admin): complete M4-10 homework feedback progress`；计划状态补充提交 `4b0e32d docs(plan): record M4-10 commit status`；GitHub push 已完成。
 
 - [ ] M4-11 E2E：作业反馈发布流程  
   **流程：** 老师上传作业 → AI 建议 → 老师确认 → 发布 → 家长查看。  
