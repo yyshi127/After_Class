@@ -650,7 +650,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/homework/correction-canvas.ts` 批改区域坐标换算/比例校验 helper、`TeacherHomeworkCorrectionCanvas` 作业原图与批改区域 UI 组件、`/teacher/homework-correction` 老师端批改画布路由；MVP 以原图尺寸保存区域坐标，避免展示缩放导致错题区域偏移。  
   **TDD 记录：** 先新增 `tests/unit/homework-correction-canvas.test.tsx` 并运行失败，失败原因为批改画布 domain/component 不存在；实现后单元测试通过。随后新增 `tests/e2e/teacher-homework-correction.spec.ts` 并确认 `/teacher/homework-correction` 缺少页面失败；补齐路由后同一 E2E 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/homework-correction-canvas.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-homework-correction.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 30 个文件/102 个测试，E2E 17 个测试）。  
-  **提交记录：** 待提交。
+  **提交记录：** 已提交并推送 GitHub：`ed1cb49 feat(homework): add correction canvas`。
 
 - [ ] M4-05 AI 圈错建议 service stub  
   **内容：** 返回建议区域、学科、错因、置信度；MVP 可先用 mock provider。  
