@@ -1,15 +1,18 @@
+import { AdminDataTableFrame } from '@/components/admin/admin-data-table-frame';
 import { filterCampusesForList, type CampusListFilters, type CampusListItem } from '@/domain/admin/campus-list';
 
 type AdminCampusListProps = {
   campuses: readonly CampusListItem[];
   filters: CampusListFilters;
+  isLoading?: boolean;
+  errorMessage?: string;
 };
 
 function statusLabel(status: CampusListItem['status']) {
   return status === 'ACTIVE' ? '启用' : '停用';
 }
 
-export function AdminCampusList({ campuses, filters }: AdminCampusListProps) {
+export function AdminCampusList({ campuses, filters, isLoading = false, errorMessage }: AdminCampusListProps) {
   const filteredCampuses = filterCampusesForList(campuses, filters);
 
   return (
@@ -30,11 +33,16 @@ export function AdminCampusList({ campuses, filters }: AdminCampusListProps) {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-3xl bg-surface shadow-neu-sm">
-        {filteredCampuses.length === 0 ? (
-          <p className="p-6 text-sm text-muted">暂无符合条件的校区</p>
-        ) : (
-          <table className="w-full min-w-[720px] text-left text-sm">
+      <AdminDataTableFrame
+        emptyMessage="暂无符合条件的校区"
+        errorMessage={errorMessage}
+        isLoading={isLoading}
+        itemLabel="校区资料"
+        minWidthClassName="min-w-[720px]"
+        title="校区资料表格"
+        totalCount={filteredCampuses.length}
+      >
+          <table className="w-full text-left text-sm">
             <thead className="bg-surfaceAlt text-muted">
               <tr>
                 <th className="px-5 py-4 font-semibold">校区名称</th>
@@ -60,8 +68,7 @@ export function AdminCampusList({ campuses, filters }: AdminCampusListProps) {
               ))}
             </tbody>
           </table>
-        )}
-      </div>
+      </AdminDataTableFrame>
     </section>
   );
 }

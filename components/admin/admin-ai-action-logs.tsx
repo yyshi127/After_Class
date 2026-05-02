@@ -1,3 +1,4 @@
+import { AdminDataTableFrame } from '@/components/admin/admin-data-table-frame';
 import type { AdminAiActionLogListItem } from '@/domain/admin/ai-action-logs';
 
 const intentOptions = ['全部意图', '考勤查询', '作业查询', '请假申请', '服务有效期/收费查询', '留言老师', '反馈草稿', '圈错建议', '同类题生成', '班级核算查询'];
@@ -7,9 +8,11 @@ const resultOptions = ['全部结果', '已生成草稿', '待确认', '已执�
 
 type AdminAiActionLogsProps = {
   logs: readonly AdminAiActionLogListItem[];
+  isLoading?: boolean;
+  errorMessage?: string;
 };
 
-export function AdminAiActionLogs({ logs }: AdminAiActionLogsProps) {
+export function AdminAiActionLogs({ logs, isLoading = false, errorMessage }: AdminAiActionLogsProps) {
   return (
     <section className="space-y-6">
       <div className="rounded-3xl bg-surface p-6 shadow-neu">
@@ -35,8 +38,15 @@ export function AdminAiActionLogs({ logs }: AdminAiActionLogsProps) {
         <FilterSelect label="结果筛选" options={resultOptions} />
       </div>
 
-      <div className="overflow-hidden rounded-3xl bg-surface shadow-neu">
-        <div className="overflow-x-auto">
+      <AdminDataTableFrame
+        emptyMessage="暂无符合权限或筛选条件的 AI 操作日志"
+        errorMessage={errorMessage}
+        isLoading={isLoading}
+        itemLabel="日志资料"
+        minWidthClassName="min-w-[980px]"
+        title="日志资料表格"
+        totalCount={logs.length}
+      >
           <table className="min-w-full border-separate border-spacing-0 text-left text-sm">
             <thead className="bg-surfaceAlt text-xs uppercase tracking-[0.2em] text-muted">
               <tr>
@@ -51,14 +61,7 @@ export function AdminAiActionLogs({ logs }: AdminAiActionLogsProps) {
               </tr>
             </thead>
             <tbody>
-              {logs.length === 0 ? (
-                <tr>
-                  <td className="px-4 py-8 text-center text-muted" colSpan={8}>
-                    暂无符合权限或筛选条件的 AI 操作日志
-                  </td>
-                </tr>
-              ) : (
-                logs.map((log) => (
+              {logs.map((log) => (
                   <tr key={log.id} className="border-t border-white/70">
                     <td className="px-4 py-4 font-medium">{log.createdAtLabel}</td>
                     <td className="px-4 py-4">{log.campusLabel}</td>
@@ -69,12 +72,10 @@ export function AdminAiActionLogs({ logs }: AdminAiActionLogsProps) {
                     <td className="px-4 py-4">{log.resultStatusLabel}</td>
                     <td className="max-w-xs px-4 py-4 text-muted">{log.rawInput}</td>
                   </tr>
-                ))
-              )}
+                ))}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminDataTableFrame>
     </section>
   );
 }

@@ -1,25 +1,16 @@
+import { AdminDataTableFrame } from '@/components/admin/admin-data-table-frame';
 import { getAdminClassListItems, type AdminClassRecord } from '@/domain/admin/class-list';
 import type { PermissionActor } from '@/domain/auth/permissions';
 
 type AdminClassListProps = {
   actor: PermissionActor;
   classes: readonly AdminClassRecord[];
+  isLoading?: boolean;
+  errorMessage?: string;
 };
 
-export function AdminClassList({ actor, classes }: AdminClassListProps) {
+export function AdminClassList({ actor, classes, isLoading = false, errorMessage }: AdminClassListProps) {
   const classItems = getAdminClassListItems(actor, classes);
-
-  if (classItems.length === 0) {
-    return (
-      <section className="space-y-6">
-        <div>
-          <p className="text-sm font-semibold text-muted">Classes</p>
-          <h2 className="font-heading text-3xl font-bold">班级管理</h2>
-        </div>
-        <p className="rounded-3xl bg-surface p-6 text-sm text-muted shadow-neu-sm">暂无可查看班级</p>
-      </section>
-    );
-  }
 
   return (
     <section className="space-y-6">
@@ -38,8 +29,16 @@ export function AdminClassList({ actor, classes }: AdminClassListProps) {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-3xl bg-surface shadow-neu-sm">
-        <table className="w-full min-w-[900px] text-left text-sm">
+      <AdminDataTableFrame
+        emptyMessage="暂无可查看班级"
+        errorMessage={errorMessage}
+        isLoading={isLoading}
+        itemLabel="班级资料"
+        minWidthClassName="min-w-[900px]"
+        title="班级资料表格"
+        totalCount={classItems.length}
+      >
+        <table className="w-full text-left text-sm">
           <thead className="bg-surfaceAlt text-muted">
             <tr>
               <th className="px-5 py-4 font-semibold">班级</th>
@@ -63,7 +62,7 @@ export function AdminClassList({ actor, classes }: AdminClassListProps) {
             ))}
           </tbody>
         </table>
-      </div>
+      </AdminDataTableFrame>
     </section>
   );
 }

@@ -1,12 +1,15 @@
+import { AdminDataTableFrame } from '@/components/admin/admin-data-table-frame';
 import { canAccessAdminStudentList, getAdminStudentListItems, studentStatusLabel, type AdminStudentRecord } from '@/domain/admin/student-list';
 import type { PermissionActor } from '@/domain/auth/permissions';
 
 type AdminStudentListProps = {
   actor: PermissionActor;
   students: readonly AdminStudentRecord[];
+  isLoading?: boolean;
+  errorMessage?: string;
 };
 
-export function AdminStudentList({ actor, students }: AdminStudentListProps) {
+export function AdminStudentList({ actor, students, isLoading = false, errorMessage }: AdminStudentListProps) {
   if (!canAccessAdminStudentList(actor)) {
     return <p className="rounded-3xl bg-surface p-6 text-sm font-semibold text-destructive shadow-neu-sm">无权访问管理端学生全量列表</p>;
   }
@@ -25,11 +28,16 @@ export function AdminStudentList({ actor, students }: AdminStudentListProps) {
         </a>
       </div>
 
-      <div className="overflow-hidden rounded-3xl bg-surface shadow-neu-sm">
-        {studentItems.length === 0 ? (
-          <p className="p-6 text-sm text-muted">暂无可查看学生</p>
-        ) : (
-          <table className="w-full min-w-[860px] text-left text-sm">
+      <AdminDataTableFrame
+        emptyMessage="暂无可查看学生"
+        errorMessage={errorMessage}
+        isLoading={isLoading}
+        itemLabel="学生资料"
+        minWidthClassName="min-w-[860px]"
+        title="学生资料表格"
+        totalCount={studentItems.length}
+      >
+          <table className="w-full text-left text-sm">
             <thead className="bg-surfaceAlt text-muted">
               <tr>
                 <th className="px-5 py-4 font-semibold">学生姓名</th>
@@ -57,8 +65,7 @@ export function AdminStudentList({ actor, students }: AdminStudentListProps) {
               ))}
             </tbody>
           </table>
-        )}
-      </div>
+      </AdminDataTableFrame>
     </section>
   );
 }

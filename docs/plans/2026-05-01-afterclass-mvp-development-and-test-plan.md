@@ -1028,9 +1028,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/admin-ai-assistant-ui.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/admin-ai-assistant-ui.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 70 个文件/206 个测试，E2E 37 个测试）。预览已重启并验证 `http://127.0.0.1:8001/parent`、`/admin/settlements`、`/admin/ai-assistant` 均返回 200。  
   **提交记录：** 已提交到本地 Git：`80439a1 feat(ui): improve admin AI assistant`；计划状态补充提交为当前 `docs(plan): record M8-03 commit status`；GitHub push 已完成。
 
-- [ ] M8-04 管理端资料管理 UI  
+- [x] M8-04 管理端资料管理 UI  
   **内容：** 校区、学生、班级、收费、日志。  
-  **测试：** 表格、空状态、加载、错误状态齐全。
+  **测试：** 表格、空状态、加载、错误状态齐全。  
+  **完成记录：** 2026-05-03 新增 `AdminDataTableFrame` 统一管理端资料表格容器，并接入校区、学生、班级、收费、AI 操作日志 5 类资料管理页面；所有表格拥有明确 region 名称、记录数摘要、横向滚动容器，以及统一 loading/empty/error 状态。  
+  **TDD 记录：** 先新增 `tests/unit/admin-data-management-ui.test.tsx` 并运行失败，失败原因为 5 类资料页缺少统一“资料表格” region、记录数摘要和显式状态；实现通用表格 frame 并接入 5 个组件后聚焦测试通过。首次全量门禁 typecheck 发现测试传入 AI log 原始记录而非投影 DTO，已补齐显示投影字段后复跑全量门禁通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/admin-data-management-ui.test.tsx`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 71 个文件/208 个测试，E2E 37 个测试）。  
+  **提交记录：** 待提交。
 
 - [ ] M8-05 老师端今日托管 UI  
   **内容：** 学生列表、状态、拍照签到、到期提醒、AI 快捷录入。  
