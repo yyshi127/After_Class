@@ -860,9 +860,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/admin-class-settlements.test.tsx`（RED 后 GREEN）、`npm run test:unit -- tests/unit/admin-class-settlements.test.tsx && npm run test:e2e -- tests/e2e/admin-class-settlements.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 52 个文件/157 个测试，E2E 30 个测试）。  
   **提交记录：** 已提交到本地 Git：`bdf9300 feat(admin): add class settlements page`；GitHub push 待完成.
 
-- [ ] M6-10 E2E：收费与核算可见性  
+- [x] M6-10 E2E：收费与核算可见性  
   **流程：** 管理员录入收费 → 家长看有效期 → 老师看到期提醒 → 管理员看毛利。  
-  **测试：** 不同角色字段可见性正确。
+  **测试：** 不同角色字段可见性正确。  
+  **完成记录：** 2026-05-02 新增 `tests/e2e/billing-settlement-visibility-flow.spec.ts`，串通 `/admin/billing` 收费录入结果 → `/parent` 服务有效期 → `/teacher` 服务到期提醒 → `/admin/settlements` 班级核算；验证校区管理员仅看授权校区，家长端不出现余额/欠费/应收/实收/毛利，老师端不出现毛利或金额，管理端可查看毛利。为流程补充 `AdminBillingRecords` 的“收费录入结果”提示区，明确收费录入会同步家长有效期与班级核算。  
+  **TDD 记录：** 先新增 M6-10 E2E 并运行失败，失败原因为收费记录页缺少“收费录入结果”流程提示；最小补齐提示区后，调整严格定位到表格单元并重跑聚焦 E2E 通过。  
+  **测试命令：** `npm run test:e2e -- tests/e2e/billing-settlement-visibility-flow.spec.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 52 个文件/157 个测试，E2E 31 个测试）。  
+  **提交记录：** 待提交。
 
 ---
 

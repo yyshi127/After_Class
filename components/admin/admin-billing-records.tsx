@@ -29,6 +29,11 @@ export function AdminBillingRecords({ actor, records }: AdminBillingRecordsProps
         <p className="mt-2 text-sm text-muted">学生服务周期、缴费周期、到期时间、应收实收。</p>
       </div>
 
+      <div className="rounded-3xl bg-surface p-5 text-sm shadow-neu-sm">
+        <p className="font-semibold">收费录入结果</p>
+        <p className="mt-2 text-muted">管理员录入收费后，同步更新家长服务有效期与管理端班级核算数据。</p>
+      </div>
+
       <div className="overflow-hidden rounded-3xl bg-surface shadow-neu-sm">
         <table className="w-full min-w-[980px] text-left text-sm">
           <thead className="bg-surfaceAlt text-muted">
