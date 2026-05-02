@@ -20,18 +20,30 @@ export function TeacherTodayCustodyPage({
 
   return (
     <main className="min-h-screen bg-background px-6 py-8 text-foreground md:px-10">
-      <section className="mx-auto max-w-6xl space-y-8">
-        <div className="rounded-[2rem] bg-surface p-6 shadow-neu-sm">
-          <p className="text-sm font-semibold text-muted">Teacher Portal</p>
-          <h1 className="font-heading text-3xl font-bold md:text-4xl">老师端工作台</h1>
-          <p className="mt-3 max-w-2xl text-sm text-muted">查看今日负责校区、班级、托管类型下的学生到托状态，并优先处理服务即将到期提醒。</p>
-          <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <p className="rounded-2xl bg-surfaceAlt px-4 py-3 text-sm font-semibold">{responsibleSummary}</p>
-            <div className="flex flex-wrap gap-3">
-              <button className="min-h-11 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground" type="button">到岗签到</button>
-              <button className="min-h-11 rounded-full bg-surfaceAlt px-5 py-2 text-sm font-semibold" type="button">离岗签退</button>
+      <section data-testid="teacher-today-shell" className="mx-auto max-w-6xl space-y-8">
+        <div className="grid gap-5 lg:grid-cols-[1.4fr_0.8fr]">
+          <div className="min-w-0 rounded-[2rem] bg-surface p-6 shadow-neu-sm">
+            <p className="text-sm font-semibold text-muted">Teacher Portal</p>
+            <h1 className="font-heading text-3xl font-bold md:text-4xl">老师端工作台</h1>
+            <p className="mt-3 max-w-2xl text-sm text-muted">查看今日负责校区、班级、托管类型下的学生到托状态，并优先处理服务即将到期提醒。</p>
+            <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <p className="rounded-2xl bg-surfaceAlt px-4 py-3 text-sm font-semibold">{responsibleSummary}</p>
+              <div className="flex flex-wrap gap-3">
+                <button className="min-h-11 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground" type="button">到岗签到</button>
+                <button className="min-h-11 rounded-full bg-surfaceAlt px-5 py-2 text-sm font-semibold" type="button">离岗签退</button>
+              </div>
             </div>
           </div>
+
+          <section aria-label="老师 AI 快捷录入" className="min-w-0 rounded-[2rem] bg-lavender/45 p-6 shadow-neu-sm">
+            <p className="text-sm font-semibold text-primary">AI Quick Entry</p>
+            <h2 className="mt-1 font-heading text-2xl font-bold">AI 快捷录入</h2>
+            <p className="mt-3 text-sm leading-6 text-muted">可先用语音/文字记录请假、纪律、作业反馈草稿；语音/文字记录后需老师确认，AI 不会直接发布给家长。</p>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row lg:flex-col">
+              <button className="min-h-11 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground" type="button">AI 快捷录入</button>
+              <button className="min-h-11 rounded-full bg-surfaceAlt px-5 py-2 text-sm font-semibold" type="button">查看草稿箱</button>
+            </div>
+          </section>
         </div>
 
         <div className="space-y-5 rounded-[2rem] bg-surface p-6 shadow-neu-sm">
@@ -98,7 +110,7 @@ export function TeacherTodayCustodyPage({
           {items.length === 0 ? (
             <p className="rounded-3xl bg-surfaceAlt p-6 text-sm text-muted">暂无负责学生</p>
           ) : (
-            <div className="grid gap-4 md:grid-cols-2">
+            <section aria-label="今日托管学生列表" className="grid gap-4 md:grid-cols-2">
               {items.map((item) => (
                 <article key={item.id} className="rounded-3xl bg-background p-5 shadow-neu-sm">
                   <div className="flex items-start justify-between gap-4">
@@ -118,7 +130,7 @@ export function TeacherTodayCustodyPage({
                   </a>
                 </article>
               ))}
-            </div>
+            </section>
           )}
         </div>
       </section>

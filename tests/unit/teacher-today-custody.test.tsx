@@ -85,6 +85,7 @@ describe('teacher today custody page', () => {
     render(<TeacherTodayCustodyPage actor={teacher} records={custodyRecords} today="2026-05-02" />);
 
     expect(screen.getByRole('heading', { name: '今日托管' })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: '今日托管学生列表' })).toBeInTheDocument();
     expect(screen.getByLabelText('校区筛选')).toBeInTheDocument();
     expect(screen.getByLabelText('班级筛选')).toBeInTheDocument();
     expect(screen.getByLabelText('托管类型筛选')).toBeInTheDocument();
@@ -109,5 +110,15 @@ describe('teacher today custody page', () => {
     expect(screen.getByText('王小明 · 服务 4 天后到期')).toBeInTheDocument();
     expect(screen.getByText('仅提醒服务到期/续费跟进，不展示经营或收费金额。')).toBeInTheDocument();
     expect(screen.queryByText(/毛利|欠费金额|余额|收入|课费|¥|1800/)).not.toBeInTheDocument();
+  });
+
+  it('renders mobile/tablet friendly quick actions for photo check-in and AI entry', () => {
+    render(<TeacherTodayCustodyPage actor={teacher} records={custodyRecords} today="2026-05-02" />);
+
+    const quickEntryRegion = screen.getByRole('region', { name: '老师 AI 快捷录入' });
+    expect(quickEntryRegion).toHaveTextContent('语音/文字记录后需老师确认，AI 不会直接发布给家长');
+    expect(screen.getByRole('button', { name: 'AI 快捷录入' })).toHaveClass('min-h-11');
+    expect(screen.getByRole('link', { name: '为王小明拍照签到' })).toHaveClass('min-h-11');
+    expect(screen.getByTestId('teacher-today-shell')).toHaveClass('max-w-6xl', 'space-y-8');
   });
 });
