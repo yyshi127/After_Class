@@ -932,7 +932,7 @@ storage: 本地 volume，后续迁移对象存储
   **内容：** 解析时间、学生、原因，确认后创建请假记录。  
   **测试：** 确认前不写入。  
   **完成记录：** 2026-05-02 新增 `domain/ai-command/guardian-leave-request.ts`，家长 AI `createLeaveRequest` 会基于已解析学生、日期、服务类型和原因生成中风险确认卡片；确认前复用 `executeConfirmedRequest` 阻断任何请假写入，确认后才生成 `status: 请假` 的考勤草稿；同时复用 `canAccessStudent` 防止家长为非绑定学生创建请假申请。新增 `tests/unit/guardian-leave-request.test.ts` 覆盖确认前不写入、确认后生成请假考勤草稿、非绑定学生拒绝。全量质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`。  
-  **提交记录：** 已提交到本地 Git：`b235618 feat(ai): add guardian leave confirmation`；GitHub push 待完成。
+  **提交记录：** 已提交到本地 Git：`b235618 feat(ai): add guardian leave confirmation`；计划状态补充提交 `4c553db docs(plan): record M7-08 commit status`；GitHub push 已完成。
 
 - [ ] M7-09 家长 AI：留言老师确认卡片  
   **内容：** 生成留言确认，确认后发给负责老师。  
