@@ -718,7 +718,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 Prisma `MistakeBookItem` 模型和 `MistakeCorrectionStatus` 枚举，字段覆盖校区、班级、学生、作业来源、确认区域来源、学科、知识点、错因、图片区域、题干、订正状态、AI 置信度与订正时间；关联 `Campus`、`CustodyClass`、`Student`、`HomeworkReview` 并建立来源区域唯一约束。新增 `domain/mistake-book/mistake-book-item.ts`，仅从老师 `CONFIRMED` / `MODIFIED` 区域生成错题本草稿，忽略区域不会收录。  
   **TDD 记录：** 先新增 `tests/unit/mistake-book-item.test.ts` 并运行失败，失败原因为 `@/domain/mistake-book/mistake-book-item` 不存在；实现 Prisma 模型和 domain helper 后聚焦测试与 Prisma validate 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/mistake-book-item.test.ts`、`npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 37 个文件/123 个测试，E2E 23 个测试）。  
-  **提交记录：** 已提交到本地 Git：`d3be157 feat(mistake-book): add item model`；GitHub push 待执行。
+  **提交记录：** 已提交到本地 Git：`d3be157 feat(mistake-book): add item model`；计划状态补充提交 `b44ea9a docs(plan): record M5-01 commit status`；GitHub push 已完成。
 
 - [ ] M5-02 作业发布后自动收录错题  
   **内容：** 根据 confirmedAreas 创建错题记录。  
