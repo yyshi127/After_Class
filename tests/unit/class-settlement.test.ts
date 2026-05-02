@@ -16,6 +16,7 @@ const settlementInput = {
     { id: 'student-arrived', campusId: 'campus-east', classId: 'class-rocket', serviceType: '晚辅导', dailyRevenue: 90 },
     { id: 'student-absent', campusId: 'campus-east', classId: 'class-rocket', serviceType: '晚辅导', dailyRevenue: 90 },
     { id: 'student-leave', campusId: 'campus-east', classId: 'class-rocket', serviceType: '晚辅导', dailyRevenue: 90 },
+    { id: 'student-pending', campusId: 'campus-east', classId: 'class-rocket', serviceType: '晚辅导', dailyRevenue: 90 },
     { id: 'student-other-campus', campusId: 'campus-west', classId: 'class-other', serviceType: '晚辅导', dailyRevenue: 999 },
   ],
   attendanceRecords: [
@@ -52,6 +53,7 @@ describe('ClassSettlement model and campus/service scoped calculation', () => {
     expect(schema).toContain('arrivedCount');
     expect(schema).toContain('leaveCount');
     expect(schema).toContain('absentCount');
+    expect(schema).toContain('pendingCount');
     expect(schema).toContain('studentRevenueAmount');
     expect(schema).toContain('teacherFeeAmount');
     expect(schema).toContain('reservedCostAmount');
@@ -69,10 +71,11 @@ describe('ClassSettlement model and campus/service scoped calculation', () => {
       classId: 'class-rocket',
       serviceType: '晚辅导',
       settlementDate: new Date('2026-05-20T00:00:00.000Z'),
-      expectedCount: 3,
+      expectedCount: 4,
       arrivedCount: 1,
       leaveCount: 1,
       absentCount: 1,
+      pendingCount: 1,
       studentRevenueAmount: 90,
       teacherFeeAmount: 220,
       reservedCostAmount: 30,

@@ -42,6 +42,7 @@ export type ClassSettlementDraft = {
   arrivedCount: number;
   leaveCount: number;
   absentCount: number;
+  pendingCount: number;
   studentRevenueAmount: number;
   teacherFeeAmount: number;
   reservedCostAmount: number;
@@ -70,6 +71,7 @@ export function calculateClassSettlementDraft(input: CalculateClassSettlementInp
   ).length;
   const leaveCount = scopedStudents.filter((student) => attendanceByStudent.get(student.id) === '请假').length;
   const absentCount = scopedStudents.filter((student) => attendanceByStudent.get(student.id) === '缺勤').length;
+  const pendingCount = scopedStudents.filter((student) => (attendanceByStudent.get(student.id) ?? '待确认') === '待确认').length;
   const studentRevenueAmount = scopedStudents
     .filter((student) => REVENUE_ATTENDANCE_STATUSES.includes(attendanceByStudent.get(student.id) ?? '待确认'))
     .reduce((total, student) => total + student.dailyRevenue, 0);
@@ -109,6 +111,7 @@ export function calculateClassSettlementDraft(input: CalculateClassSettlementInp
     arrivedCount,
     leaveCount,
     absentCount,
+    pendingCount,
     studentRevenueAmount,
     teacherFeeAmount,
     reservedCostAmount: input.reservedCostAmount,

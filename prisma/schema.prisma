@@ -513,6 +513,7 @@ model ClassSettlement {
   arrivedCount               Int
   leaveCount                 Int
   absentCount                Int
+  pendingCount               Int
   studentRevenueAmount       Decimal
   teacherFeeAmount           Decimal
   reservedCostAmount         Decimal
