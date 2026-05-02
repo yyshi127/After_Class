@@ -32,6 +32,22 @@ export type MistakeBookItemDraft = {
   createdAt: string;
 };
 
+export type PublishedHomeworkReviewForMistakeCollection = {
+  id: string;
+  campusId: string;
+  classId?: string | null;
+  studentId: string;
+  publishStatus: 'DRAFT' | 'PUBLISHED';
+  publishedAt: Date | null;
+};
+
+export type ExistingMistakeBookItemSource = Pick<MistakeBookItemDraft, 'homeworkReviewId' | 'sourceAreaId'>;
+
+export type MistakeBookCollectionResult = {
+  createdItems: MistakeBookItemDraft[];
+  skippedDuplicateKeys: string[];
+};
+
 export function createMistakeBookItemsFromConfirmedAreas(input: {
   campusId: string;
   classId?: string | null;
@@ -60,6 +76,44 @@ export function createMistakeBookItemsFromConfirmedAreas(input: {
       aiConfidence: area.confidence,
       createdAt,
     }));
+}
+
+export function collectMistakeBookItemsAfterFeedbackPublish(input: {
+  review: PublishedHomeworkReviewForMistakeCollection;
+  confirmedAreas: readonly MistakeBookAreaInput[];
+  existingItems: readonly ExistingMistakeBookItemSource[];
+  collectedAt: Date;
+}): MistakeBookCollectionResult {
+  if (input.review.publishStatus !== 'PUBLISHED' || !input.review.publishedAt) {
+    return { createdItems: [], skippedDuplicateKeys: [] };
+  }
+
+  const existingKeys = new Set(input.existingItems.map((item) => toMistakeSourceKey(item.homeworkReviewId, item.sourceAreaId)));
+  const skippedDuplicateKeys: string[] = [];
+
+  const createdItems = createMistakeBookItemsFromConfirmedAreas({
+    campusId: input.review.campusId,
+    classId: input.review.classId,
+    studentId: input.review.studentId,
+    homeworkReviewId: input.review.id,
+    areas: input.confirmedAreas,
+    createdAt: input.collectedAt,
+  }).filter((item) => {
+    const key = toMistakeSourceKey(item.homeworkReviewId, item.sourceAreaId);
+    if (existingKeys.has(key)) {
+      skippedDuplicateKeys.push(key);
+      return false;
+    }
+
+    existingKeys.add(key);
+    return true;
+  });
+
+  return { createdItems, skippedDuplicateKeys };
+}
+
+function toMistakeSourceKey(homeworkReviewId: string, sourceAreaId: string): string {
+  return `${homeworkReviewId}:${sourceAreaId}`;
 }
 
 function isConfirmedMistakeArea(area: MistakeBookAreaInput): area is MistakeBookConfirmedArea {

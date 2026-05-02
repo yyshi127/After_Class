@@ -720,9 +720,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/mistake-book-item.test.ts`、`npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 37 个文件/123 个测试，E2E 23 个测试）。  
   **提交记录：** 已提交到本地 Git：`d3be157 feat(mistake-book): add item model`；计划状态补充提交 `b44ea9a docs(plan): record M5-01 commit status`；GitHub push 已完成。
 
-- [ ] M5-02 作业发布后自动收录错题  
+- [x] M5-02 作业发布后自动收录错题  
   **内容：** 根据 confirmedAreas 创建错题记录。  
-  **测试：** 忽略区域不生成错题。
+  **测试：** 忽略区域不生成错题。  
+  **完成记录：** 2026-05-02 新增 `collectMistakeBookItemsAfterFeedbackPublish` post-publish 收录服务，复用 M5-01 的 `createMistakeBookItemsFromConfirmedAreas`，仅在作业反馈已发布且存在发布时间后，根据老师确认/修改的错题区域生成待创建错题；忽略区域不会生成错题。通过 `homeworkReviewId:sourceAreaId` 自然键过滤既有错题，重复发布同一作业反馈不会重复创建。  
+  **TDD 记录：** 先新增 `tests/unit/mistake-book-collection.test.ts` 并运行失败，失败原因为 `collectMistakeBookItemsAfterFeedbackPublish is not a function`；最小实现发布后收录与重复键过滤后聚焦测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/mistake-book-collection.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 38 个文件/125 个测试，E2E 23 个测试）。  
+  **提交记录：** 待提交。
 
 - [ ] M5-03 老师端错题本页面  
   **内容：** 按学生、学科、知识点、日期筛选。  
