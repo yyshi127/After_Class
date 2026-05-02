@@ -1058,7 +1058,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-03 升级家长端首页移动端 UI，新增家长首页今日概览，强化安全到达与照片预览、今日作业反馈、服务有效期三类核心信息；长文件 ID 使用换行处理，移动端外层限制横向溢出，家长端继续不展示余额、欠费金额、应收、实收、毛利或老师课费。
   **TDD 记录：** 先新增 `tests/e2e/parent-home-ui.spec.ts` 并运行失败，失败原因为 `/parent` 缺少 `家长移动首页` main 与核心 region；最小改造家长首页和相关卡片后聚焦 E2E 通过。首次全量 E2E 因概览卡片复用完整“当前服务有效期至 2026-05-31”导致旧测试 strict-mode 冲突，已将概览文案收敛为“有效至 2026-05-31”并复跑失败用例通过。
   **测试命令：** `npm run test:e2e -- tests/e2e/parent-home-ui.spec.ts`（RED 后 GREEN）、`npm run test:unit -- tests/unit/parent-safety-arrival-card.test.tsx tests/unit/parent-service-validity-card.test.tsx tests/unit/homework-feedback-publishing.test.tsx`、`npm run test:e2e -- tests/e2e/parent-service-validity.spec.ts tests/e2e/billing-settlement-visibility-flow.spec.ts tests/e2e/parent-home-ui.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 72 个文件/210 个测试，E2E 41 个测试）。
-  **提交记录：** 已提交到本地 Git：`2bf03ba feat(ui): improve parent home mobile`；GitHub push 待完成。
+  **提交记录：** 已提交并推送 GitHub：`2bf03ba feat(ui): improve parent home mobile`；计划状态补充提交 `a58d236 docs(plan): record M8-07 completion`。
 
 - [ ] M8-08 家长端 AI 助手 UI  
   **内容：** 文字/语音入口、请假确认卡片、查询结果。  
