@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Building2, ClipboardList, CreditCard, GraduationCap, LayoutDashboard, LogOut, Settings, Users } from 'lucide-react';
+import { Building2, Calculator, ClipboardList, CreditCard, GraduationCap, LayoutDashboard, LogOut, Settings, Users } from 'lucide-react';
 
 import { getVisibleCampusesForAdmin, type AdminCampusOption } from '@/domain/admin/admin-layout';
 import type { PermissionActor } from '@/domain/auth/permissions';
@@ -11,6 +11,7 @@ const navItems = [
   { label: '班级管理', href: '/admin/classes', icon: GraduationCap },
   { label: '作业反馈', href: '/admin/homework', icon: ClipboardList },
   { label: '收费记录', href: '/admin/billing', icon: CreditCard },
+  { label: '班级核算', href: '/admin/settlements', icon: Calculator },
   { label: '系统设置', href: '/admin/settings', icon: Settings },
 ];
 
