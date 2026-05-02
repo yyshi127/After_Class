@@ -1,4 +1,10 @@
 import { ParentHomeSafetyCard } from '@/components/parent/parent-home-safety-card';
+import { ParentHomeworkFeedbackCard } from '@/components/parent/parent-homework-feedback-card';
+import { createEditableFeedbackDraft } from '@/domain/feedback/feedback';
+import {
+  getGuardianVisibleHomeworkFeedback,
+  publishHomeworkFeedback,
+} from '@/domain/feedback/homework-feedback-publishing';
 import { getParentSafetyArrivalCards } from '@/domain/parent/safety-arrival';
 import { DEMO_SEED } from '@/prisma/seed-data';
 
@@ -37,6 +43,48 @@ const safetyCards = demoGuardian
     })
   : [];
 
+const publishedHomeworkFeedback = demoGuardian && demoStudent
+  ? publishHomeworkFeedback({
+      review: {
+        id: 'homework-review-wang-demo',
+        campusId: demoStudent.campusId,
+        classId: demoStudent.classId,
+        studentId: demoStudent.id,
+        subject: '数学',
+        originalImageFileId: 'file-homework-original-wang',
+        correctedImageFileId: 'file-homework-corrected-wang',
+        publishStatus: 'DRAFT',
+        publishedAt: null,
+      },
+      feedback: createEditableFeedbackDraft({
+        campusId: demoStudent.campusId,
+        classId: demoStudent.classId,
+        studentId: demoStudent.id,
+        teacherUserId: demoTeacher?.id ?? 'demo-teacher-zhao',
+        homeworkReviewId: 'homework-review-wang-demo',
+        behaviorPerformance: '今天专注度较好，能主动提问。',
+        homeworkCompletion: '数学作业已完成，订正 1 处。',
+        knowledgeMastery: '两位数乘法仍需巩固。',
+        draftSource: 'AI',
+      }),
+      publishedAt: new Date('2026-05-02T12:00:00.000Z'),
+    })
+  : null;
+
+const parentHomeworkFeedback = demoGuardian && publishedHomeworkFeedback
+  ? getGuardianVisibleHomeworkFeedback({
+      guardian: {
+        id: demoGuardian.id,
+        role: demoGuardian.role,
+        guardianStudentIds: DEMO_SEED.guardianStudents
+          .filter((binding) => binding.guardianUserId === demoGuardian.id)
+          .map((binding) => binding.studentId),
+      },
+      review: publishedHomeworkFeedback.review,
+      feedback: publishedHomeworkFeedback.feedback,
+    })
+  : null;
+
 export default function ParentPage() {
   return (
     <main className="min-h-screen px-6 py-10 text-text">
@@ -48,6 +96,7 @@ export default function ParentPage() {
         </section>
 
         <ParentHomeSafetyCard cards={safetyCards} />
+        <ParentHomeworkFeedbackCard feedback={parentHomeworkFeedback} />
       </div>
     </main>
   );
