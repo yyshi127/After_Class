@@ -40,12 +40,12 @@ describe('homework review model and visibility', () => {
     expect(schema).toContain('enum HomeworkReviewStatus');
     expect(schema).toContain('enum HomeworkPublishStatus');
     expect(schema).toContain('model HomeworkReview');
-    expect(schema).toContain('originalImageFileId  String');
-    expect(schema).toContain('correctedImageFileId String?');
-    expect(schema).toContain('subject              String');
-    expect(schema).toContain('aiSuggestedAreas     Json?');
-    expect(schema).toContain('teacherConfirmedAreas Json?');
-    expect(schema).toContain('publishStatus        HomeworkPublishStatus');
+    expect(schema).toMatch(/originalImageFileId\s+String/);
+    expect(schema).toMatch(/correctedImageFileId\s+String\?/);
+    expect(schema).toMatch(/subject\s+String/);
+    expect(schema).toMatch(/aiSuggestedAreas\s+Json\?/);
+    expect(schema).toMatch(/teacherConfirmedAreas\s+Json\?/);
+    expect(schema).toMatch(/publishStatus\s+HomeworkPublishStatus/);
   });
 
   it('creates an unpublished homework review draft from a private original image', () => {

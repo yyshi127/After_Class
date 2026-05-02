@@ -79,6 +79,22 @@ enum NoticePushStatus {
   FAILED
 }
 
+enum HomeworkReviewStatus {
+  UPLOADED
+  AI_SUGGESTED
+  TEACHER_REVIEWED
+}
+
+enum HomeworkPublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum FeedbackPublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
 enum TeacherAttendanceStatus {
   CHECKED_IN    @map("已签到")
   CHECKED_OUT   @map("已签退")
@@ -110,6 +126,8 @@ model User {
   taughtAttendanceRecords AttendanceRecord[] @relation("AttendanceTeacher")
   teacherAttendanceRecords TeacherAttendance[] @relation("TeacherAttendanceTeacher")
   teacherAttendanceMakeups TeacherAttendance[] @relation("TeacherAttendanceMakeupActor")
+  homeworkReviews    HomeworkReview[] @relation("HomeworkReviewTeacher")
+  feedbacks          Feedback[] @relation("FeedbackTeacher")
   uploadedFiles      PrivateFile[] @relation("PrivateFileUploader")
   parentNotices      ParentNotice[] @relation("ParentNoticeGuardian")
   auditLogs          AuditLog[]
@@ -136,6 +154,8 @@ model Campus {
   attendanceRecords AttendanceRecord[]
   teacherAttendanceRecords TeacherAttendance[]
   files PrivateFile[]
+  homeworkReviews HomeworkReview[]
+  feedbacks Feedback[]
 
   @@index([status])
 }
@@ -154,6 +174,8 @@ model CustodyClass {
   teacherAssignments TeacherAssignment[]
   attendanceRecords AttendanceRecord[]
   teacherAttendanceRecords TeacherAttendance[]
+  homeworkReviews HomeworkReview[]
+  feedbacks Feedback[]
 
   @@index([campusId])
   @@unique([campusId, name])
@@ -181,6 +203,8 @@ model Student {
   attendanceRecords AttendanceRecord[]
   files PrivateFile[]
   parentNotices ParentNotice[]
+  homeworkReviews HomeworkReview[]
+  feedbacks Feedback[]
 
   @@index([campusId])
   @@index([classId])
@@ -288,11 +312,77 @@ model PrivateFile {
   student    Student? @relation(fields: [studentId], references: [id], onDelete: SetNull)
   uploadedBy User     @relation("PrivateFileUploader", fields: [uploadedByUserId], references: [id], onDelete: Restrict)
   parentNotices ParentNotice[]
+  homeworkOriginals HomeworkReview[] @relation("HomeworkOriginalImage")
+  homeworkCorrections HomeworkReview[] @relation("HomeworkCorrectedImage")
 
   @@index([campusId])
   @@index([studentId])
   @@index([uploadedByUserId])
   @@index([purpose])
+  @@index([createdAt])
+}
+
+model HomeworkReview {
+  id                    String                @id @default(cuid())
+  campusId              String
+  classId               String?
+  studentId             String
+  teacherUserId         String
+  originalImageFileId   String
+  correctedImageFileId  String?
+  subject               String
+  status                HomeworkReviewStatus  @default(UPLOADED)
+  aiSuggestedAreas      Json?
+  teacherConfirmedAreas Json?
+  publishStatus         HomeworkPublishStatus @default(DRAFT)
+  publishedAt           DateTime?
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+
+  campus         Campus        @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  class          CustodyClass? @relation(fields: [classId], references: [id], onDelete: SetNull)
+  student        Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher        User          @relation("HomeworkReviewTeacher", fields: [teacherUserId], references: [id], onDelete: Restrict)
+  originalImage  PrivateFile   @relation("HomeworkOriginalImage", fields: [originalImageFileId], references: [id], onDelete: Restrict)
+  correctedImage PrivateFile?  @relation("HomeworkCorrectedImage", fields: [correctedImageFileId], references: [id], onDelete: SetNull)
+  feedbacks      Feedback[]
+
+  @@index([campusId])
+  @@index([classId])
+  @@index([studentId])
+  @@index([teacherUserId])
+  @@index([status])
+  @@index([publishStatus])
+  @@index([createdAt])
+}
+
+model Feedback {
+  id                  String                @id @default(cuid())
+  campusId            String
+  classId             String?
+  studentId           String
+  teacherUserId       String
+  homeworkReviewId    String?
+  behaviorPerformance String?
+  homeworkCompletion  String
+  knowledgeMastery    String?
+  publishStatus       FeedbackPublishStatus @default(DRAFT)
+  publishedAt         DateTime?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+
+  campus         Campus          @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  class          CustodyClass?   @relation(fields: [classId], references: [id], onDelete: SetNull)
+  student        Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher        User            @relation("FeedbackTeacher", fields: [teacherUserId], references: [id], onDelete: Restrict)
+  homeworkReview HomeworkReview? @relation(fields: [homeworkReviewId], references: [id], onDelete: SetNull)
+
+  @@index([campusId])
+  @@index([classId])
+  @@index([studentId])
+  @@index([teacherUserId])
+  @@index([homeworkReviewId])
+  @@index([publishStatus])
   @@index([createdAt])
 }
 
@@ -322,6 +412,7 @@ model ParentNotice {
   @@index([pushStatus])
   @@index([createdAt])
 }
+
 
 model TeacherAttendance {
   id             String                  @id @default(cuid())

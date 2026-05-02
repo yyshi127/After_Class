@@ -620,13 +620,21 @@ storage: 本地 volume，后续迁移对象存储
 
 ### M4. 作业批改、AI 圈错草稿与三类反馈
 
-- [ ] M4-01 创建 HomeworkReview 模型  
+- [x] M4-01 创建 HomeworkReview 模型  
   **内容：** 原图、批改图、学科、状态、AI 建议区域、老师确认区域、发布状态。  
-  **测试：** 未发布记录家长不可见。
+  **测试：** 未发布记录家长不可见。  
+  **完成记录：** 2026-05-02 新增 Prisma `HomeworkReview` 模型、状态/发布枚举和 `domain/homework/homework-review.ts` 草稿/可见性 helper；模型覆盖作业原图、批改图、学科、AI 建议区域、老师确认区域、发布状态，并关联校区、班级、学生、老师和私有文件。  
+  **TDD 记录：** 先新增 `tests/unit/homework-review.test.ts` 并确认失败，失败原因为 `HomeworkReview` 模型和 domain helper 不完整；补齐模型与 helper 后同一测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/homework-review.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 28 个文件/95 个测试，E2E 15 个测试）。  
+  **提交记录：** 已提交到本地 Git；GitHub 远端待用户提供仓库或完成 SSH key 授权.
 
-- [ ] M4-02 创建 Feedback 模型  
+- [x] M4-02 创建 Feedback 模型  
   **内容：** 行为表现、作业完成、知识掌握、发布状态。  
-  **测试：** 作业完成字段必填。
+  **测试：** 作业完成字段必填。  
+  **完成记录：** 2026-05-02 新增 Prisma `Feedback` 模型、发布枚举和 `domain/feedback/feedback.ts` 三段反馈草稿/发布校验 helper；模型覆盖行为表现、作业完成、知识掌握、发布状态，并可关联作业批改记录。  
+  **TDD 记录：** 先新增 `tests/unit/feedback.test.ts` 并确认失败，失败原因为 `domain/feedback/feedback` 不存在；实现 domain helper 与 Prisma 模型后同一测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/feedback.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 28 个文件/95 个测试，E2E 15 个测试）。  
+  **提交记录：** 已提交到本地 Git；GitHub 远端待用户提供仓库或完成 SSH key 授权.
 
 - [ ] M4-03 老师端选择学生上传作业  
   **内容：** 班级 → 学生 → 作业图片上传。  
