@@ -850,7 +850,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 补齐 `calculateClassSettlementDraft` 的待确认出勤核算，班级核算按校区/班级/托管类型筛选学生和老师考勤；仅 `已到`、`迟到`、`已离托` 计入学生收入，`请假`、`缺勤`、`待确认` 不计收入但分别进入统计，老师课费按有效老师考勤与 `TeacherFeeRule` 汇总，毛利 = 学生收入 - 老师课费 - 预留成本。Prisma `ClassSettlement` 新增 `pendingCount` 用于留痕待确认人数。  
   **TDD 记录：** 先扩展 `tests/unit/class-settlement.test.ts` 加入无出勤记录的待确认学生，并断言 `pendingCount` 与收入排除规则；聚焦测试 RED 失败于 schema/返回值缺少 `pendingCount`；最小实现后聚焦测试和 `prisma:validate` 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/class-settlement.test.ts`（RED 后 GREEN）、`npm run test:unit -- tests/unit/class-settlement.test.ts && npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 51 个文件/154 个测试，E2E 29 个测试）。  
-  **提交记录：** 已提交到本地 Git：`2dad526 feat(billing): track pending settlement count`；GitHub push 待完成.
+  **提交记录：** 已提交到本地 Git：`2dad526 feat(billing): track pending settlement count`；计划状态补充提交 `59a955f docs(plan): record M6-08 commit status`；GitHub push 已完成.
 
 - [ ] M6-09 管理端班级核算页面  
   **内容：** 按校区、日期、班级、托管类型、老师筛选。  
