@@ -918,7 +918,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/ai-command/guardian-attendance-query.ts`，家长 AI `queryAttendance` 作为低风险查询直接返回授权绑定孩子的到托状态、服务类型、签到时间和签到照片入口；即使 AI 实体指定其他学生，也会通过 `canAccessStudent` 与 `guardianStudentIds` 过滤为空，不泄露其他孩子考勤或照片。  
   **TDD 记录：** 先新增 `tests/unit/guardian-attendance-query.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/guardian-attendance-query` 不存在；实现最小查询 service 后聚焦测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/guardian-attendance-query.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 58 个文件/173 个测试，E2E 31 个测试）。  
-  **提交记录：** 已提交到本地 Git：`b9296a1 feat(ai): add guardian attendance query`；GitHub push 待完成。
+  **提交记录：** 已提交到本地 Git：`b9296a1 feat(ai): add guardian attendance query`；计划状态补充提交 `287e787 docs(plan): record M7-06 commit status`；GitHub push 已完成。
 
 - [ ] M7-07 家长 AI：查询作业  
   **内容：** 返回已发布作业状态、三类点评摘要。  
