@@ -35,6 +35,11 @@ enum StudentStatus {
   LEFT
 }
 
+enum BillingCycle {
+  MONTHLY
+  SEMESTER
+}
+
 enum CampusStatus {
   ACTIVE
   INACTIVE
@@ -163,6 +168,7 @@ model Campus {
   homeworkReviews HomeworkReview[]
   feedbacks Feedback[]
   mistakeBookItems MistakeBookItem[]
+  billingRecords BillingRecord[]
 
   @@index([status])
 }
@@ -184,6 +190,7 @@ model CustodyClass {
   homeworkReviews HomeworkReview[]
   feedbacks Feedback[]
   mistakeBookItems MistakeBookItem[]
+  billingRecords BillingRecord[]
 
   @@index([campusId])
   @@unique([campusId, name])
@@ -214,6 +221,7 @@ model Student {
   homeworkReviews HomeworkReview[]
   feedbacks Feedback[]
   mistakeBookItems MistakeBookItem[]
+  billingRecords BillingRecord[]
 
   @@index([campusId])
   @@index([classId])
@@ -428,6 +436,35 @@ model MistakeBookItem {
   @@index([knowledgePoint])
   @@index([correctionStatus])
   @@index([createdAt])
+}
+
+model BillingRecord {
+  id            String       @id @default(cuid())
+  campusId      String
+  studentId     String
+  classId       String?
+  serviceType   ServiceType
+  billingCycle  BillingCycle
+  periodStart   DateTime
+  periodEnd     DateTime
+  amountDue     Decimal
+  amountPaid    Decimal
+  balanceAmount Decimal
+  debtAmount    Decimal
+  validUntil    DateTime
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  campus  Campus        @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  student Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  class   CustodyClass? @relation(fields: [classId], references: [id], onDelete: SetNull)
+
+  @@index([campusId])
+  @@index([studentId])
+  @@index([classId])
+  @@index([serviceType])
+  @@index([billingCycle])
+  @@index([validUntil])
 }
 
 model ParentNotice {
