@@ -912,9 +912,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/confirmation-request.test.ts`（RED 后 GREEN）、`npm run test:unit -- tests/unit/confirmation-request.test.ts && npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 57 个文件/171 个测试，E2E 31 个测试）。  
   **提交记录：** 已提交到本地 Git：`b1da46b feat(ai): add confirmation request service`；计划状态补充提交 `647b0ba docs(plan): record M7-05 commit status`；GitHub push 已完成。
 
-- [ ] M7-06 家长 AI：查询考勤  
+- [x] M7-06 家长 AI：查询考勤  
   **内容：** 返回绑定孩子到托状态和照片入口。  
-  **测试：** 不能查询其他孩子。
+  **测试：** 不能查询其他孩子。  
+  **完成记录：** 2026-05-02 新增 `domain/ai-command/guardian-attendance-query.ts`，家长 AI `queryAttendance` 作为低风险查询直接返回授权绑定孩子的到托状态、服务类型、签到时间和签到照片入口；即使 AI 实体指定其他学生，也会通过 `canAccessStudent` 与 `guardianStudentIds` 过滤为空，不泄露其他孩子考勤或照片。  
+  **TDD 记录：** 先新增 `tests/unit/guardian-attendance-query.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/guardian-attendance-query` 不存在；实现最小查询 service 后聚焦测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/guardian-attendance-query.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 58 个文件/173 个测试，E2E 31 个测试）。  
+  **提交记录：** 待本轮提交。
 
 - [ ] M7-07 家长 AI：查询作业  
   **内容：** 返回已发布作业状态、三类点评摘要。  
