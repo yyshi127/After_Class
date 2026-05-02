@@ -820,13 +820,21 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/admin-billing-records.test.tsx`、`npm run test:e2e -- tests/e2e/admin-billing-records.spec.ts`、任务级回归 `npm run test:unit -- tests/unit/admin-billing-records.test.tsx tests/unit/admin-layout.test.tsx && npm run test:e2e -- tests/e2e/admin-billing-records.spec.ts`。  
   **提交记录：** 已提交到本地 Git：`7a912d5 feat(billing): add admin billing records page`；计划状态补充提交：`docs(plan): record M6-04 commit status`。
 
-- [ ] M6-05 服务到期提醒计算  
+- [x] M6-05 服务到期提醒计算  
   **内容：** 到期前一次、到期当天一次，逾期后人工提醒。  
-  **测试：** 7 天内到期列表正确。
+  **测试：** 7 天内到期列表正确。  
+  **完成记录：** 2026-05-02 扩展 `domain/billing/service-validity.ts`，新增 `getServiceExpiryReminders`，按 UTC 日期计算 7 天内到期列表；区分到期前自动提醒、到期当天自动提醒和逾期人工跟进，返回 DTO 不包含应收、实收、余额、欠费等金额字段。  
+  **TDD 记录：** 先新增 `tests/unit/service-expiry-reminders.test.ts` 并运行失败，失败原因为 `getServiceExpiryReminders is not a function`；实现最小提醒计算后聚焦测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/service-expiry-reminders.test.ts`、任务级回归 `npm run test:unit -- tests/unit/service-expiry-reminders.test.ts tests/unit/teacher-today-custody.test.tsx`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 50 个文件/153 个测试，E2E 28 个测试）。  
+  **提交记录：** 待本轮提交。
 
-- [ ] M6-06 老师端服务到期提醒  
+- [x] M6-06 老师端服务到期提醒  
   **内容：** 仅展示学生服务到期/欠费提醒，不展示班级毛利。  
-  **测试：** 老师端不出现毛利字段。
+  **测试：** 老师端不出现毛利字段。  
+  **完成记录：** 2026-05-02 在 `TeacherTodayCustodyPage` 增加老师端“服务到期提醒”区块，仅基于老师负责学生展示服务到期/续费跟进提示，不展示经营、收费金额或毛利字段。  
+  **TDD 记录：** 先扩展 `tests/unit/teacher-today-custody.test.tsx` 并运行失败，失败原因为页面缺少“服务到期提醒”标题；实现提醒区块并修正提示文案避免出现毛利字段后聚焦测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/teacher-today-custody.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-today-custody.spec.ts`、任务级回归 `npm run test:unit -- tests/unit/service-expiry-reminders.test.ts tests/unit/teacher-today-custody.test.tsx`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 50 个文件/153 个测试，E2E 28 个测试）。  
+  **提交记录：** 待本轮提交。
 
 - [ ] M6-07 家长端服务有效期展示  
   **内容：** “当前服务有效期至 YYYY-MM-DD”或续费提示。  

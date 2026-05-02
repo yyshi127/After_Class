@@ -101,4 +101,13 @@ describe('teacher today custody page', () => {
     expect(screen.getByRole('button', { name: '到岗签到' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '离岗签退' })).toBeInTheDocument();
   });
+
+  it('shows service expiry reminders to teachers without gross margin or financial amounts', () => {
+    render(<TeacherTodayCustodyPage actor={teacher} records={custodyRecords} today="2026-05-02" />);
+
+    expect(screen.getByRole('heading', { name: '服务到期提醒' })).toBeInTheDocument();
+    expect(screen.getByText('王小明 · 服务 4 天后到期')).toBeInTheDocument();
+    expect(screen.getByText('仅提醒服务到期/续费跟进，不展示经营或收费金额。')).toBeInTheDocument();
+    expect(screen.queryByText(/毛利|欠费金额|余额|收入|课费|¥|1800/)).not.toBeInTheDocument();
+  });
 });

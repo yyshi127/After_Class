@@ -16,6 +16,7 @@ export function TeacherTodayCustodyPage({
   const responsibleSummary = firstResponsibleItem
     ? `今日负责：${firstResponsibleItem.campusName} · ${firstResponsibleItem.className}`
     : '今日暂无负责班级';
+  const expiringItems = items.filter((item) => item.isExpiringSoon || item.serviceExpiryLabel === '服务已到期');
 
   return (
     <main className="min-h-screen bg-background px-6 py-8 text-foreground md:px-10">
@@ -31,6 +32,28 @@ export function TeacherTodayCustodyPage({
               <button className="min-h-11 rounded-full bg-surfaceAlt px-5 py-2 text-sm font-semibold" type="button">离岗签退</button>
             </div>
           </div>
+        </div>
+
+        <div className="space-y-5 rounded-[2rem] bg-surface p-6 shadow-neu-sm">
+          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-sm font-semibold text-muted">Expiry Reminder</p>
+              <h2 className="font-heading text-3xl font-bold">服务到期提醒</h2>
+            </div>
+            <p className="rounded-full bg-surfaceAlt px-4 py-2 text-sm font-semibold text-muted">仅提醒服务到期/续费跟进，不展示经营或收费金额。</p>
+          </div>
+          {expiringItems.length === 0 ? (
+            <p className="rounded-3xl bg-surfaceAlt p-5 text-sm text-muted">7 天内暂无服务到期学生</p>
+          ) : (
+            <div className="grid gap-3 md:grid-cols-2">
+              {expiringItems.map((item) => (
+                <article key={`expiry-${item.id}`} className="rounded-3xl bg-peach/30 p-5 text-sm font-semibold">
+                  <p>{item.studentName} · {item.serviceExpiryLabel}</p>
+                  <p className="mt-2 text-muted">{item.campusName} · {item.className} · {item.serviceType}</p>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="space-y-5 rounded-[2rem] bg-surface p-6 shadow-neu-sm">
