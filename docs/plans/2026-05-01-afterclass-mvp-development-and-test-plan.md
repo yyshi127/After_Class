@@ -1010,7 +1010,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-03 将 `ui-design/afterclass-mvp-ui.html` 中 mental-health demo 的核心色系、语义色、拟物阴影、圆角和字体 token 写入 `tailwind.config.js` 与 `app/globals.css`；保留既有 `text-muted`/`bg-surface` 等页面类名兼容，同时补充 `primary.deep`、`surface.*`、`text.*`、`danger`、`success`、`neu-md`、`neu-sm` 等后续 UI 完整落地所需 token。  
   **TDD 记录：** 先新增 `tests/unit/design-tokens.test.ts` 并运行失败，失败原因为 Tailwind 缺少完整 surface/text/semantic token、CSS 缺少设计稿变量和背景渐变、圆角 token 不完整；最小补齐主题和全局 CSS 后聚焦测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/design-tokens.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 69 个文件/202 个测试，E2E 34 个测试）。  
-  **提交记录：** 待提交。
+  **提交记录：** 已提交并推送 GitHub：`bfdc118 feat(ui): add design token contract`。
 
 - [ ] M8-02 管理端首页看板 UI  
   **内容：** KPI、趋势、风险、待处理事项、校区筛选。  
