@@ -888,13 +888,21 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/ai-provider.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 54 个文件/162 个测试）。  
   **提交记录：** 已提交到本地 Git：`2998aab feat(ai): add action logging and provider foundation`；计划状态补充提交待生成。
 
-- [ ] M7-03 创建意图识别 schema  
+- [x] M7-03 创建意图识别 schema  
   **内容：** 9 个 MVP 意图：queryAttendance、queryHomework、createLeaveRequest、queryBilling、sendTeacherMessage、recordHomeworkFeedback、suggestMistakeAreas、generateSimilarQuestions、queryClassSettlement。  
-  **测试：** 未知意图降级到人工/传统页面。
+  **测试：** 未知意图降级到人工/传统页面。  
+  **完成记录：** 2026-05-02 新增 `domain/ai-command/ai-intent-schema.ts`，用 zod 定义 9 个 MVP 意图识别 schema 与各意图实体 schema；未知意图、低置信度和实体不完整统一降级到人工/传统页面，不执行业务写入。  
+  **TDD 记录：** 先新增 `tests/unit/ai-intent-schema.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/ai-intent-schema` 不存在；实现 schema 与解析 helper 后聚焦测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/ai-intent-schema.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 56 个文件/168 个测试）。  
+  **提交记录：** 待本轮提交。
 
-- [ ] M7-04 创建 RiskClassifier  
+- [x] M7-04 创建 RiskClassifier  
   **内容：** 低风险查询、中风险确认、高风险拒绝。  
-  **测试：** 修改收费、删除学生、批量通知均为高风险。
+  **测试：** 修改收费、删除学生、批量通知均为高风险。  
+  **完成记录：** 2026-05-02 新增 `domain/ai-command/risk-classifier.ts`，将只读查询归为低风险，正常业务写入归为中风险并要求确认；识别修改收费/余额/欠费/课费、删除学生、批量通知等高风险指令并拒绝执行，引导传统页面人工复核。  
+  **TDD 记录：** 先新增 `tests/unit/risk-classifier.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/risk-classifier` 不存在；实现最小风险分类器后聚焦测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/risk-classifier.test.ts`（RED 后 GREEN）、`npm run test:unit -- tests/unit/ai-intent-schema.test.ts tests/unit/risk-classifier.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 56 个文件/168 个测试）。  
+  **提交记录：** 待本轮提交。
 
 - [ ] M7-05 创建 ConfirmationRequest 模型/服务  
   **内容：** 中风险动作生成确认卡片，确认后执行 domain service。  
