@@ -782,7 +782,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `tests/e2e/mistake-to-practice-sheet-flow.spec.ts`，串通 `/teacher/homework-upload` → `/teacher/homework-correction` → `/teacher/mistake-book` → `/teacher/practice-sheet`；补齐发布后自动收录错题入口、错题卡片生成同类题练习单入口、练习单 Word 下载与文件追溯展示。  
   **TDD 记录：** 先新增 E2E 并运行失败，失败原因为批改页尚未暴露“发布后将自动收录错题”与错题本入口；补齐最小 UI 链路后聚焦 E2E 通过。  
   **测试命令：** `npm run test:e2e -- tests/e2e/mistake-to-practice-sheet-flow.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 45 个文件/140 个测试，E2E 27 个测试）。  
-  **提交记录：** 待提交.
+  **提交记录：** 已提交到本地 Git：`5464f15 test(mistake-book): cover practice sheet flow`；GitHub push 待完成.
 
 ---
 
