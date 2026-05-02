@@ -1044,9 +1044,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/teacher-today-custody.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/teacher-today-custody.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 71 个文件/209 个测试，E2E 38 个测试）。  
   **提交记录：** 已提交并推送 GitHub：`e17f11d feat(ui): improve teacher today custody`；计划状态补充提交 `7579e08 docs(plan): record M8-05 completion`。
 
-- [ ] M8-06 老师端作业批改 UI  
+- [x] M8-06 老师端作业批改 UI  
   **内容：** 图片、圈错、三类点评、发布、练习单。  
-  **测试：** 触控区域 ≥44px。
+  **测试：** 触控区域 ≥44px。  
+  **完成记录：** 2026-05-03 升级老师端作业批改工作台，将图片与圈错、AI 圈错确认、三类点评编辑、发布与练习单操作组织为可访问 region；统一页面外层 `main`，补齐发布后进入 Word 练习单的操作入口，并确保按钮/链接触控目标使用 `min-h-11`。  
+  **TDD 记录：** 先新增 `tests/unit/teacher-homework-correction-ui.test.tsx` 与 `tests/e2e/teacher-homework-correction-ui.spec.ts`；聚焦单测 RED 失败于缺少 `老师作业批改工作台` main、命名区域和练习单入口；最小改造页面/组件后聚焦单测与平板/手机 E2E 均通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/teacher-homework-correction-ui.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/teacher-homework-correction-ui.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 72 个文件/210 个测试，E2E 40 个测试）。  
+  **提交记录：** 已提交到本地 Git：`4a5ce65 feat(ui): improve teacher homework correction`；计划状态补充提交待完成。
 
 - [ ] M8-07 家长端首页 UI  
   **内容：** 安全到达、照片、今日作业、服务有效期。  
