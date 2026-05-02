@@ -984,9 +984,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/admin-ai-high-risk-refusal.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/admin-ai-high-risk-refusal.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 67 个文件/196 个测试，E2E 32 个测试）。  
   **提交记录：** 已提交到本地 Git：`efa1d6f feat(ai): add high risk refusal UI`；计划状态补充提交 `4659df1 docs(plan): record M7-15 commit status`；GitHub push 已完成。
 
-- [ ] M7-16 AI 操作日志页面  
+- [x] M7-16 AI 操作日志页面  
   **内容：** 筛选时间、用户、意图、风险、确认状态、结果。  
-  **测试：** 权限隔离和日志完整性。
+  **测试：** 权限隔离和日志完整性。  
+  **完成记录：** 2026-05-03 新增 `domain/admin/ai-action-logs.ts` 管理端 AI 操作日志投影、`AdminAiActionLogs` 日志筛选/列表组件和 `/admin/ai-logs` 页面；页面支持时间、用户、意图、风险、确认状态和结果筛选入口，日志行展示校区、用户、原始输入、风险、确认状态与执行/拒绝/失败结果。查询投影复用 `canAccessCampus`，校区管理员只能看到授权校区日志，老师等非管理角色不能查看 AI 操作日志。管理端侧边栏新增“AI 操作日志”入口。  
+  **TDD 记录：** 先新增 `tests/unit/admin-ai-action-logs.test.tsx` 并运行失败，失败原因为日志组件/domain helper 不存在；实现 domain 与组件后聚焦单测通过。随后新增 `tests/e2e/admin-ai-action-logs.spec.ts` 并确认 `/admin/ai-logs` 缺少页面失败；实现路由与导航后聚焦 E2E 通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/admin-ai-action-logs.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/admin-ai-action-logs.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 68 个文件/199 个测试，E2E 33 个测试）。  
+  **提交记录：** 已提交到本地 Git：`3165f07 feat(ai): add admin action logs page`；计划状态补充提交待完成；GitHub push 待完成。
 
 - [ ] M7-17 E2E：AI 确认与拒绝  
   **流程：** 家长请假确认、老师反馈草稿、管理员高风险拒绝。  
