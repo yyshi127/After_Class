@@ -952,9 +952,13 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/ai-command/teacher-feedback-draft.ts`，老师 AI `recordHomeworkFeedback` 可根据老师短句生成三类点评草稿，并复用 `canAccessStudent` 校验老师班级/校区授权；AI 反馈只生成 `draftSource: AI`、`publishStatus: DRAFT`、`publishedAt: null` 的可编辑草稿，默认 `publishBlocked: true`，不会自动发布给家长。新增 `tests/unit/teacher-feedback-draft-ai.test.ts` 覆盖三类点评生成、稀疏短句仍保持草稿、非授权学生拒绝。全量质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`。  
   **提交记录：** 已提交到本地 Git：`b2470c8 feat(ai): add teacher feedback draft`；计划状态补充提交 `16bb0a3 docs(plan): record M7-11 commit status`；GitHub push 已完成。
 
-- [ ] M7-12 老师 AI：圈错建议  
+- [x] M7-12 老师 AI：圈错建议  
   **内容：** 图片分析返回建议区域和置信度。  
-  **测试：** 老师确认前不进入错题本。
+  **测试：** 老师确认前不进入错题本。  
+  **完成记录：** 2026-05-03 新增 `domain/ai-command/teacher-mistake-suggestion.ts`，老师 AI `suggestMistakeAreas` 复用作业 AI 圈错 provider，对作业原图返回建议区域、学科、错因、置信度和人工确认提示；调用前复用 `canAccessStudent` 校验老师校区/班级授权，并校验作业记录与学生一致。AI 圈错结果只处于中风险确认草稿，`teacherConfirmedAreas` 默认为空，老师确认前不会进入错题本。  
+  **TDD 记录：** 先新增 `tests/unit/teacher-mistake-suggestion-ai.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/teacher-mistake-suggestion` 不存在；最小实现后聚焦测试通过。首次全量门禁 typecheck 发现 `teacherConfirmedAreas` 类型不能传入错题收录服务，已收敛为空元组以表达“确认前无可收录区域”，复跑全量门禁通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/teacher-mistake-suggestion-ai.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 64 个文件/189 个测试，E2E 31 个测试）。  
+  **提交记录：** 待提交。
 
 - [ ] M7-13 老师 AI：同类题生成  
   **内容：** 生成同类题草稿。  
