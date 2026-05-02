@@ -920,9 +920,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/guardian-attendance-query.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 58 个文件/173 个测试，E2E 31 个测试）。  
   **提交记录：** 已提交到本地 Git：`b9296a1 feat(ai): add guardian attendance query`；计划状态补充提交 `287e787 docs(plan): record M7-06 commit status`；GitHub push 已完成。
 
-- [ ] M7-07 家长 AI：查询作业  
+- [x] M7-07 家长 AI：查询作业  
   **内容：** 返回已发布作业状态、三类点评摘要。  
-  **测试：** 不返回未发布草稿。
+  **测试：** 不返回未发布草稿。  
+  **完成记录：** 2026-05-02 新增 `domain/ai-command/guardian-homework-query.ts`，家长 AI `queryHomework` 作为低风险查询，只基于 `getGuardianVisibleHomeworkFeedback` 返回授权绑定孩子的已发布作业状态、发布时间、作业完成、行为表现、知识掌握摘要；未发布草稿、其他孩子作业和老师内部草稿均不会出现在响应中。  
+  **TDD 记录：** 先新增 `tests/unit/guardian-homework-query.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/guardian-homework-query` 不存在；实现最小查询 service 后聚焦测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/guardian-homework-query.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 59 个文件/175 个测试，E2E 31 个测试）。  
+  **提交记录：** 待本轮提交。
 
 - [ ] M7-08 家长 AI：请假确认卡片  
   **内容：** 解析时间、学生、原因，确认后创建请假记录。  
