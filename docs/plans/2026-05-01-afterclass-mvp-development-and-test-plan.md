@@ -1026,7 +1026,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-03 新增 `AdminAiAssistantWorkspace` 管理端 AI 经营助手工作区，并接入 `/admin/ai-assistant`；页面包含对话区、管理端经营数据卡片、中风险确认卡片区、高风险拒绝卡片和快捷问题，保持 mental-health demo 软拟物风格。高风险“把欠费改成 0”仍明确拒绝并引导收费记录页人工复核，经营数据卡片标注仅管理端可见。  
   **TDD 记录：** 先新增 `tests/unit/admin-ai-assistant-ui.test.tsx` 并运行失败，失败原因为 `@/components/admin/admin-ai-assistant-workspace` 不存在；实现组件与页面接入后聚焦单测通过。随后新增 `tests/e2e/admin-ai-assistant-ui.spec.ts` 覆盖对话、数据卡片、确认卡片、拒绝卡片、快捷问题和 1440px 无横向溢出，聚焦 E2E 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/admin-ai-assistant-ui.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/admin-ai-assistant-ui.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 70 个文件/206 个测试，E2E 37 个测试）。预览已重启并验证 `http://127.0.0.1:8001/parent`、`/admin/settlements`、`/admin/ai-assistant` 均返回 200。  
-  **提交记录：** 已提交到本地 Git：`80439a1 feat(ui): improve admin AI assistant`；计划状态补充提交为当前 `docs(plan): record M8-03 commit status`；GitHub push 待完成。
+  **提交记录：** 已提交到本地 Git：`80439a1 feat(ui): improve admin AI assistant`；计划状态补充提交为当前 `docs(plan): record M8-03 commit status`；GitHub push 已完成。
 
 - [ ] M8-04 管理端资料管理 UI  
   **内容：** 校区、学生、班级、收费、日志。  
