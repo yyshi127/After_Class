@@ -95,6 +95,12 @@ enum FeedbackPublishStatus {
   PUBLISHED
 }
 
+enum MistakeCorrectionStatus {
+  PENDING_CORRECTION
+  CORRECTED
+  MASTERED
+}
+
 enum TeacherAttendanceStatus {
   CHECKED_IN    @map("已签到")
   CHECKED_OUT   @map("已签退")
@@ -156,6 +162,7 @@ model Campus {
   files PrivateFile[]
   homeworkReviews HomeworkReview[]
   feedbacks Feedback[]
+  mistakeBookItems MistakeBookItem[]
 
   @@index([status])
 }
@@ -176,6 +183,7 @@ model CustodyClass {
   teacherAttendanceRecords TeacherAttendance[]
   homeworkReviews HomeworkReview[]
   feedbacks Feedback[]
+  mistakeBookItems MistakeBookItem[]
 
   @@index([campusId])
   @@unique([campusId, name])
@@ -205,6 +213,7 @@ model Student {
   parentNotices ParentNotice[]
   homeworkReviews HomeworkReview[]
   feedbacks Feedback[]
+  mistakeBookItems MistakeBookItem[]
 
   @@index([campusId])
   @@index([classId])
@@ -346,6 +355,7 @@ model HomeworkReview {
   originalImage  PrivateFile   @relation("HomeworkOriginalImage", fields: [originalImageFileId], references: [id], onDelete: Restrict)
   correctedImage PrivateFile?  @relation("HomeworkCorrectedImage", fields: [correctedImageFileId], references: [id], onDelete: SetNull)
   feedbacks      Feedback[]
+  mistakeBookItems MistakeBookItem[]
 
   @@index([campusId])
   @@index([classId])
@@ -383,6 +393,40 @@ model Feedback {
   @@index([teacherUserId])
   @@index([homeworkReviewId])
   @@index([publishStatus])
+  @@index([createdAt])
+}
+
+model MistakeBookItem {
+  id               String                  @id @default(cuid())
+  campusId         String
+  classId          String?
+  studentId        String
+  homeworkReviewId String
+  sourceAreaId     String
+  subject          String
+  knowledgePoint   String
+  mistakeReason    String
+  imageRegion      Json
+  questionText     String?
+  correctionStatus MistakeCorrectionStatus @default(PENDING_CORRECTION)
+  aiConfidence     Float?
+  correctedAt      DateTime?
+  createdAt        DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
+
+  campus         Campus         @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  class          CustodyClass?  @relation(fields: [classId], references: [id], onDelete: SetNull)
+  student        Student        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  homeworkReview HomeworkReview @relation(fields: [homeworkReviewId], references: [id], onDelete: Cascade)
+
+  @@unique([homeworkReviewId, sourceAreaId])
+  @@index([campusId])
+  @@index([classId])
+  @@index([studentId])
+  @@index([homeworkReviewId])
+  @@index([subject])
+  @@index([knowledgePoint])
+  @@index([correctionStatus])
   @@index([createdAt])
 }
 
