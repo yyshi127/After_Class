@@ -652,9 +652,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/homework-correction-canvas.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-homework-correction.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 30 个文件/102 个测试，E2E 17 个测试）。  
   **提交记录：** 已提交并推送 GitHub：`ed1cb49 feat(homework): add correction canvas`。
 
-- [ ] M4-05 AI 圈错建议 service stub  
+- [x] M4-05 AI 圈错建议 service stub  
   **内容：** 返回建议区域、学科、错因、置信度；MVP 可先用 mock provider。  
-  **测试：** 低置信度提示老师手动确认。
+  **测试：** 低置信度提示老师手动确认。  
+  **完成记录：** 2026-05-02 新增 `domain/homework/ai-mistake-suggestion.ts` AI 圈错建议 service stub 与 `mock-mistake-suggestion` provider，返回建议区域、学科、错因、置信度、置信度等级和老师确认提示；所有 AI 建议均标记为需老师确认，低置信度区域单独提示老师手动确认或调整。  
+  **TDD 记录：** 先新增 `tests/unit/ai-mistake-suggestion.test.ts` 并运行失败，失败原因为 `@/domain/homework/ai-mistake-suggestion` 不存在；实现 mock provider/service 后同一测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/ai-mistake-suggestion.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 31 个文件/105 个测试，E2E 17 个测试）。  
+  **提交记录：** 待提交。
 
 - [ ] M4-06 老师确认/修改/忽略圈错区域  
   **内容：** 只有确认区域进入批改图和错题本。  
