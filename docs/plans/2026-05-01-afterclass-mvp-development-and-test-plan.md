@@ -1042,7 +1042,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-03 升级老师端今日托管工作台，补齐可访问的“今日托管学生列表” region、软拟物 AI 快捷录入卡片、44px 以上触控按钮，并保持拍照签到、服务到期提醒、校区/班级/托管类型筛选和老师负责范围隔离。老师端到期提醒继续只展示服务有效期/续费跟进，不展示余额、欠费、收入、老师课费或毛利。  
   **TDD 记录：** 先扩展 `tests/unit/teacher-today-custody.test.tsx` 与 `tests/e2e/teacher-today-custody.spec.ts`；聚焦单测 RED 失败于缺少“今日托管学生列表”和“老师 AI 快捷录入” region；最小实现 UI 后聚焦单测通过。首次聚焦 E2E 发现“待确认”文本与“查看待确认草稿”按钮重名导致 strict mode 冲突，已将次要按钮改为“查看草稿箱”后复跑通过。  
   **测试命令：** `npm run test:unit -- tests/unit/teacher-today-custody.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/teacher-today-custody.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 71 个文件/209 个测试，E2E 38 个测试）。  
-  **提交记录：** 已提交到本地 Git：`e17f11d feat(ui): improve teacher today custody`；计划状态补充提交待完成。
+  **提交记录：** 已提交并推送 GitHub：`e17f11d feat(ui): improve teacher today custody`；计划状态补充提交 `7579e08 docs(plan): record M8-05 completion`。
 
 - [ ] M8-06 老师端作业批改 UI  
   **内容：** 图片、圈错、三类点评、发布、练习单。  
