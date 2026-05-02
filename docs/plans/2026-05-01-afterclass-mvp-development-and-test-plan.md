@@ -878,7 +878,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 Prisma `AiActionLog` 模型、`AiIntent`、`AiRiskLevel`、`AiActionResultStatus` 枚举，并关联 `User.aiActionLogs`；新增 `domain/ai-command/ai-action-log.ts`，统一构造 AI 操作日志 payload，并提供 `withAiActionLogging` 包装器确保 AI 调用成功或失败都会持久化日志。  
   **TDD 记录：** 先新增 `tests/unit/ai-action-log.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/ai-action-log` 不存在；实现模型与 domain helper 后聚焦测试和 Prisma validate 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/ai-action-log.test.ts && npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 54 个文件/162 个测试）。  
-  **提交记录：** 本轮提交待生成。
+  **提交记录：** 已提交到本地 Git：`2998aab feat(ai): add action logging and provider foundation`；计划状态补充提交待生成。
 
 - [x] M7-02 创建 AiProvider 接口  
   **内容：** `generateJson`、`generateText`、`analyzeImage` 抽象。  
@@ -886,7 +886,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/ai-command/ai-provider.ts`，定义 `AiProvider` 的 `generateJson`、`generateText`、`analyzeImage` 三类可插拔能力，并提供记录调用参数的 `createMockAiProvider`，便于后续 AI Command Layer 在单元测试中不触碰外部 AI 服务。  
   **TDD 记录：** 先新增 `tests/unit/ai-provider.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/ai-provider` 不存在；实现接口与 mock provider 后聚焦测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/ai-provider.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 54 个文件/162 个测试）。  
-  **提交记录：** 本轮提交待生成。
+  **提交记录：** 已提交到本地 Git：`2998aab feat(ai): add action logging and provider foundation`；计划状态补充提交待生成。
 
 - [ ] M7-03 创建意图识别 schema  
   **内容：** 9 个 MVP 意图：queryAttendance、queryHomework、createLeaveRequest、queryBilling、sendTeacherMessage、recordHomeworkFeedback、suggestMistakeAreas、generateSimilarQuestions、queryClassSettlement。  
