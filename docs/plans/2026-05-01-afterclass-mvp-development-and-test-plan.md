@@ -946,9 +946,11 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/ai-command/guardian-service-validity-query.ts`，家长 AI 服务有效期查询复用 `getGuardianVisibleServiceValidity` 与绑定学生权限过滤，只返回学生、服务类型、有效期、安全状态文案和续费咨询说明；即使 AI entity 指定非绑定学生也返回空结果，不泄露服务有效期或财务信息。新增 `tests/unit/guardian-service-validity-query.test.ts` 覆盖响应不含 `amountDue`、`amountPaid`、`balanceAmount`、`debtAmount`、余额/欠费/应收/实收及代表性金额。全量质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`。  
   **提交记录：** 已提交到本地 Git：`94ea110 feat(ai): add guardian service validity query`；计划状态补充提交 `98519f4 docs(plan): record M7-10 commit status`；GitHub push 已完成。
 
-- [ ] M7-11 老师 AI：反馈草稿  
+- [x] M7-11 老师 AI：反馈草稿  
   **内容：** 根据老师短句生成三类点评草稿。  
-  **测试：** 默认草稿，不自动发布。
+  **测试：** 默认草稿，不自动发布。  
+  **完成记录：** 2026-05-02 新增 `domain/ai-command/teacher-feedback-draft.ts`，老师 AI `recordHomeworkFeedback` 可根据老师短句生成三类点评草稿，并复用 `canAccessStudent` 校验老师班级/校区授权；AI 反馈只生成 `draftSource: AI`、`publishStatus: DRAFT`、`publishedAt: null` 的可编辑草稿，默认 `publishBlocked: true`，不会自动发布给家长。新增 `tests/unit/teacher-feedback-draft-ai.test.ts` 覆盖三类点评生成、稀疏短句仍保持草稿、非授权学生拒绝。全量质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`。  
+  **提交记录：** 待本轮提交。
 
 - [ ] M7-12 老师 AI：圈错建议  
   **内容：** 图片分析返回建议区域和置信度。  
