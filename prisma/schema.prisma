@@ -1,0 +1,384 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  CAMPUS_ADMIN
+  ADMIN
+  TEACHER
+  ASSISTANT
+  GUARDIAN
+  STUDENT
+}
+
+enum ServiceType {
+  LUNCH_CARE     @map("中午托")
+  AFTERNOON_CARE @map("下午托")
+  EVENING_TUTOR  @map("晚辅导")
+  FULL_EVENING   @map("晚全托")
+}
+
+enum StudentStatus {
+  ACTIVE
+  PAUSED
+  LEFT
+}
+
+enum CampusStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum AuditAction {
+  VIEW_SENSITIVE_IDENTITY
+  EXPORT_SENSITIVE_DATA
+  UPDATE_BILLING
+}
+
+enum AttendanceStatus {
+  ARRIVED           @map("已到")
+  LEAVE_REQUESTED   @map("请假")
+  ABSENT            @map("缺勤")
+  LATE              @map("迟到")
+  DEPARTED          @map("已离托")
+  PENDING_CONFIRM   @map("待确认")
+}
+
+enum AttendanceMatchStatus {
+  MATCHED
+  PENDING_CONFIRMATION
+  FAILED
+}
+
+enum AttendanceNotificationStatus {
+  PENDING
+  SENT
+  SUPPRESSED
+  FAILED
+}
+
+enum FileVisibility {
+  PRIVATE
+}
+
+enum NoticePushStatus {
+  PENDING
+  SENT
+  SUPPRESSED
+  FAILED
+}
+
+enum TeacherAttendanceStatus {
+  CHECKED_IN    @map("已签到")
+  CHECKED_OUT   @map("已签退")
+  LATE          @map("迟到")
+  EARLY_LEAVE   @map("早退")
+  LEAVE         @map("请假")
+  ABSENT        @map("缺勤")
+  MAKEUP        @map("补签")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  phone         String?   @unique
+  image         String?
+  passwordHash  String?
+  role          Role
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts           Account[]
+  sessions           Session[]
+  students           Student[]
+  guardianStudents   GuardianStudent[]
+  teacherAssignments TeacherAssignment[]
+  taughtAttendanceRecords AttendanceRecord[] @relation("AttendanceTeacher")
+  teacherAttendanceRecords TeacherAttendance[] @relation("TeacherAttendanceTeacher")
+  teacherAttendanceMakeups TeacherAttendance[] @relation("TeacherAttendanceMakeupActor")
+  uploadedFiles      PrivateFile[] @relation("PrivateFileUploader")
+  parentNotices      ParentNotice[] @relation("ParentNoticeGuardian")
+  auditLogs          AuditLog[]
+
+  @@index([role])
+  @@index([isActive])
+}
+
+model Campus {
+  id                    String       @id @default(cuid())
+  name                  String
+  address               String
+  phone                 String
+  principalName         String
+  status                CampusStatus @default(ACTIVE)
+  serviceHours          String
+  supportedServiceTypes ServiceType[]
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+
+  classes  CustodyClass[]
+  students Student[]
+  teacherAssignments TeacherAssignment[]
+  attendanceRecords AttendanceRecord[]
+  teacherAttendanceRecords TeacherAttendance[]
+  files PrivateFile[]
+
+  @@index([status])
+}
+
+model CustodyClass {
+  id        String   @id @default(cuid())
+  campusId  String
+  grade     String
+  name      String
+  capacity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  campus   Campus    @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  students Student[]
+  teacherAssignments TeacherAssignment[]
+  attendanceRecords AttendanceRecord[]
+  teacherAttendanceRecords TeacherAttendance[]
+
+  @@index([campusId])
+  @@unique([campusId, name])
+}
+
+model Student {
+  id             String        @id @default(cuid())
+  userId         String?
+  name           String
+  identityNumber String?
+  school         String
+  grade          String
+  campusId       String
+  classId        String?
+  serviceType    ServiceType
+  status         StudentStatus @default(ACTIVE)
+  safetyNote     String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  user   User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  campus Campus        @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  class  CustodyClass? @relation(fields: [classId], references: [id], onDelete: SetNull)
+  guardians GuardianStudent[]
+  attendanceRecords AttendanceRecord[]
+  files PrivateFile[]
+  parentNotices ParentNotice[]
+
+  @@index([campusId])
+  @@index([classId])
+  @@index([serviceType])
+  @@index([status])
+}
+
+model GuardianStudent {
+  id             String   @id @default(cuid())
+  guardianUserId String
+  studentId      String
+  relationship   String
+  phone          String
+  notifyEnabled  Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  guardian User    @relation(fields: [guardianUserId], references: [id], onDelete: Cascade)
+  student  Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([guardianUserId, studentId])
+  @@index([studentId])
+}
+
+model TeacherAssignment {
+  id            String   @id @default(cuid())
+  teacherUserId String
+  campusId      String
+  classId       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  teacher User          @relation(fields: [teacherUserId], references: [id], onDelete: Cascade)
+  campus  Campus        @relation(fields: [campusId], references: [id], onDelete: Cascade)
+  class   CustodyClass? @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@unique([teacherUserId, campusId, classId])
+  @@index([campusId])
+  @@index([classId])
+}
+
+model AuditLog {
+  id          String      @id @default(cuid())
+  actorUserId String
+  action      AuditAction
+  targetType  String
+  targetId    String
+  reason      String?
+  metadata    Json?
+  createdAt   DateTime    @default(now())
+
+  actor User @relation(fields: [actorUserId], references: [id], onDelete: Restrict)
+
+  @@index([actorUserId])
+  @@index([action])
+  @@index([targetType, targetId])
+  @@index([createdAt])
+}
+
+model AttendanceRecord {
+  id                 String                       @id @default(cuid())
+  campusId           String
+  classId            String?
+  studentId          String
+  teacherUserId      String?
+  serviceType        ServiceType
+  status             AttendanceStatus
+  checkedAt          DateTime?
+  photoFileId        String?
+  matchStatus        AttendanceMatchStatus        @default(PENDING_CONFIRMATION)
+  notificationStatus AttendanceNotificationStatus @default(SUPPRESSED)
+  createdAt          DateTime                     @default(now())
+  updatedAt          DateTime                     @updatedAt
+
+  campus  Campus        @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  class   CustodyClass? @relation(fields: [classId], references: [id], onDelete: SetNull)
+  student Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher User?         @relation("AttendanceTeacher", fields: [teacherUserId], references: [id], onDelete: SetNull)
+  parentNotices ParentNotice[]
+
+  @@index([campusId])
+  @@index([classId])
+  @@index([studentId])
+  @@index([teacherUserId])
+  @@index([status])
+  @@index([matchStatus])
+  @@index([notificationStatus])
+  @@index([checkedAt])
+}
+
+model PrivateFile {
+  id               String         @id @default(cuid())
+  campusId         String
+  studentId        String?
+  uploadedByUserId String
+  originalName     String
+  storageKey       String         @unique
+  mimeType         String
+  byteSize         Int
+  purpose          String
+  visibility       FileVisibility @default(PRIVATE)
+  createdAt        DateTime       @default(now())
+
+  campus     Campus   @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  student    Student? @relation(fields: [studentId], references: [id], onDelete: SetNull)
+  uploadedBy User     @relation("PrivateFileUploader", fields: [uploadedByUserId], references: [id], onDelete: Restrict)
+  parentNotices ParentNotice[]
+
+  @@index([campusId])
+  @@index([studentId])
+  @@index([uploadedByUserId])
+  @@index([purpose])
+  @@index([createdAt])
+}
+
+model ParentNotice {
+  id                 String           @id @default(cuid())
+  campusId           String
+  guardianUserId     String
+  studentId          String
+  attendanceRecordId String?
+  photoFileId        String?
+  type               String
+  title              String
+  message            String
+  pushStatus         NoticePushStatus @default(PENDING)
+  createdAt          DateTime         @default(now())
+  sentAt             DateTime?
+
+  guardian         User              @relation("ParentNoticeGuardian", fields: [guardianUserId], references: [id], onDelete: Cascade)
+  student          Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  attendanceRecord AttendanceRecord? @relation(fields: [attendanceRecordId], references: [id], onDelete: SetNull)
+  photoFile        PrivateFile?      @relation(fields: [photoFileId], references: [id], onDelete: SetNull)
+
+  @@index([campusId])
+  @@index([guardianUserId])
+  @@index([studentId])
+  @@index([attendanceRecordId])
+  @@index([pushStatus])
+  @@index([createdAt])
+}
+
+model TeacherAttendance {
+  id             String                  @id @default(cuid())
+  teacherUserId  String
+  campusId       String
+  classId        String?
+  status         TeacherAttendanceStatus
+  checkedInAt    DateTime?
+  checkedOutAt   DateTime?
+  makeupByUserId String?
+  makeupReason   String?
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+
+  teacher      User          @relation("TeacherAttendanceTeacher", fields: [teacherUserId], references: [id], onDelete: Cascade)
+  campus       Campus        @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  class        CustodyClass? @relation(fields: [classId], references: [id], onDelete: SetNull)
+  makeupByUser User?         @relation("TeacherAttendanceMakeupActor", fields: [makeupByUserId], references: [id], onDelete: SetNull)
+
+  @@index([teacherUserId])
+  @@index([campusId])
+  @@index([classId])
+  @@index([status])
+  @@index([checkedInAt])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refreshToken      String?
+  accessToken       String?
+  expiresAt         Int?
+  tokenType         String?
+  scope             String?
+  idToken           String?
+  sessionState      String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}

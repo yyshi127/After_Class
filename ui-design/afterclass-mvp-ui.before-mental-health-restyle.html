@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智能晚辅托管系统 MVP 产品级 UI 设计稿</title>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --bg-soft: #eef6fa;
+      --surface: #ffffff;
+      --surface-tint: #f8fbff;
+      --primary: #3f7ee8;
+      --primary-deep: #2459b8;
+      --primary-soft: #dceaff;
+      --ai: #3bb7a8;
+      --ai-soft: #dff8f4;
+      --mint: #c9f0e7;
+      --lavender: #ede7ff;
+      --peach: #ffe8dd;
+      --sky: #dff1ff;
+      --warning: #f59e0b;
+      --warning-soft: #fff4d7;
+      --danger: #e5484d;
+      --danger-soft: #ffe5e7;
+      --success: #16a672;
+      --success-soft: #def8ec;
+      --text: #172033;
+      --muted: #68758a;
+      --subtle: #93a0b4;
+      --line: #dbe5f0;
+      --shadow: 12px 12px 30px rgba(108, 128, 154, 0.16), -10px -10px 26px rgba(255,255,255,0.9);
+      --shadow-sm: 5px 5px 14px rgba(108, 128, 154, 0.12), -5px -5px 14px rgba(255,255,255,0.95);
+      --inset: inset 4px 4px 10px rgba(118, 139, 165, 0.16), inset -5px -5px 12px rgba(255,255,255,0.95);
+      --radius-lg: 28px;
+      --radius: 18px;
+      --radius-sm: 12px;
+      --font: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", Inter, system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(201,240,231,.9), transparent 34%),
+        radial-gradient(circle at 84% 4%, rgba(237,231,255,.95), transparent 30%),
+        linear-gradient(135deg, #f8fbff 0%, #eef7f7 52%, #f7f2ff 100%);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.45;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    .design-shell { display: grid; grid-template-columns: 280px minmax(0, 1fr); min-height: 100vh; }
+    .toc {
+      position: sticky; top: 0; height: 100vh; padding: 28px 20px; overflow: auto;
+      background: rgba(255,255,255,.72); backdrop-filter: blur(20px); border-right: 1px solid rgba(219,229,240,.7);
+    }
+    .brand { display: flex; gap: 12px; align-items: center; margin-bottom: 28px; }
+    .logo {
+      width: 44px; height: 44px; border-radius: 15px; display: grid; place-items: center;
+      background: linear-gradient(145deg, #eaf3ff, #fff); box-shadow: var(--shadow-sm); color: var(--primary);
+    }
+    .logo svg, .ico svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .brand h1 { font-size: 16px; margin: 0; letter-spacing: -.02em; }
+    .brand p { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
+    .toc a {
+      display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 9px 12px; margin: 5px 0;
+      border-radius: 14px; color: #4c5b72; font-size: 13px;
+    }
+    .toc a:hover { background: #edf6ff; color: var(--primary-deep); }
+    .toc .section-label { margin: 20px 10px 8px; font-size: 11px; color: var(--subtle); font-weight: 800; letter-spacing: .08em; }
+    .main { padding: 34px; overflow: hidden; }
+    .hero { display: grid; grid-template-columns: minmax(0,1.1fr) .9fr; gap: 24px; align-items: stretch; margin-bottom: 34px; }
+    .hero-card, .panel, .frame, .mobile-frame, .token-card {
+      background: rgba(255,255,255,.82); border: 1px solid rgba(255,255,255,.9); box-shadow: var(--shadow); border-radius: var(--radius-lg);
+    }
+    .hero-card { padding: 34px; position: relative; overflow: hidden; }
+    .hero-card::after { content:""; position:absolute; width:240px; height:240px; right:-70px; top:-70px; border-radius:50%; background: radial-gradient(circle, rgba(63,126,232,.22), transparent 68%); }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background: var(--ai-soft); color:#087568; font-size:12px; font-weight:800; }
+    .hero h2 { font-size: 38px; line-height: 1.08; letter-spacing: -.04em; margin: 18px 0 12px; max-width: 790px; }
+    .hero p { color: var(--muted); font-size: 15px; max-width: 760px; margin: 0 0 22px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; }
+    .btn { border:0; min-height:42px; padding:0 16px; border-radius: 14px; display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:800; cursor:pointer; }
+    .btn-primary { background: linear-gradient(145deg, var(--primary), #62a1ff); color:#fff; box-shadow: 0 10px 24px rgba(63,126,232,.28); }
+    .btn-ai { background: linear-gradient(145deg, var(--ai), #72d8ca); color:#073f3a; box-shadow: 0 10px 24px rgba(59,183,168,.24); }
+    .btn-soft { background: #f4f8fb; color:#38506f; box-shadow: var(--shadow-sm); }
+    .btn-outline { background:#fff; border:1px solid var(--line); color:#36506c; }
+    .mini-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:14px; padding:20px; }
+    .mini-stat { padding:18px; border-radius:20px; background:linear-gradient(145deg,#fff,#f5fbff); box-shadow:var(--shadow-sm); }
+    .mini-stat b { display:block; font-size:26px; letter-spacing:-.04em; }
+    .mini-stat span { color:var(--muted); font-size:12px; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:16px; margin: 30px 0 18px; }
+    .section-head h2 { margin:0; font-size:26px; letter-spacing:-.03em; }
+    .section-head p { margin:5px 0 0; color:var(--muted); font-size:14px; max-width:760px; }
+    .page-grid { display:grid; gap:22px; }
+    .page-grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .page-grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .frame { overflow:hidden; min-height: 610px; }
+    .frame-bar { height:46px; display:flex; align-items:center; justify-content:space-between; padding:0 18px; background: rgba(248,251,255,.85); border-bottom:1px solid var(--line); }
+    .frame-title { font-size:13px; font-weight:900; color:#2a3b52; display:flex; align-items:center; gap:8px; }
+    .dots { display:flex; gap:6px; } .dots i { width:9px; height:9px; border-radius:99px; background:#cbd7e6; display:block; } .dots i:nth-child(1){background:#ffb4b4}.dots i:nth-child(2){background:#ffd77b}.dots i:nth-child(3){background:#94deb5}
+    .app { display:grid; grid-template-columns: 190px minmax(0,1fr); min-height:560px; background:#f7fbff; }
+    .side { padding:18px 12px; border-right:1px solid var(--line); background:linear-gradient(180deg,#ffffff,#f2f8ff); }
+    .side .org { display:flex; align-items:center; gap:10px; padding:10px; margin-bottom:12px; }
+    .avatar { width:34px; height:34px; border-radius:12px; background:linear-gradient(145deg,var(--primary-soft),#fff); display:grid; place-items:center; color:var(--primary-deep); font-weight:900; }
+    .navitem { min-height:36px; border-radius:12px; display:flex; align-items:center; gap:9px; padding:0 10px; margin:4px 0; color:#58677c; font-size:12px; font-weight:700; }
+    .navitem.active { background:#eaf3ff; color:var(--primary-deep); box-shadow: inset 0 0 0 1px #d7e8ff; }
+    .content { padding:18px; min-width:0; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px; }
+    .title h3 { margin:0; font-size:20px; letter-spacing:-.02em; }
+    .title p { margin:3px 0 0; color:var(--muted); font-size:12px; }
+    .chips { display:flex; gap:8px; flex-wrap:wrap; }
+    .chip { min-height:30px; padding:0 10px; border-radius:999px; display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid var(--line); color:#526277; font-size:12px; font-weight:700; }
+    .chip.primary { background:var(--primary-soft); color:var(--primary-deep); border-color:#c9defe; }
+    .chip.ai { background:var(--ai-soft); color:#087568; border-color:#bceee5; }
+    .kpis { display:grid; grid-template-columns: repeat(4,1fr); gap:12px; margin-bottom:14px; }
+    .kpi { padding:14px; border-radius:18px; background:#fff; box-shadow:var(--shadow-sm); border:1px solid rgba(255,255,255,.9); }
+    .kpi span { color:var(--muted); font-size:11px; font-weight:800; }
+    .kpi b { display:block; margin-top:4px; font-size:24px; letter-spacing:-.04em; }
+    .kpi small { color:var(--success); font-weight:800; font-size:11px; }
+    .card-grid { display:grid; grid-template-columns: 1.2fr .8fr; gap:14px; }
+    .card { background:#fff; border:1px solid rgba(219,229,240,.8); border-radius:20px; padding:16px; box-shadow: var(--shadow-sm); min-width:0; }
+    .card h4 { margin:0 0 10px; font-size:14px; letter-spacing:-.01em; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid #edf2f7; font-size:12px; }
+    .row:last-child { border-bottom:0; }
+    .row strong { color:#25344a; }
+    .row span { color:var(--muted); }
+    .progress { height:8px; border-radius:999px; background:#e8eef6; overflow:hidden; }
+    .progress i { display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,var(--primary),var(--ai)); }
+    .timeline { display:grid; gap:10px; }
+    .event { display:grid; grid-template-columns:32px 1fr; gap:10px; align-items:start; }
+    .event .dot { width:30px; height:30px; border-radius:12px; background:#eef6ff; color:var(--primary); display:grid; place-items:center; }
+    .event b { font-size:12px; } .event p { margin:2px 0 0; color:var(--muted); font-size:11px; }
+    .table { width:100%; border-collapse:separate; border-spacing:0 8px; font-size:12px; }
+    .table th { text-align:left; color:var(--subtle); font-size:11px; padding:0 10px; }
+    .table td { background:#fff; padding:10px; border-top:1px solid #edf2f7; border-bottom:1px solid #edf2f7; }
+    .table td:first-child { border-left:1px solid #edf2f7; border-radius:12px 0 0 12px; font-weight:800; }
+    .table td:last-child { border-right:1px solid #edf2f7; border-radius:0 12px 12px 0; }
+    .status { display:inline-flex; min-height:24px; align-items:center; border-radius:999px; padding:0 8px; font-size:11px; font-weight:900; }
+    .status.ok { background:var(--success-soft); color:#0c7651; }
+    .status.warn { background:var(--warning-soft); color:#9a5b00; }
+    .status.bad { background:var(--danger-soft); color:#b4232a; }
+    .status.info { background:var(--primary-soft); color:var(--primary-deep); }
+    .ai-box { background:linear-gradient(145deg,#f4fffd,#ffffff); border:1px solid #c9f0e7; border-radius:20px; padding:14px; box-shadow:0 0 0 4px rgba(59,183,168,.05), var(--shadow-sm); }
+    .ai-input { min-height:46px; border-radius:16px; background:#f4fafb; box-shadow:var(--inset); display:flex; align-items:center; justify-content:space-between; padding:0 12px; color:var(--muted); font-size:12px; }
+    .chat { display:grid; grid-template-columns: 170px 1fr 200px; min-height:560px; }
+    .chat-list { padding:14px; border-right:1px solid var(--line); background:#fbfdff; }
+    .conversation { padding:16px; background:#f7fbff; display:flex; flex-direction:column; gap:12px; }
+    .bubble { max-width:78%; padding:12px 14px; border-radius:18px; font-size:12px; box-shadow:var(--shadow-sm); }
+    .bubble.user { align-self:flex-end; background:var(--primary); color:#fff; border-bottom-right-radius:6px; }
+    .bubble.ai { align-self:flex-start; background:#fff; border-bottom-left-radius:6px; }
+    .confirm { background:#fff; border:1px solid #c9f0e7; border-radius:18px; padding:14px; box-shadow:var(--shadow-sm); max-width:86%; }
+    .confirm h4 { margin:0 0 8px; color:#087568; }
+    .confirm dl { display:grid; grid-template-columns:70px 1fr; gap:6px; margin:0 0 12px; font-size:12px; }
+    .confirm dt { color:var(--muted); } .confirm dd { margin:0; font-weight:800; }
+    .right-rail { padding:14px; border-left:1px solid var(--line); background:#fbfdff; }
+    .teacher-app { grid-template-columns: 1fr; }
+    .teacher-toolbar { display:grid; grid-template-columns: 1fr auto; gap:12px; align-items:center; margin-bottom:14px; }
+    .student-list { display:grid; gap:10px; }
+    .student-row { display:grid; grid-template-columns: 1.2fr repeat(4, .7fr) auto; gap:10px; align-items:center; background:#fff; border:1px solid #edf2f7; border-radius:18px; padding:12px; box-shadow:var(--shadow-sm); font-size:12px; }
+    .student-name { display:flex; align-items:center; gap:10px; font-weight:900; }
+    .photo-card { height:138px; border-radius:18px; background:linear-gradient(135deg,#eef6ff,#fff7f0); border:1px dashed #a8c5e8; display:grid; place-items:center; color:#55708c; font-size:12px; text-align:center; }
+    .review-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .annotation { position:relative; height:260px; border-radius:20px; background:linear-gradient(135deg,#fff,#eef6ff); box-shadow:var(--inset); overflow:hidden; }
+    .annotation .paper { position:absolute; inset:24px; background:#fff; border-radius:12px; transform:rotate(-2deg); border:1px solid #e6edf5; }
+    .mark { position:absolute; border:3px solid var(--danger); border-radius:999px; width:92px; height:40px; left:80px; top:100px; transform:rotate(-9deg); }
+    .mark.two { width:70px; height:34px; left:190px; top:155px; transform:rotate(6deg); border-color:var(--warning); }
+    .mobile-gallery { display:flex; gap:22px; flex-wrap:wrap; align-items:flex-start; }
+    .mobile-frame { width: 390px; min-height: 820px; padding:12px; background:linear-gradient(145deg,#fff,#f6fbff); }
+    .phone { min-height:790px; border-radius:34px; overflow:hidden; background:#f5f9fb; border:1px solid #e3edf7; position:relative; }
+    .phone-head { height:66px; padding:16px 18px 8px; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,.86); border-bottom:1px solid #e6eef6; }
+    .phone-title b { font-size:17px; } .phone-title p { margin:2px 0 0; font-size:11px; color:var(--muted); }
+    .phone-body { padding:16px 16px 88px; display:grid; gap:14px; }
+    .bottom-nav { position:absolute; left:12px; right:12px; bottom:12px; height:64px; background:rgba(255,255,255,.92); border:1px solid #e7eef7; border-radius:24px; display:grid; grid-template-columns: repeat(4,1fr); padding:7px; box-shadow: 0 16px 34px rgba(90,111,133,.18); }
+    .tab { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; color:#7b8797; font-size:10px; font-weight:800; border-radius:18px; }
+    .tab.active { background:#eaf3ff; color:var(--primary-deep); }
+    .safe-card { padding:18px; border-radius:26px; background:linear-gradient(145deg,#ffffff,#eef8ff); box-shadow:var(--shadow-sm); border:1px solid #fff; }
+    .safe-card h3 { margin:0; font-size:22px; letter-spacing:-.03em; }
+    .safe-card p { margin:6px 0 0; color:var(--muted); font-size:13px; }
+    .photo-thumb { height:150px; border-radius:22px; background:linear-gradient(135deg,#dff1ff,#ffe8dd); display:grid; place-items:center; color:#426380; font-weight:800; }
+    .homework-card { padding:14px; border-radius:22px; background:#fff; box-shadow:var(--shadow-sm); }
+    .comment-grid { display:grid; gap:8px; }
+    .comment { padding:12px; border-radius:16px; background:#f7fbff; border:1px solid #e6eef6; }
+    .comment b { font-size:12px; } .comment p { margin:3px 0 0; font-size:12px; color:var(--muted); }
+    .mobile-chat { display:flex; flex-direction:column; gap:12px; min-height:520px; }
+    .input-dock { position:absolute; left:12px; right:12px; bottom:86px; min-height:56px; background:#fff; border:1px solid #e6eef6; box-shadow:var(--shadow-sm); border-radius:22px; display:flex; align-items:center; gap:10px; padding:8px 10px; color:var(--muted); font-size:12px; }
+    .tokens { display:grid; grid-template-columns: repeat(4,1fr); gap:14px; }
+    .token-card { padding:18px; border-radius:22px; }
+    .swatch { height:56px; border-radius:18px; margin-bottom:10px; box-shadow:var(--shadow-sm); }
+    .icon-grid { display:grid; grid-template-columns: repeat(6,1fr); gap:12px; }
+    .ico-card { background:#fff; border-radius:18px; padding:14px; text-align:center; box-shadow:var(--shadow-sm); color:#38506f; font-size:11px; font-weight:800; }
+    .ico { width:38px; height:38px; display:grid; place-items:center; margin:0 auto 8px; border-radius:14px; background:#f0f7ff; color:var(--primary); }
+    .note { padding:14px 16px; background:#fffdf4; border:1px solid #ffe5a6; color:#765411; border-radius:18px; font-size:13px; }
+
+    @media (max-width: 1100px) {
+      .design-shell { grid-template-columns:1fr; }
+      .toc { position:relative; height:auto; }
+      .hero, .page-grid.two, .page-grid.three, .tokens { grid-template-columns:1fr; }
+      .app, .chat { grid-template-columns:1fr; }
+      .side, .chat-list, .right-rail { display:none; }
+      .kpis { grid-template-columns:repeat(2,1fr); }
+      .card-grid, .review-grid { grid-template-columns:1fr; }
+      .student-row { grid-template-columns:1fr; }
+      .mobile-frame { width:100%; max-width:390px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="design-shell">
+    <aside class="toc">
+      <div class="brand">
+        <div class="logo"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 12h8M9 16h6M9 8h.01M15 8h.01"/></svg></div>
+        <div><h1>晚辅托管 MVP UI</h1><p>产品级界面设计稿</p></div>
+      </div>
+      <div class="section-label">DESIGN</div>
+      <a href="#overview">设计总览</a>
+      <a href="#system">设计系统</a>
+      <div class="section-label">ADMIN</div>
+      <a href="#admin-dashboard">管理端首页看板</a>
+      <a href="#admin-ai">AI 经营助手</a>
+      <a href="#admin-data">校区/学生/核算/日志</a>
+      <div class="section-label">TEACHER</div>
+      <a href="#teacher-today">老师今日托管</a>
+      <a href="#teacher-review">作业批改与点评</a>
+      <div class="section-label">MOBILE</div>
+      <a href="#parent">家长端 H5</a>
+      <a href="#student">学生端 H5</a>
+      <div class="section-label">STATES</div>
+      <a href="#states">关键状态与确认卡片</a>
+    </aside>
+
+    <main class="main">
+      <section class="hero" id="overview">
+        <div class="hero-card">
+          <span class="eyebrow">UI/UX Pro Max · Soft Neumorphism · 商用 MVP</span>
+          <h2>智能晚辅托管系统：覆盖 MVP 全链路的高质量 UI 设计稿</h2>
+          <p>参考 mental-health demo 的“安静、柔和、可信赖”视觉语言，转译为教育托管 SaaS：浅色柔和背景、轻拟物卡片、清晰数据密度、克制 AI 高亮。所有页面使用真实业务字段与示例数据，可直接拆解为 Next.js + Tailwind + shadcn/ui 前端页面。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#admin-dashboard">查看管理端</a>
+            <a class="btn btn-ai" href="#parent">查看移动端</a>
+            <a class="btn btn-soft" href="#system">设计规范</a>
+          </div>
+          <div class="note" style="margin-top:22px">设计原则：家长安心、老师高效、校长看清核算、AI 全程可确认可审计；不是营销页，也不是概念图。</div>
+        </div>
+        <div class="hero-card mini-grid">
+          <div class="mini-stat"><span>MVP 页面覆盖</span><b>18+</b><span>管理端 / 老师端 / 家长端 / 学生端</span></div>
+          <div class="mini-stat"><span>固定托管类型</span><b>4</b><span>中午托 / 下午托 / 晚辅导 / 晚全托</span></div>
+          <div class="mini-stat"><span>AI 必做意图</span><b>9</b><span>查询、确认、圈错、同类题、核算</span></div>
+          <div class="mini-stat"><span>核心安全规则</span><b>100%</b><span>写入确认，高风险拒绝</span></div>
+        </div>
+      </section>
+
+      <section id="system">
+        <div class="section-head"><div><h2>设计系统</h2><p>基于 UI/UX Pro Max 的 Soft UI Evolution + Neumorphism：保留柔和疗愈感，但提升对比度和管理效率，适合商用教育 SaaS。</p></div></div>
+        <div class="tokens">
+          <div class="token-card"><div class="swatch" style="background:#3f7ee8"></div><b>Primary #3F7EE8</b><p>主按钮、选中态、管理端关键路径。</p></div>
+          <div class="token-card"><div class="swatch" style="background:#3bb7a8"></div><b>AI / Success #3BB7A8</b><p>AI 输入、确认草稿、积极状态。</p></div>
+          <div class="token-card"><div class="swatch" style="background:#f59e0b"></div><b>Warning #F59E0B</b><p>待确认、到期、低置信度。</p></div>
+          <div class="token-card"><div class="swatch" style="background:#e5484d"></div><b>Danger #E5484D</b><p>缺勤、异常、高风险拒绝。</p></div>
+        </div>
+        <div class="section-head"><div><h2>线性图标规范</h2><p>不使用 emoji 作为结构图标，统一使用 2px stroke 的线性 SVG，保证专业感和可转前端。</p></div></div>
+        <div class="icon-grid">
+          <div class="ico-card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 19V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v11"/><path d="M8 6V4h8v2M7 12h10M7 16h6"/></svg></div>校区</div>
+          <div class="ico-card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-8 0v2"/><circle cx="12" cy="7" r="4"/></svg></div>学生</div>
+          <div class="ico-card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg></div>考勤</div>
+          <div class="ico-card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div>作业</div>
+          <div class="ico-card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg></div>收费</div>
+          <div class="ico-card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2"/></svg></div>AI</div>
+        </div>
+      </section>
+
+      <section id="admin-dashboard">
+        <div class="section-head"><div><h2>管理端：首页看板</h2><p>总校长/校区管理员打开系统后的核心页面：校区筛选、今日到托、作业、收费、老师课费、班级毛利和风险预警。</p></div><span class="chip primary">1440px Desktop</span></div>
+        <div class="frame">
+          <div class="frame-bar"><div class="frame-title"><span>管理端 / 首页看板</span></div><div class="dots"><i></i><i></i><i></i></div></div>
+          <div class="app">
+            <aside class="side">
+              <div class="org"><div class="avatar">托</div><div><b>青禾托管</b><p style="margin:2px 0 0;color:var(--muted);font-size:11px">总校区视图</p></div></div>
+              <div class="navitem active">首页看板</div><div class="navitem">AI 经营助手</div><div class="navitem">校区管理</div><div class="navitem">学生与班级</div><div class="navitem">考勤/作业</div><div class="navitem">收费与核算</div><div class="navitem">AI 操作日志</div><div class="navitem">系统设置</div>
+            </aside>
+            <section class="content">
+              <div class="topbar">
+                <div class="title"><h3>今日运营总览</h3><p>2026-05-01 周五 · 数据每 5 分钟更新</p></div>
+                <div class="chips"><span class="chip primary">全部校区</span><span class="chip">城东校区</span><span class="chip">城西校区</span><button class="btn btn-ai">问 AI 经营助手</button></div>
+              </div>
+              <div class="kpis">
+                <div class="kpi"><span>今日应到</span><b>186</b><small>实到 169 · 90.8%</small></div>
+                <div class="kpi"><span>作业待反馈</span><b>24</b><small style="color:var(--warning)">2 个班级偏慢</small></div>
+                <div class="kpi"><span>7 天内到期</span><b>18</b><small style="color:var(--warning)">月缴 13 · 学期缴 5</small></div>
+                <div class="kpi"><span>今日预估毛利</span><b>¥8,420</b><small>较昨日 +6.4%</small></div>
+              </div>
+              <div class="card-grid">
+                <div class="card"><h4>校区运营走势 <span class="chip ai">AI 已生成摘要</span></h4><div style="height:190px;display:flex;align-items:end;gap:10px;padding:14px 4px 0"><span style="height:45%;flex:1;background:#dceaff;border-radius:12px"></span><span style="height:58%;flex:1;background:#dff8f4;border-radius:12px"></span><span style="height:72%;flex:1;background:#dceaff;border-radius:12px"></span><span style="height:64%;flex:1;background:#dff8f4;border-radius:12px"></span><span style="height:84%;flex:1;background:#3f7ee8;border-radius:12px"></span><span style="height:76%;flex:1;background:#dff8f4;border-radius:12px"></span><span style="height:90%;flex:1;background:#3bb7a8;border-radius:12px"></span></div></div>
+                <div class="ai-box"><h4>AI 今日摘要</h4><div class="timeline"><div class="event"><div class="dot">1</div><div><b>城东校区晚全托实到率较低</b><p>请假 5 人，缺勤 2 人，建议老师确认缺勤原因。</p></div></div><div class="event"><div class="dot">2</div><div><b>三年级 A 班反馈完成率 62%</b><p>还有 8 名学生未发布三类点评。</p></div></div><div class="event"><div class="dot">3</div><div><b>18 名学生服务即将到期</b><p>家长端仅提示有效期，催缴需人工沟通。</p></div></div></div></div>
+              </div>
+              <div class="card" style="margin-top:14px"><h4>待处理事项</h4><table class="table"><thead><tr><th>事项</th><th>校区</th><th>对象</th><th>风险</th><th>操作</th></tr></thead><tbody><tr><td>拍照签到待确认</td><td>城东</td><td>赵一鸣</td><td><span class="status warn">待确认</span></td><td>查看照片</td></tr><tr><td>作业反馈未发布</td><td>城西</td><td>三年级 A 班</td><td><span class="status info">提醒</span></td><td>催办老师</td></tr><tr><td>服务即将到期</td><td>城南</td><td>李雨桐</td><td><span class="status warn">7天内</span></td><td>生成跟进名单</td></tr></tbody></table></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="admin-ai">
+        <div class="section-head"><div><h2>管理端：AI 经营助手</h2><p>自然语言查询经营数据，但不允许修改收费金额、课费、学生状态或批量通知。高风险请求显示拒绝和传统页面引导。</p></div></div>
+        <div class="frame">
+          <div class="frame-bar"><div class="frame-title">管理端 / AI 经营助手</div><div class="dots"><i></i><i></i><i></i></div></div>
+          <div class="chat">
+            <aside class="chat-list"><div class="chip ai">新对话</div><div class="row"><strong>今天哪个班毛利最低？</strong></div><div class="row"><strong>生成今日托管日报</strong></div><div class="row"><strong>7 天内到期名单</strong></div></aside>
+            <section class="conversation">
+              <div class="bubble user">今天哪个班毛利最低？按校区给我看一下。</div>
+              <div class="bubble ai">已按你的总校长权限查询全部校区。今日毛利最低的是城西校区三年级 B 班，主要原因是请假人数较多、老师课费固定。</div>
+              <div class="card" style="max-width:92%"><h4>班级核算结果</h4><table class="table"><tbody><tr><td>城西 · 三年级 B</td><td>实到 18/27</td><td>收入 ¥2,340</td><td>课费 ¥1,220</td><td><span class="status warn">毛利 ¥1,120</span></td></tr><tr><td>城东 · 四年级 A</td><td>实到 24/28</td><td>收入 ¥3,120</td><td>课费 ¥1,280</td><td><span class="status ok">毛利 ¥1,840</span></td></tr></tbody></table></div>
+              <div class="bubble user">把城西校区所有欠费金额改成 0。</div>
+              <div class="confirm"><h4>高风险操作已拒绝</h4><p style="color:var(--muted);font-size:12px">AI 不能直接修改收费金额、余额/欠费或课费。请进入「收费与核算」页面，由管理员逐条确认修改并记录日志。</p><button class="btn btn-primary">前往收费与核算</button></div>
+              <div class="ai-input">输入经营问题，例如“生成今天托管日报” <button class="btn btn-ai">发送</button></div>
+            </section>
+            <aside class="right-rail"><div class="card"><h4>可用能力</h4><div class="chips"><span class="chip">校区汇总</span><span class="chip">班级毛利</span><span class="chip">到期名单</span><span class="chip">日报草稿</span></div></div><div class="card" style="margin-top:12px"><h4>权限说明</h4><p style="font-size:12px;color:var(--muted)">总校长可查全部校区；校区管理员仅查授权校区；老师只能查负责班级服务到期。</p></div></aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="admin-data">
+        <div class="section-head"><div><h2>管理端：校区 / 学生班级 / 收费核算 / AI 日志</h2><p>四个关键传统业务页面，保证 AI 之外的手工流程完整可用。</p></div></div>
+        <div class="page-grid two">
+          <div class="frame"><div class="frame-bar"><div class="frame-title">校区管理</div><div class="dots"><i></i><i></i><i></i></div></div><div class="content"><div class="topbar"><div class="title"><h3>校区档案</h3><p>多校区是 MVP 基础能力</p></div><button class="btn btn-primary">新建校区</button></div><table class="table"><thead><tr><th>校区</th><th>负责人</th><th>托管类型</th><th>状态</th></tr></thead><tbody><tr><td>城东校区</td><td>陈校长</td><td>中午托 / 晚全托</td><td><span class="status ok">启用</span></td></tr><tr><td>城西校区</td><td>周老师</td><td>下午托 / 晚辅导</td><td><span class="status ok">启用</span></td></tr><tr><td>城南校区</td><td>待分配</td><td>晚辅导</td><td><span class="status warn">待完善</span></td></tr></tbody></table><div class="card"><h4>校区权限</h4><p style="font-size:12px;color:var(--muted)">校区管理员只能访问授权校区数据；总校长可查看全部校区汇总。</p></div></div></div>
+          <div class="frame"><div class="frame-bar"><div class="frame-title">学生与班级管理</div><div class="dots"><i></i><i></i><i></i></div></div><div class="content"><div class="topbar"><div class="title"><h3>学生档案</h3><p>身份证号默认脱敏，完整查看记日志</p></div><button class="btn btn-primary">新增学生</button></div><div class="chips"><span class="chip primary">城东校区</span><span class="chip">晚全托</span><span class="chip">三年级 A 班</span></div><table class="table"><tbody><tr><td>张明</td><td>三年级</td><td>晚全托</td><td>身份证 3101********3218</td><td><span class="status ok">在读</span></td></tr><tr><td>李雨桐</td><td>二年级</td><td>晚辅导</td><td>3101********0892</td><td><span class="status warn">即将到期</span></td></tr><tr><td>王小雨</td><td>四年级</td><td>下午托</td><td>3101********7712</td><td><span class="status ok">在读</span></td></tr></tbody></table></div></div>
+          <div class="frame"><div class="frame-bar"><div class="frame-title">收费与班级核算</div><div class="dots"><i></i><i></i><i></i></div></div><div class="content"><div class="topbar"><div class="title"><h3>班级核算</h3><p>家长端不展示余额/欠费/毛利</p></div><span class="chip primary">按校区筛选</span></div><div class="kpis"><div class="kpi"><span>应收</span><b>¥42k</b></div><div class="kpi"><span>实收</span><b>¥39k</b></div><div class="kpi"><span>老师课费</span><b>¥11k</b></div><div class="kpi"><span>毛利</span><b>¥21k</b></div></div><table class="table"><tbody><tr><td>城东 · 晚全托</td><td>实到 58</td><td>收入 ¥8,640</td><td>课费 ¥2,300</td><td>毛利 ¥6,340</td></tr><tr><td>城西 · 晚辅导</td><td>实到 42</td><td>收入 ¥4,620</td><td>课费 ¥1,900</td><td>毛利 ¥2,720</td></tr></tbody></table></div></div>
+          <div class="frame"><div class="frame-bar"><div class="frame-title">AI 操作日志</div><div class="dots"><i></i><i></i><i></i></div></div><div class="content"><div class="topbar"><div class="title"><h3>AI 审计日志</h3><p>查询、识别、确认和执行结果可追溯</p></div><span class="chip ai">风险筛选</span></div><table class="table"><thead><tr><th>用户</th><th>意图</th><th>风险</th><th>确认</th><th>结果</th></tr></thead><tbody><tr><td>家长 王女士</td><td>createLeaveRequest</td><td><span class="status warn">中风险</span></td><td>已确认</td><td>成功</td></tr><tr><td>老师 刘老师</td><td>suggestMistakeAreas</td><td><span class="status warn">中风险</span></td><td>已修改</td><td>发布草稿</td></tr><tr><td>管理员 陈校长</td><td>modifyBilling</td><td><span class="status bad">高风险</span></td><td>未执行</td><td>已拒绝</td></tr></tbody></table></div></div>
+        </div>
+      </section>
+
+      <section id="teacher-today">
+        <div class="section-head"><div><h2>老师端：今日托管</h2><p>老师高频工作台：到岗签到、校区/班级/托管类型筛选、学生拍照签到、服务到期提醒、作业反馈进度。</p></div></div>
+        <div class="frame"><div class="frame-bar"><div class="frame-title">老师端 / 今日托管</div><div class="dots"><i></i><i></i><i></i></div></div><div class="app teacher-app"><section class="content"><div class="teacher-toolbar"><div class="title"><h3>刘老师，下午好</h3><p>城东校区 · 三年级 A 班 · 晚全托 · 负责学生 28 人</p></div><div class="chips"><button class="btn btn-primary">到岗签到</button><button class="btn btn-ai">AI 快捷录入</button></div></div><div class="kpis"><div class="kpi"><span>应到</span><b>28</b></div><div class="kpi"><span>已到</span><b>23</b></div><div class="kpi"><span>待拍照</span><b>5</b></div><div class="kpi"><span>待反馈</span><b>12</b></div></div><div class="ai-box" style="margin-bottom:14px"><div class="ai-input">一句话记录：例如“张明已到托管中心，王小雨请假，李雨桐服务快到期” <button class="btn btn-ai">识别</button></div></div><div class="student-list"><div class="student-row"><div class="student-name"><div class="avatar">张</div>张明 <span class="chip">晚全托</span></div><span class="status ok">已到</span><span>照片已发</span><span>作业待批</span><span class="status ok">有效期正常</span><button class="btn btn-outline">写反馈</button></div><div class="student-row"><div class="student-name"><div class="avatar">李</div>李雨桐 <span class="chip">晚辅导</span></div><span class="status warn">待确认</span><span>需补发</span><span>作业未传</span><span class="status warn">7天到期</span><button class="btn btn-primary">拍照签到</button></div><div class="student-row"><div class="student-name"><div class="avatar">王</div>王小雨 <span class="chip">下午托</span></div><span class="status bad">缺勤</span><span>未通知</span><span>-</span><span class="status ok">正常</span><button class="btn btn-outline">联系家长</button></div></div></section></div></div>
+      </section>
+
+      <section id="teacher-review">
+        <div class="section-head"><div><h2>老师端：作业批改、AI 圈错、三类点评、Word 练习单</h2><p>作业原图和批改图只有老师确认发布后家长可见；AI 圈错与同类题生成都是草稿。</p></div></div>
+        <div class="page-grid two">
+          <div class="frame"><div class="frame-bar"><div class="frame-title">作业批改与点评</div><div class="dots"><i></i><i></i><i></i></div></div><div class="content"><div class="topbar"><div class="title"><h3>张明 · 数学作业</h3><p>三年级 A 班 · 2026-05-01</p></div><span class="status warn">草稿</span></div><div class="review-grid"><div class="annotation"><div class="paper"></div><div class="mark"></div><div class="mark two"></div></div><div class="card"><h4>AI 圈错建议</h4><div class="row"><strong>第 3 题计算错误</strong><span class="status warn">置信度 72%</span></div><div class="row"><strong>第 6 题审题不完整</strong><span class="status warn">置信度 64%</span></div><button class="btn btn-ai" style="width:100%;margin-top:10px">老师确认圈错区域</button><button class="btn btn-outline" style="width:100%;margin-top:8px">手动修改区域</button></div></div><div class="card" style="margin-top:12px"><h4>三类今日点评</h4><div class="comment-grid"><div class="comment"><b>行为表现</b><p>今天专注度较好，能主动订正。</p></div><div class="comment"><b>作业完成</b><p>数学已完成，计算题有 2 处错误。</p></div><div class="comment"><b>知识掌握</b><p>建议继续练习两位数乘法进位。</p></div></div><div style="display:flex;gap:10px;margin-top:12px"><button class="btn btn-primary">确认发布给家长</button><button class="btn btn-soft">保存草稿</button></div></div></div></div>
+          <div class="frame"><div class="frame-bar"><div class="frame-title">错题本与 Word 练习单</div><div class="dots"><i></i><i></i><i></i></div></div><div class="content"><div class="topbar"><div class="title"><h3>错题自动收录</h3><p>老师确认过的错题才进入错题本</p></div><button class="btn btn-ai">生成同类题</button></div><div class="card"><h4>错题记录</h4><div class="row"><strong>数学 · 两位数乘法</strong><span>错因：进位遗漏</span></div><div class="row"><strong>英语 · 单词拼写</strong><span>错因：记忆不牢</span></div><div class="row"><strong>语文 · 阅读理解</strong><span>错因：定位信息不准确</span></div></div><div class="card" style="margin-top:12px"><h4>AI 同类题草稿</h4><div class="row"><strong>32 × 14 = ?</strong><span class="status warn">待老师选择</span></div><div class="row"><strong>46 × 23 = ?</strong><span class="status warn">待老师选择</span></div><div class="row"><strong>58 × 12 = ?</strong><span class="status warn">待老师选择</span></div><button class="btn btn-primary" style="width:100%;margin-top:10px">生成 Word 练习单</button></div></div></div>
+        </div>
+      </section>
+
+      <section id="parent">
+        <div class="section-head"><div><h2>家长端 H5</h2><p>家长只看到孩子安全、学习反馈、服务有效期和续费提示；不展示余额、欠费金额、机构收入或毛利。</p></div><span class="chip primary">390px Mobile</span></div>
+        <div class="mobile-gallery">
+          <div class="mobile-frame"><div class="phone"><div class="phone-head"><div class="phone-title"><b>张明今天已到托</b><p>晚全托 · 城东校区</p></div><span class="status ok">安全到达</span></div><div class="phone-body"><div class="safe-card"><h3>17:18 已到托管中心</h3><p>刘老师已拍照确认，今天服务包含晚餐和作业辅导。</p><div class="photo-thumb" style="margin-top:12px">到托照片缩略图</div></div><div class="homework-card"><h4>今日作业</h4><div class="row"><strong>数学</strong><span class="status warn">待订正</span></div><div class="row"><strong>英语</strong><span class="status ok">已完成</span></div></div><div class="homework-card"><h4>服务有效期</h4><p style="font-size:13px;color:var(--muted)">当前服务有效期至 2026-05-28。服务即将到期时，机构老师会联系续费。</p></div></div><div class="bottom-nav"><div class="tab active">首页</div><div class="tab">AI助手</div><div class="tab">作业</div><div class="tab">我的</div></div></div></div>
+          <div class="mobile-frame"><div class="phone"><div class="phone-head"><div class="phone-title"><b>AI 助手</b><p>问状态、作业、请假、留言</p></div><span class="chip ai">文字/语音</span></div><div class="phone-body mobile-chat"><div class="bubble user">明天下午家里有事，请半天假。</div><div class="confirm" style="max-width:100%"><h4>请假申请确认</h4><dl><dt>学生</dt><dd>张明</dd><dt>时间</dt><dd>明天下午</dd><dt>原因</dt><dd>家中有事</dd><dt>风险</dt><dd>中风险，需确认</dd></dl><div style="display:flex;gap:8px"><button class="btn btn-primary">确认请假</button><button class="btn btn-outline">修改</button></div></div><div class="bubble ai">确认后老师端会收到请假记录，AI 操作日志也会保存本次申请。</div></div><div class="input-dock">问问孩子今天情况，或说“明天下午请假” <button class="btn btn-ai">发送</button></div><div class="bottom-nav"><div class="tab">首页</div><div class="tab active">AI助手</div><div class="tab">作业</div><div class="tab">我的</div></div></div></div>
+          <div class="mobile-frame"><div class="phone"><div class="phone-head"><div class="phone-title"><b>作业/考勤详情</b><p>原图、批改图、三类点评</p></div><span class="status warn">有错题</span></div><div class="phone-body"><div class="photo-thumb">作业原图</div><div class="photo-thumb" style="background:linear-gradient(135deg,#fff,#ffe5e7)">老师确认批改图</div><div class="comment-grid"><div class="comment"><b>行为表现</b><p>今天能主动提问，订正时比较认真。</p></div><div class="comment"><b>作业完成</b><p>数学完成，有两处进位计算错误。</p></div><div class="comment"><b>知识掌握</b><p>建议复习两位数乘法，老师已生成练习单。</p></div></div></div><div class="bottom-nav"><div class="tab">首页</div><div class="tab">AI助手</div><div class="tab active">作业</div><div class="tab">我的</div></div></div></div>
+          <div class="mobile-frame"><div class="phone"><div class="phone-head"><div class="phone-title"><b>我的 / 服务信息</b><p>通知设置与服务有效期</p></div></div><div class="phone-body"><div class="safe-card"><h3>张明</h3><p>三年级 A 班 · 晚全托 · 城东校区</p></div><div class="homework-card"><div class="row"><strong>服务有效期</strong><span>至 2026-05-28</span></div><div class="row"><strong>到托通知</strong><span class="status ok">已开启</span></div><div class="row"><strong>请假记录</strong><span>本月 1 次</span></div><div class="row"><strong>身份证号</strong><span>3101********3218</span></div></div><div class="note">家长端不展示余额、欠费金额、班级毛利等经营数据。</div></div><div class="bottom-nav"><div class="tab">首页</div><div class="tab">AI助手</div><div class="tab">作业</div><div class="tab active">我的</div></div></div></div>
+        </div>
+      </section>
+
+      <section id="student">
+        <div class="section-head"><div><h2>学生端 H5 / 平板</h2><p>轻量学习入口：今日任务、待订正错题、AI 拍照提问。同样保持亲和但不幼稚。</p></div></div>
+        <div class="mobile-gallery">
+          <div class="mobile-frame"><div class="phone"><div class="phone-head"><div class="phone-title"><b>今日任务</b><p>张明，今天还有 2 项待完成</p></div><span class="status info">晚辅导</span></div><div class="phone-body"><div class="safe-card"><h3>完成进度 68%</h3><div class="progress" style="margin-top:14px"><i style="width:68%"></i></div><p>先完成数学订正，再做英语单词复习。</p></div><div class="homework-card"><div class="row"><strong>数学计算题</strong><span class="status warn">需订正</span></div><div class="row"><strong>英语单词</strong><span class="status info">待复习</span></div><div class="row"><strong>语文阅读</strong><span class="status ok">已完成</span></div></div><button class="btn btn-ai" style="width:100%;height:52px">打开 AI 学习助手</button></div><div class="bottom-nav"><div class="tab active">任务</div><div class="tab">错题</div><div class="tab">练习</div><div class="tab">成长</div></div></div></div>
+          <div class="mobile-frame"><div class="phone"><div class="phone-head"><div class="phone-title"><b>错题本</b><p>老师确认后的错题</p></div><span class="chip ai">可练习</span></div><div class="phone-body"><div class="homework-card"><h4>数学 · 两位数乘法</h4><p style="font-size:13px;color:var(--muted)">错因：进位遗漏 · 来源：5月1日作业</p><div class="photo-thumb" style="height:120px">错题区域</div><div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-primary">重练</button><button class="btn btn-outline">AI 讲解</button></div></div><div class="homework-card"><h4>AI 拍照提问</h4><p style="font-size:13px;color:var(--muted)">拍照上传题目后，AI 用 3-5 步短句讲解，避免直接给长答案。</p><button class="btn btn-ai" style="width:100%">拍照提问</button></div></div><div class="bottom-nav"><div class="tab">任务</div><div class="tab active">错题</div><div class="tab">练习</div><div class="tab">成长</div></div></div></div>
+        </div>
+      </section>
+
+      <section id="states">
+        <div class="section-head"><div><h2>关键状态与确认卡片</h2><p>MVP 每个端都需要覆盖默认、空、加载、AI 思考、语音录入、识别失败、权限不足、操作成功、需确认、高风险拒绝。</p></div></div>
+        <div class="page-grid three">
+          <div class="card"><h4>AI 思考中</h4><div class="ai-input">正在理解你的意思<span class="chip ai">3s</span></div><p style="color:var(--muted);font-size:12px">轻量动画，不阻塞用户。</p></div>
+          <div class="card"><h4>语音录入中</h4><div class="ai-input">录音 00:12 · 点击结束<span class="chip ai">波形</span></div><p style="color:var(--muted);font-size:12px">录音按钮不遮挡底部导航。</p></div>
+          <div class="card"><h4>识别失败</h4><div class="status warn">没有听清，可以再说一次或改用文字输入</div><p style="color:var(--muted);font-size:12px">提供重试和文字兜底。</p></div>
+          <div class="card"><h4>权限不足</h4><div class="status bad">你只能查看自己孩子的信息</div><p style="color:var(--muted);font-size:12px">越权行为进入审计日志。</p></div>
+          <div class="card"><h4>操作成功</h4><div class="status ok">请假申请已提交给老师</div><p style="color:var(--muted);font-size:12px">明确下一步和通知对象。</p></div>
+          <div class="card"><h4>高风险拒绝</h4><div class="status bad">AI 不能修改收费金额</div><p style="color:var(--muted);font-size:12px">引导进入传统页面人工处理。</p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
