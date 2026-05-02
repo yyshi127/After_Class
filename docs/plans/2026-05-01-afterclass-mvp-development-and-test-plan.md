@@ -684,9 +684,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/homework-feedback-publishing.test.tsx`、`npm run test:e2e -- tests/e2e/parent-homework-feedback-publishing.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 34 个文件/115 个测试，E2E 20 个测试）。  
   **提交记录：** 已提交到本地 Git：`d00a31c feat(feedback): publish homework feedback to parents`；计划状态补充提交 `cce8f82 docs(plan): record M4-08 commit status`；GitHub push 已完成。
 
-- [ ] M4-09 家长端作业/考勤详情页  
+- [x] M4-09 家长端作业/考勤详情页  
   **内容：** 作业原图、批改图、三类点评、错题摘要。  
-  **测试：** 不展示老师内部备注或 AI 未确认草稿。
+  **测试：** 不展示老师内部备注或 AI 未确认草稿。  
+  **完成记录：** 2026-05-02 新增家长端作业/考勤详情页 `/parent/homework-feedback`，展示作业原图、批改图、三类点评、到托/离校时间线和错题摘要；家长端首页作业反馈卡片增加详情入口。详情数据通过 `createParentHomeworkFeedbackDetail` 聚合，并复用家长绑定权限校验，过滤 AI 未确认草稿、内部置信度和老师内部备注。  
+  **TDD 记录：** 本轮开始时检测到该任务已有未提交测试与实现文件；未伪造 RED 结果。已补跑聚焦单元测试 `tests/unit/parent-homework-feedback-detail.test.tsx` 与聚焦 E2E `tests/e2e/parent-homework-feedback-detail.spec.ts`，确认家长仅能看到绑定学生的已发布详情，且不展示老师内部备注或 AI 未确认草稿。  
+  **测试命令：** `npm run test:unit -- tests/unit/parent-homework-feedback-detail.test.tsx`、`npm run test:e2e -- tests/e2e/parent-homework-feedback-detail.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 35 个文件/118 个测试，E2E 21 个测试；首次完整门禁中的 lint 因 Playwright test-results 临时目录竞态 ENOENT 失败，单独重跑 lint 与完整门禁均通过）。  
+  **提交记录：** 待本轮提交。
 
 - [ ] M4-10 管理端作业反馈进度  
   **内容：** 按校区/班级查看待批改、待发布、已发布。  

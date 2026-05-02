@@ -27,7 +27,9 @@ export function ParentHomeworkFeedbackCard({
             {feedback.subject} · 发布于 {new Date(feedback.publishedAt).toLocaleString('zh-CN', { hour12: false })}
           </p>
         </div>
-        <span className="rounded-full bg-mint/50 px-4 py-2 text-sm font-semibold">老师已确认发布</span>
+        <a className="rounded-full bg-mint/50 px-4 py-2 text-sm font-semibold" href="/parent/homework-feedback">
+          查看作业与考勤详情
+        </a>
       </div>
 
       <div className="mt-5 grid gap-4 md:grid-cols-2">
