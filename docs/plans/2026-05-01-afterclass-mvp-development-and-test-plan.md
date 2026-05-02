@@ -974,7 +974,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-03 新增 `domain/ai-command/admin-class-settlement-query.ts`，管理端 AI `queryClassSettlement` 复用管理端班级核算 projection，按 actor 权限、校区、班级、托管类型、日期和老师过滤核算结果；校区管理员只能看到授权校区，超级管理员可跨校区筛选，老师等非财务角色不能通过 AI 查询学生收入、老师课费或班级毛利。  
   **TDD 记录：** 先新增 `tests/unit/admin-class-settlement-ai-query.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/admin-class-settlement-query` 不存在；最小实现后聚焦测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/admin-class-settlement-ai-query.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 66 个文件/195 个测试，E2E 31 个测试）。  
-  **提交记录：** 待提交并推送。
+  **提交记录：** 已提交到本地 Git：`5500728 feat(ai): add admin class settlement query`；计划状态补充提交待完成。
 
 - [ ] M7-15 高风险拒绝 UI  
   **内容：** 明确显示不能执行原因和传统页面入口。  
