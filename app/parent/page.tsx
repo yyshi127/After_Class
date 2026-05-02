@@ -189,12 +189,29 @@ const guardianLeaveAttendanceDraft = confirmedGuardianLeave
 
 export default function ParentPage() {
   return (
-    <main className="min-h-screen px-6 py-10 text-text">
-      <div className="mx-auto grid max-w-5xl gap-6">
-        <section className="rounded-neu bg-surface p-8 shadow-neu">
+    <main aria-label="家长移动首页" className="min-h-screen overflow-x-hidden px-4 py-6 text-text sm:px-6 sm:py-10">
+      <div className="mx-auto grid max-w-5xl gap-5 sm:gap-6">
+        <section className="rounded-neu bg-surface p-6 shadow-neu sm:p-8">
           <p className="mb-3 text-sm font-semibold text-muted">Parent Portal</p>
           <h1 className="mb-4 font-heading text-3xl font-bold">家长端首页</h1>
           <p className="max-w-2xl text-muted">查看孩子到托安全状态、考勤时间线、作业反馈和服务有效期提醒。</p>
+        </section>
+
+        <section aria-label="家长首页今日概览" className="grid gap-3 sm:grid-cols-3">
+          <article className="rounded-3xl bg-mint/40 p-4 shadow-neu-sm">
+            <p className="text-sm font-semibold text-muted">安全到达</p>
+            <p className="mt-2 text-lg font-bold">{safetyCards[0]?.status === '已到' ? '已到托管中心' : '待老师确认'}</p>
+          </article>
+          <article className="rounded-3xl bg-lavender/40 p-4 shadow-neu-sm">
+            <p className="text-sm font-semibold text-muted">今日作业</p>
+            <p className="mt-2 text-lg font-bold">{parentHomeworkFeedback ? '老师已发布反馈' : '等待老师发布'}</p>
+          </article>
+          <article className="rounded-3xl bg-peach/40 p-4 shadow-neu-sm">
+            <p className="text-sm font-semibold text-muted">服务有效期</p>
+            <p className="mt-2 text-lg font-bold">
+              {parentServiceValidities[0] ? `有效至 ${parentServiceValidities[0].validUntil.toISOString().slice(0, 10)}` : '暂无记录'}
+            </p>
+          </article>
         </section>
 
         <ParentHomeSafetyCard cards={safetyCards} />
@@ -212,10 +229,10 @@ export default function ParentPage() {
               <p>确认后状态：{guardianLeaveAttendanceDraft.status}</p>
             </div>
             <div className="mt-4 flex flex-wrap gap-3">
-              <button className="rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white shadow-soft" type="button">
+              <button className="min-h-11 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white shadow-soft" type="button">
                 确认创建请假申请
               </button>
-              <button className="rounded-full border border-border px-4 py-3 text-sm font-semibold text-muted" type="button">
+              <button className="min-h-11 rounded-full border border-border px-4 py-3 text-sm font-semibold text-muted" type="button">
                 取消
               </button>
             </div>

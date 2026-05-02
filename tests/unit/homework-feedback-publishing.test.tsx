@@ -127,6 +127,7 @@ describe('homework feedback publishing', () => {
       />,
     );
 
+    expect(screen.getByRole('region', { name: '今日作业反馈' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '今日作业反馈' })).toBeInTheDocument();
     expect(screen.getByText('作业原图：file-homework-original-wang')).toBeInTheDocument();
     expect(screen.getByText('批改图：file-homework-corrected-wang')).toBeInTheDocument();

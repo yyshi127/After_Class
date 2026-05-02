@@ -16,7 +16,7 @@ export function ParentHomeworkFeedbackCard({
   }
 
   return (
-    <section className="rounded-neu bg-surface p-6 shadow-neu-sm" aria-labelledby="parent-homework-feedback-heading">
+    <section aria-label="今日作业反馈" className="rounded-neu bg-surface p-5 shadow-neu-sm sm:p-6" aria-labelledby="parent-homework-feedback-heading">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-muted">Homework Feedback</p>
@@ -27,7 +27,7 @@ export function ParentHomeworkFeedbackCard({
             {feedback.subject} · 发布于 {new Date(feedback.publishedAt).toLocaleString('zh-CN', { hour12: false })}
           </p>
         </div>
-        <a className="rounded-full bg-mint/50 px-4 py-2 text-sm font-semibold" href="/parent/homework-feedback">
+        <a className="min-h-11 rounded-full bg-mint/50 px-4 py-3 text-sm font-semibold" href="/parent/homework-feedback">
           查看作业与考勤详情
         </a>
       </div>
@@ -35,11 +35,11 @@ export function ParentHomeworkFeedbackCard({
       <div className="mt-5 grid gap-4 md:grid-cols-2">
         <div className="rounded-2xl bg-surfaceAlt p-4 shadow-neu-inset">
           <p className="text-sm font-bold">作业原图</p>
-          <p className="mt-2 text-sm text-muted">作业原图：{feedback.originalImageFileId}</p>
+          <p className="mt-2 break-all text-sm text-muted">作业原图：{feedback.originalImageFileId}</p>
         </div>
         <div className="rounded-2xl bg-surfaceAlt p-4 shadow-neu-inset">
           <p className="text-sm font-bold">老师批改图</p>
-          <p className="mt-2 text-sm text-muted">批改图：{feedback.correctedImageFileId}</p>
+          <p className="mt-2 break-all text-sm text-muted">批改图：{feedback.correctedImageFileId}</p>
         </div>
       </div>
 

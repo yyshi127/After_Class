@@ -89,12 +89,14 @@ describe('parent home safety arrival card', () => {
 
     render(<ParentHomeSafetyCard cards={cards} />);
 
+    expect(screen.getByRole('region', { name: '安全到达与照片' })).toBeVisible();
     expect(screen.getByRole('heading', { name: '安全到达' })).toBeVisible();
     expect(screen.getByText('王小明')).toBeVisible();
     expect(screen.getByText('已到')).toBeVisible();
     expect(screen.getByText('晚辅导')).toBeVisible();
     expect(screen.getByText('李老师')).toBeVisible();
     expect(screen.getByText('到托时间：18:30')).toBeVisible();
+    expect(screen.getByText('到托照片预览')).toBeVisible();
     expect(screen.getByText('照片：file-arrival-photo-wang')).toBeVisible();
     expect(screen.queryByText('李小红')).not.toBeInTheDocument();
   });

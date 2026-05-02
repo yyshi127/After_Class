@@ -49,6 +49,7 @@ describe('parent service validity card', () => {
 
     render(<ParentServiceValidityCard validities={validities} />);
 
+    expect(screen.getByRole('region', { name: '服务有效期' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '服务有效期' })).toBeInTheDocument();
     expect(screen.getByText('王小明')).toBeInTheDocument();
     expect(screen.getByText('晚辅导')).toBeInTheDocument();

@@ -2,8 +2,8 @@ import type { ParentVisibleServiceValidity } from '@/domain/billing/service-vali
 
 export function ParentServiceValidityCard({ validities }: { validities: readonly ParentVisibleServiceValidity[] }) {
   return (
-    <section className="rounded-neu bg-surface p-6 shadow-neu">
-      <div className="mb-4 flex items-center justify-between gap-4">
+    <section aria-label="服务有效期" className="rounded-neu bg-surface p-5 shadow-neu sm:p-6">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-muted">Service Validity</p>
           <h2 className="font-heading text-2xl font-bold">服务有效期</h2>
