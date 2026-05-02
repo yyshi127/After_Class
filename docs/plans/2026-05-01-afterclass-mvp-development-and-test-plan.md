@@ -812,9 +812,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/class-settlement.test.ts && npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 48 个文件/147 个测试）。  
   **提交记录：** 已提交到本地 Git：`babfde6 feat(billing): complete teacher fee and settlement models`；计划状态补充提交待完成。
 
-- [ ] M6-04 管理端收费记录页面  
+- [x] M6-04 管理端收费记录页面  
   **内容：** 学生服务周期、缴费周期、到期时间、应收实收。  
-  **测试：** 校区管理员仅看本校区。
+  **测试：** 校区管理员仅看本校区。  
+  **完成记录：** 2026-05-02 新增 `domain/admin/billing-records.ts` 管理端收费记录授权/格式化 helper、`AdminBillingRecords` 收费记录表组件和 `/admin/billing` 路由；页面展示学生服务周期、缴费周期、到期时间、应收和实收，并在管理端侧边栏增加收费记录入口。  
+  **TDD 记录：** 先新增 `tests/unit/admin-billing-records.test.tsx` 并运行失败，失败原因为收费记录组件/domain helper 不存在；实现 domain、组件和路由后聚焦单元测试通过。新增 `tests/e2e/admin-billing-records.spec.ts` 覆盖页面与校区隔离，路由实现后通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/admin-billing-records.test.tsx`、`npm run test:e2e -- tests/e2e/admin-billing-records.spec.ts`、任务级回归 `npm run test:unit -- tests/unit/admin-billing-records.test.tsx tests/unit/admin-layout.test.tsx && npm run test:e2e -- tests/e2e/admin-billing-records.spec.ts`。  
+  **提交记录：** 已提交到本地 Git：`086ab2b feat(billing): add admin billing records page`；计划状态补充提交待完成。
 
 - [ ] M6-05 服务到期提醒计算  
   **内容：** 到期前一次、到期当天一次，逾期后人工提醒。  
