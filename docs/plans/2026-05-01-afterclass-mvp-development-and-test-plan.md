@@ -958,7 +958,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-03 新增 `domain/ai-command/teacher-mistake-suggestion.ts`，老师 AI `suggestMistakeAreas` 复用作业 AI 圈错 provider，对作业原图返回建议区域、学科、错因、置信度和人工确认提示；调用前复用 `canAccessStudent` 校验老师校区/班级授权，并校验作业记录与学生一致。AI 圈错结果只处于中风险确认草稿，`teacherConfirmedAreas` 默认为空，老师确认前不会进入错题本。  
   **TDD 记录：** 先新增 `tests/unit/teacher-mistake-suggestion-ai.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/teacher-mistake-suggestion` 不存在；最小实现后聚焦测试通过。首次全量门禁 typecheck 发现 `teacherConfirmedAreas` 类型不能传入错题收录服务，已收敛为空元组以表达“确认前无可收录区域”，复跑全量门禁通过。  
   **测试命令：** `npm run test:unit -- tests/unit/teacher-mistake-suggestion-ai.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 64 个文件/189 个测试，E2E 31 个测试）。  
-  **提交记录：** 已提交到本地 Git：`8cdb6eb feat(ai): add teacher mistake suggestion command`；计划状态补充提交待完成。
+  **提交记录：** 已提交到本地 Git：`8cdb6eb feat(ai): add teacher mistake suggestion command`；计划状态补充提交 `fd8c0fc docs(plan): record M7-12 commit status`；GitHub push 已完成。
 
 - [ ] M7-13 老师 AI：同类题生成  
   **内容：** 生成同类题草稿。  
