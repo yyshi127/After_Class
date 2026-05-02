@@ -734,7 +734,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/teacher/mistake-book.ts`、`components/teacher/teacher-mistake-book-page.tsx` 和 `/teacher/mistake-book` 页面，老师端可查看已收录错题，页面提供学生、学科、知识点、日期筛选入口，并展示学生、班级、学科、知识点、错因、题目快照、订正状态和收录日期。读取逻辑复用 `canAccessStudent`，只返回老师负责校区/班级内学生错题。  
   **TDD 记录：** 先新增 `tests/unit/teacher-mistake-book.test.tsx` 与 `tests/e2e/teacher-mistake-book.spec.ts`，首次运行失败，失败原因为老师端错题本 domain/page 尚不存在；最小实现 domain 过滤、组件和路由后聚焦单测/E2E 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/teacher-mistake-book.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-mistake-book.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 39 个文件/128 个测试，E2E 24 个测试）。  
-  **提交记录：** 已提交到本地 Git：`00d4b16 feat(teacher): add mistake book page`；GitHub push 待完成。
+  **提交记录：** 已提交到本地 Git：`00d4b16 feat(teacher): add mistake book page`；计划状态补充提交 `2ef905b docs(plan): record M5-03 commit status`；GitHub push 已完成。
 
 - [ ] M5-04 学生端错题本页面  
   **内容：** 查看自己的错题、订正状态、AI 讲解入口。  
