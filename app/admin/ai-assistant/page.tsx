@@ -1,4 +1,4 @@
-import { AdminAiHighRiskRefusalCard } from '@/components/admin/admin-ai-high-risk-refusal-card';
+import { AdminAiAssistantWorkspace } from '@/components/admin/admin-ai-assistant-workspace';
 import { AdminLayout } from '@/components/admin/admin-layout';
 import { createHighRiskRefusalCard } from '@/domain/ai-command/high-risk-refusal';
 import { DEMO_SEED } from '@/prisma/seed-data';
@@ -9,6 +9,19 @@ const highRiskDebtRefusal = createHighRiskRefusalCard({
   intent: 'queryBilling',
   rawInput: '把欠费改成 0',
 });
+
+const conversation = [
+  { id: 'msg-admin', role: 'user' as const, content: '东城晚辅导本周毛利怎么样？', timeLabel: '17:42' },
+  { id: 'msg-ai', role: 'assistant' as const, content: '已按校区权限汇总班级核算，可查看右侧数据卡片。', timeLabel: '17:42' },
+];
+
+const dataCards = [
+  { id: 'gross-profit', label: '本周预估毛利', value: '¥8,420', helper: '仅管理端可见', tone: 'success' as const },
+  { id: 'pending-confirm', label: '待确认 AI 动作', value: '3', helper: '中风险写入需人工确认', tone: 'warning' as const },
+  { id: 'audit-logs', label: '今日 AI 日志', value: '18', helper: '所有调用均已留痕', tone: 'info' as const },
+];
+
+const quickQuestions = ['查询今日出勤异常', '本周班级毛利排行', '查看待确认 AI 操作'];
 
 export default function AdminAiAssistantPage() {
   return (
@@ -22,7 +35,12 @@ export default function AdminAiAssistantPage() {
           </p>
         </div>
 
-        <AdminAiHighRiskRefusalCard card={highRiskDebtRefusal} />
+        <AdminAiAssistantWorkspace
+          conversation={conversation}
+          dataCards={dataCards}
+          quickQuestions={quickQuestions}
+          refusalCard={highRiskDebtRefusal}
+        />
       </div>
     </AdminLayout>
   );
