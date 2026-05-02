@@ -1,6 +1,8 @@
 import { ParentHomeSafetyCard } from '@/components/parent/parent-home-safety-card';
 import { ParentHomeworkFeedbackCard } from '@/components/parent/parent-homework-feedback-card';
 import { ParentMistakeSummaryCard } from '@/components/parent/parent-mistake-summary-card';
+import { ParentServiceValidityCard } from '@/components/parent/parent-service-validity-card';
+import { getGuardianVisibleServiceValidity } from '@/domain/billing/service-validity';
 import { createEditableFeedbackDraft } from '@/domain/feedback/feedback';
 import {
   getGuardianVisibleHomeworkFeedback,
@@ -87,6 +89,35 @@ const parentHomeworkFeedback = demoGuardian && publishedHomeworkFeedback
     })
   : null;
 
+const parentServiceValidities = demoGuardian && demoStudent
+  ? getGuardianVisibleServiceValidity({
+      guardian: {
+        id: demoGuardian.id,
+        role: demoGuardian.role,
+        guardianStudentIds: DEMO_SEED.guardianStudents
+          .filter((binding) => binding.guardianUserId === demoGuardian.id)
+          .map((binding) => binding.studentId),
+      },
+      records: [
+        {
+          id: 'billing-wang-demo-202605',
+          campusId: demoStudent.campusId,
+          studentId: demoStudent.id,
+          studentName: demoStudent.name,
+          serviceType: demoStudent.serviceType,
+          billingCycle: 'MONTHLY',
+          periodStart: new Date('2026-05-01T00:00:00.000Z'),
+          periodEnd: new Date('2026-05-31T23:59:59.000Z'),
+          amountDue: 1800,
+          amountPaid: 1800,
+          balanceAmount: 0,
+          debtAmount: 0,
+          validUntil: new Date('2026-05-31T23:59:59.000Z'),
+        },
+      ],
+    })
+  : [];
+
 const parentMistakeSummaries = demoGuardian
   ? getParentVisibleMistakeSummaries({
       guardian: {
@@ -127,6 +158,7 @@ export default function ParentPage() {
         </section>
 
         <ParentHomeSafetyCard cards={safetyCards} />
+        <ParentServiceValidityCard validities={parentServiceValidities} />
         <ParentHomeworkFeedbackCard feedback={parentHomeworkFeedback} />
         <ParentMistakeSummaryCard summaries={parentMistakeSummaries} />
       </div>

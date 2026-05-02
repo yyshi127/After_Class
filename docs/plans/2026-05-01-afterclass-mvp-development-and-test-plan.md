@@ -836,9 +836,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/teacher-today-custody.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-today-custody.spec.ts`、任务级回归 `npm run test:unit -- tests/unit/service-expiry-reminders.test.ts tests/unit/teacher-today-custody.test.tsx`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 50 个文件/153 个测试，E2E 28 个测试）。  
   **提交记录：** 已提交到本地 Git：`adaebd0 feat(billing): add service expiry reminders`；计划状态补充提交 `87d585c docs(plan): record M6-05 M6-06 commit status`；GitHub push 已完成.
 
-- [ ] M6-07 家长端服务有效期展示  
+- [x] M6-07 家长端服务有效期展示  
   **内容：** “当前服务有效期至 YYYY-MM-DD”或续费提示。  
-  **测试：** 家长端不出现余额、欠费金额。
+  **测试：** 家长端不出现余额、欠费金额。  
+  **完成记录：** 2026-05-02 新增 `ParentServiceValidityCard` 并接入 `/parent`，复用 `getGuardianVisibleServiceValidity`，家长端只展示绑定孩子、托管类型和“当前服务有效期至 YYYY-MM-DD”，不展示余额、欠费、应收、实收或金额字段。  
+  **TDD 记录：** 先新增 `tests/unit/parent-service-validity-card.test.tsx` 并运行失败，失败原因为家长服务有效期组件不存在；最小实现组件并接入家长首页后聚焦单测通过。新增 `tests/e2e/parent-service-validity.spec.ts` 覆盖 `/parent` 可见性。  
+  **测试命令：** `npm run test:unit -- tests/unit/parent-service-validity-card.test.tsx`、`npm run test:e2e -- tests/e2e/parent-service-validity.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 51 个文件/154 个测试，E2E 29 个测试）。  
+  **提交记录：** 待提交.
 
 - [ ] M6-08 班级核算计算 service  
   **内容：** 从学生出勤和老师考勤汇总收入、课费、毛利。  
