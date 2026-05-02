@@ -802,7 +802,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 Prisma `TeacherFeeBillingMode` enum 与 `TeacherFeeRule` 模型，支持按校区、班级、老师、托管类型配置班级固定课费或日课费；新增 `domain/billing/teacher-fee-rule.ts`，为班级核算读取生效课费基础，并优先使用班级级规则，避免跨校区/跨服务类型匹配。  
   **TDD 记录：** 先新增 `tests/unit/teacher-fee-rule.test.ts` 并运行失败，失败原因为 `@/domain/billing/teacher-fee-rule` 不存在；实现 Prisma 模型与 domain helper 后聚焦测试和 Prisma validate 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/teacher-fee-rule.test.ts && npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 48 个文件/147 个测试）。  
-  **提交记录：** 待本轮质量门禁通过后提交。
+  **提交记录：** 已提交到本地 Git：`babfde6 feat(billing): complete teacher fee and settlement models`；计划状态补充提交待完成。
 
 - [x] M6-03 创建 ClassSettlement 模型  
   **内容：** 应到、实到、请假/缺勤、学生收入、老师课费、预估毛利、成本预留。  
@@ -810,7 +810,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 Prisma `ClassSettlement` 模型，覆盖应到、实到、请假、缺勤、学生收入、老师课费、成本预留和预估毛利，并按校区/班级/托管类型/日期唯一；新增 `domain/billing/class-settlement.ts`，按校区、班级和托管类型汇总出勤收入，读取 M6-02 老师课费规则计算毛利。  
   **TDD 记录：** 先新增 `tests/unit/class-settlement.test.ts` 并运行失败，失败原因为 `@/domain/billing/class-settlement` 不存在；实现模型与核算 service 后聚焦测试和 Prisma validate 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/class-settlement.test.ts && npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 48 个文件/147 个测试）。  
-  **提交记录：** 待本轮质量门禁通过后提交。
+  **提交记录：** 已提交到本地 Git：`babfde6 feat(billing): complete teacher fee and settlement models`；计划状态补充提交待完成。
 
 - [ ] M6-04 管理端收费记录页面  
   **内容：** 学生服务周期、缴费周期、到期时间、应收实收。  
