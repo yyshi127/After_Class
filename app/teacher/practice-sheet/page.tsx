@@ -25,6 +25,17 @@ const generatedQuestions: SimilarQuestionDraft[] = [
     requiresTeacherConfirmation: true,
     generatedAt: '2026-05-02T14:00:00.000Z',
   },
+  {
+    id: 'similar-mistake-wang-1-3',
+    sourceMistakeBookItemId: 'mistake-wang-1',
+    studentId: 'student-wang',
+    subject: '数学',
+    knowledgePoint: '两位数乘法',
+    prompt: '同类题3：围绕“46 × 13 竖式计算”练习两位数乘法，重点避免进位步骤遗漏。',
+    status: 'DRAFT',
+    requiresTeacherConfirmation: true,
+    generatedAt: '2026-05-02T14:00:00.000Z',
+  },
 ];
 
 const commonInput = {

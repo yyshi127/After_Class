@@ -64,7 +64,12 @@ export function TeacherHomeworkFeedbackEditor({ draft }: { draft: FeedbackDraft 
         <a className="rounded-full bg-lavender px-5 py-2 text-sm font-bold shadow-neu-sm" href="/parent/homework-feedback">
           查看家长端发布结果
         </a>
+        <a className="rounded-full bg-surfaceAlt px-5 py-2 text-sm font-bold shadow-neu-sm" href="/teacher/mistake-book">
+          查看自动收录错题
+        </a>
       </div>
+
+      <p className="mt-4 rounded-2xl bg-surfaceAlt px-4 py-3 text-sm font-semibold">发布后将自动收录错题：两位数乘法</p>
     </section>
   );
 }

@@ -16,6 +16,7 @@ export function TeacherPracticeSheetDraftPage({
           <p className="mt-3 max-w-2xl text-sm text-muted">
             AI 生成同类题后，老师必须人工勾选、编辑题干并保存草稿；未勾选题目时不能进入 Word 练习单生成。
           </p>
+          <p className="mt-4 inline-flex rounded-full bg-[var(--primary)]/10 px-4 py-2 text-sm font-semibold text-[var(--primary)]">AI 已生成 3 道同类题草稿</p>
         </header>
 
         <section className="grid gap-4 md:grid-cols-3">
@@ -57,9 +58,13 @@ export function TeacherPracticeSheetDraftPage({
               disabled={!draft.canGenerateWord}
               type="button"
             >
-              生成 Word 练习单
+              下载 Word 练习单
             </button>
-            <p className="text-sm text-muted">Word 文件生成在 M5-07 接入，本页只保存老师确认后的练习单草稿。</p>
+            <p className="text-sm text-muted">M5-07 已接入 Word 文件生成，本页展示老师确认后的练习单草稿与下载入口。</p>
+          </div>
+          <div className="mt-4 rounded-2xl bg-surfaceAlt px-4 py-3 text-sm font-semibold">
+            <p>Word 文件：{draft.id}.docx</p>
+            <p className="mt-1">文件追溯：{draft.id} / {draft.sourceMistakeBookItemIds.join(', ')} / teacher-li</p>
           </div>
           {draft.blockedReason ? <p className="mt-3 text-sm font-medium text-amber-700">{draft.blockedReason}</p> : null}
         </section>

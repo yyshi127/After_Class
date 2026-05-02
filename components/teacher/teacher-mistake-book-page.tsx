@@ -101,6 +101,9 @@ export function TeacherMistakeBookPage({
                     </div>
                   </dl>
                   <p className="mt-4 text-xs font-semibold text-muted">收录日期：{item.createdDate}</p>
+                  <a className="mt-4 inline-flex rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-neu-sm" href="/teacher/practice-sheet">
+                    生成同类题练习单
+                  </a>
                 </article>
               ))}
             </div>

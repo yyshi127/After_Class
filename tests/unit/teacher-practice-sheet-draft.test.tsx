@@ -44,13 +44,13 @@ describe('TeacherPracticeSheetDraftPage', () => {
     expect(screen.getByLabelText('勾选同类题：同类题1')).toBeChecked();
     expect(screen.getByDisplayValue('同类题1：请用竖式计算 23 × 14，并写出进位过程。')).toBeInTheDocument();
     expect(screen.getByText('练习单草稿已保存')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '生成 Word 练习单' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: '下载 Word 练习单' })).toBeEnabled();
   });
 
   it('disables Word generation when no question is selected', () => {
     render(<TeacherPracticeSheetDraftPage draft={emptyDraft} />);
 
     expect(screen.getByText('未勾选同类题，不能生成 Word 练习单')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '生成 Word 练习单' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '下载 Word 练习单' })).toBeDisabled();
   });
 });

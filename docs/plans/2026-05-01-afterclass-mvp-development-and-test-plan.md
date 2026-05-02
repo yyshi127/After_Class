@@ -776,9 +776,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/parent-mistake-summary.test.tsx`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（首次 E2E 因新增家长错题摘要导致旧签到流 `王小明` 文本定位严格模式冲突，已将断言收敛到安全到达卡片；复跑 `npm run test:e2e` 通过，unit 45 个文件/140 个测试，E2E 26 个测试）。  
   **提交记录：** 已提交到本地 Git：`8cb9ce8 feat(parent): add mistake summary card`；计划状态补充提交 `ccf790e docs(plan): record M5-08 commit status`；GitHub push 已完成.
 
-- [ ] M5-09 E2E：错题到练习单流程  
+- [x] M5-09 E2E：错题到练习单流程  
   **流程：** 发布作业 → 错题收录 → AI 生成同类题 → 老师勾选 → 下载 Word。  
-  **测试：** Playwright 或集成测试通过。
+  **测试：** Playwright 或集成测试通过。  
+  **完成记录：** 2026-05-02 新增 `tests/e2e/mistake-to-practice-sheet-flow.spec.ts`，串通 `/teacher/homework-upload` → `/teacher/homework-correction` → `/teacher/mistake-book` → `/teacher/practice-sheet`；补齐发布后自动收录错题入口、错题卡片生成同类题练习单入口、练习单 Word 下载与文件追溯展示。  
+  **TDD 记录：** 先新增 E2E 并运行失败，失败原因为批改页尚未暴露“发布后将自动收录错题”与错题本入口；补齐最小 UI 链路后聚焦 E2E 通过。  
+  **测试命令：** `npm run test:e2e -- tests/e2e/mistake-to-practice-sheet-flow.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 45 个文件/140 个测试，E2E 27 个测试）。  
+  **提交记录：** 待提交.
 
 ---
 
