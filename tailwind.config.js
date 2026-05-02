@@ -24,6 +24,8 @@ module.exports = {
         primary: {
           DEFAULT: '#7C9EB2',
           foreground: 'var(--primary-foreground)',
+          deep: '#5F8398',
+          soft: 'rgba(124, 158, 178, 0.18)',
         },
         secondary: {
           DEFAULT: '#B8A9C9',
@@ -40,12 +42,30 @@ module.exports = {
         mint: '#A8D5BA',
         peach: '#FFDAB9',
         lavender: '#E6E6FA',
-        surface: '#F0F4F8',
+        surface: {
+          DEFAULT: '#F0F4F8',
+          alt: '#E8EEF4',
+          card: '#F0F4F8',
+          dark: '#4A5568',
+        },
         surfaceAlt: '#E8EEF4',
-        text: '#2D3748',
+        text: {
+          DEFAULT: '#2D3748',
+          muted: '#718096',
+          subtle: '#A0AEC0',
+        },
         muted: {
           DEFAULT: '#718096',
           foreground: 'var(--muted-foreground)',
+          surface: '#E8EEF4',
+        },
+        danger: {
+          DEFAULT: '#E57373',
+          soft: 'rgba(229, 115, 115, 0.16)',
+        },
+        success: {
+          DEFAULT: '#6FAF8C',
+          soft: 'rgba(168, 213, 186, 0.24)',
         },
       },
       boxShadow: {
@@ -55,6 +75,8 @@ module.exports = {
       },
       borderRadius: {
         neu: '24px',
+        'neu-md': '20px',
+        'neu-sm': '16px',
       },
       fontFamily: {
         heading: ['Quicksand', 'Noto Sans SC', 'sans-serif'],
