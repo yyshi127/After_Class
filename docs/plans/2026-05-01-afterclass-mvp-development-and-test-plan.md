@@ -742,7 +742,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/student/mistake-book.ts`、`components/student/student-mistake-book-page.tsx` 和 `/student/mistake-book` 页面，学生端可查看自己的错题、题目快照、错因、订正状态和 AI 讲解入口。读取逻辑复用 `canAccessStudent` 的 student self-record 判断，其他学生错题不会显示。  
   **TDD 记录：** 先新增 `tests/unit/student-mistake-book.test.tsx` 与 `tests/e2e/student-mistake-book.spec.ts`，首次运行失败，失败原因为学生端错题本组件/domain/page 尚不存在；最小实现后聚焦单测/E2E 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/student-mistake-book.test.tsx`、`npm run test:e2e -- tests/e2e/student-mistake-book.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 40 个文件/130 个测试，E2E 25 个测试）。  
-  **提交记录：** 已提交到本地 Git：`97684a4 feat(student): add mistake book page`；GitHub push 待完成。
+  **提交记录：** 已提交并推送 GitHub：`97684a4 feat(student): add mistake book page`.
 
 - [x] M5-05 AI 同类题生成草稿  
   **内容：** 基于错题生成 3 道同类题草稿。  
@@ -750,7 +750,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/mistake-book/similar-question-draft.ts`，基于错题生成 3 道同类题草稿；生成结果默认 `DRAFT`，标记 `requiresTeacherConfirmation=true`，且确认前 `canAddToWorksheet=false`，不能直接进入练习单。  
   **TDD 记录：** 先新增 `tests/unit/similar-question-draft.test.ts` 并运行失败，失败原因为 `@/domain/mistake-book/similar-question-draft` 不存在；实现最小生成服务后同一测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/similar-question-draft.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 41 个文件/132 个测试，E2E 25 个测试）。  
-  **提交记录：** 待提交。
+  **提交记录：** 已提交并推送 GitHub：`45a93ea feat(mistake-book): generate similar question drafts`.
 
 - [ ] M5-06 老师勾选同类题  
   **内容：** 可选题目、编辑题干、保存练习单草稿。  
