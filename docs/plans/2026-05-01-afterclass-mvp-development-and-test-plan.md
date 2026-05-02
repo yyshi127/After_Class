@@ -668,9 +668,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/homework-mistake-area-confirmation.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-homework-mistake-area-confirmation.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 32 个文件/108 个测试，E2E 18 个测试）。  
   **提交记录：** 已提交到本地 Git：`fa1284b feat(homework): complete M4-06 mistake area confirmation`；计划状态补充提交 `dffcdda docs(plan): record M4-06 commit status`；GitHub push 已完成。
 
-- [ ] M4-07 三类点评编辑器  
+- [x] M4-07 三类点评编辑器  
   **内容：** 行为表现、作业完成、知识掌握；AI 草稿可编辑。  
-  **测试：** 作业完成为空不能发布。
+  **测试：** 作业完成为空不能发布。  
+  **完成记录：** 2026-05-02 新增 `createEditableFeedbackDraft` 与 `canPublishFeedbackDraft`，支持 AI/老师来源三类点评草稿保持 `DRAFT` 状态且不直接发布；新增 `TeacherHomeworkFeedbackEditor` 并接入 `/teacher/homework-correction`，老师可编辑行为表现、作业完成、知识掌握三类点评，发布按钮在作业完成点评为空时禁用并展示错误。  
+  **TDD 记录：** 先新增 `tests/unit/homework-feedback-editor.test.tsx` 并运行失败，失败原因为 `TeacherHomeworkFeedbackEditor` 不存在；新增 `tests/e2e/teacher-homework-feedback-editor.spec.ts` 并确认老师批改页缺少“三类今日点评”失败；实现 domain helper、组件与页面接入后聚焦单元/E2E 测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/homework-feedback-editor.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-homework-feedback-editor.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 33 个文件/111 个测试，E2E 19 个测试）。  
+  **提交记录：** 待本轮提交并推送 GitHub。
 
 - [ ] M4-08 发布作业反馈  
   **内容：** 发布后家长可见原图、批改图、三类点评。  
