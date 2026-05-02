@@ -53,6 +53,13 @@ export function TeacherHomeworkUploadPage({
           <div className="mt-5 rounded-2xl bg-surfaceAlt px-4 py-3 text-sm font-semibold text-muted">
             <p>可上传学生：{options.students.map((student) => student.studentName).join('、') || '暂无'}</p>
             <p className="mt-2">图片将存入私有文件服务，家长需授权后访问。</p>
+            <p className="mt-2">上传后状态：待 AI 圈错</p>
+          </div>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <a className="rounded-full bg-mint px-5 py-2 text-sm font-bold shadow-neu-sm" href="/teacher/homework-correction">
+              进入 AI 批改确认
+            </a>
+            <p className="text-sm font-semibold text-muted">MVP 演示流程：上传后进入 AI 建议与老师确认。</p>
           </div>
           <p className="mt-3 rounded-2xl bg-peach/40 px-4 py-3 text-sm font-semibold">老师不能给非负责学生上传作业</p>
         </div>

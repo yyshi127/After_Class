@@ -28,6 +28,7 @@ export function ParentHomeworkFeedbackDetail({
           </p>
         </div>
         <span className="rounded-full bg-mint/50 px-4 py-2 text-sm font-semibold">家长可见版本</span>
+        <span className="rounded-full bg-lavender/50 px-4 py-2 text-sm font-semibold">发布状态：老师已确认发布</span>
       </div>
 
       <div className="mt-5 grid gap-4 md:grid-cols-2">

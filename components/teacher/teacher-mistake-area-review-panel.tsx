@@ -40,6 +40,9 @@ export function TeacherMistakeAreaReviewPanel({
               <span className="rounded-full bg-lavender/50 px-3 py-1 text-xs font-semibold">
                 {area.confidenceLevel}
               </span>
+              <span className="rounded-full bg-mint/50 px-3 py-1 text-xs font-semibold">
+                确认状态：老师已确认
+              </span>
             </div>
 
             <div className="mt-4 flex flex-wrap gap-2">

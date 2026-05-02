@@ -60,7 +60,10 @@ export function TeacherHomeworkFeedbackEditor({ draft }: { draft: FeedbackDraft 
         >
           发布给家长
         </button>
-        <p className="text-sm text-muted">发布动作将在 M4-08 接入，当前仅保存老师可编辑草稿。</p>
+        <p className="text-sm text-muted">老师确认发布后，家长端仅能查看已发布版本。</p>
+        <a className="rounded-full bg-lavender px-5 py-2 text-sm font-bold shadow-neu-sm" href="/parent/homework-feedback">
+          查看家长端发布结果
+        </a>
       </div>
     </section>
   );
