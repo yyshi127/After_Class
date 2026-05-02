@@ -794,7 +794,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 Prisma `BillingCycle` enum 与 `BillingRecord` 模型，关联 `Campus`、`Student`、`CustodyClass`，覆盖校区/学生/班级/托管类型/缴费周期/到期时间索引；新增 `domain/billing/service-validity.ts`，家长 projection 复用 `canAccessStudent`，只返回绑定孩子服务有效期与状态文案，不返回应收、实收、余额、欠费金额。  
   **TDD 记录：** 先新增 `tests/unit/billing-record.test.ts` 并运行失败，失败原因为 BillingRecord 模型和家长有效期 projection 尚不存在；最小实现后聚焦测试与 Prisma validate 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/billing-record.test.ts && npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 46 个文件/142 个测试，E2E 27 个测试）。  
-  **提交记录：** 待提交.
+  **提交记录：** 已提交到本地 Git：`d09381d feat(billing): add billing record model`；GitHub push 待完成.
 
 - [ ] M6-02 创建 TeacherFeeRule / 简化课费配置  
   **内容：** MVP 可按班级/老师/服务类型配置固定课费或日课费。  
