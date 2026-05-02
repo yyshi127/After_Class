@@ -758,7 +758,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/mistake-book/practice-sheet-draft.ts`、`components/teacher/teacher-practice-sheet-draft-page.tsx` 和 `/teacher/practice-sheet` 页面；老师可查看 AI 同类题、勾选入练习单、编辑题干并保存练习单草稿，未勾选时阻止 Word 生成。  
   **TDD 记录：** 先新增 `tests/unit/practice-sheet-draft.test.ts`、`tests/unit/teacher-practice-sheet-draft.test.tsx` 和 `tests/e2e/teacher-practice-sheet-draft.spec.ts`，首次运行失败，失败原因为练习单草稿 domain/component/page 尚不存在；最小实现后聚焦单测和 E2E 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/practice-sheet-draft.test.ts tests/unit/teacher-practice-sheet-draft.test.tsx`、`npm run test:e2e -- tests/e2e/teacher-practice-sheet-draft.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 43 个文件/136 个测试，E2E 26 个测试）。  
-  **提交记录：** 待提交。
+  **提交记录：** 已提交到本地 Git：`07a8e15 feat(mistake-book): save practice sheet drafts`；GitHub push 待完成。
 
 - [ ] M5-07 Word 练习单生成  
   **内容：** 学生、班级、日期、学科、错题摘要、同类题、答题区域、备注。  
