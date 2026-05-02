@@ -934,9 +934,11 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/ai-command/guardian-leave-request.ts`，家长 AI `createLeaveRequest` 会基于已解析学生、日期、服务类型和原因生成中风险确认卡片；确认前复用 `executeConfirmedRequest` 阻断任何请假写入，确认后才生成 `status: 请假` 的考勤草稿；同时复用 `canAccessStudent` 防止家长为非绑定学生创建请假申请。新增 `tests/unit/guardian-leave-request.test.ts` 覆盖确认前不写入、确认后生成请假考勤草稿、非绑定学生拒绝。全量质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`。  
   **提交记录：** 已提交到本地 Git：`b235618 feat(ai): add guardian leave confirmation`；计划状态补充提交 `4c553db docs(plan): record M7-08 commit status`；GitHub push 已完成。
 
-- [ ] M7-09 家长 AI：留言老师确认卡片  
+- [x] M7-09 家长 AI：留言老师确认卡片  
   **内容：** 生成留言确认，确认后发给负责老师。  
-  **测试：** 留言只发给授权老师。
+  **测试：** 留言只发给授权老师。  
+  **完成记录：** 2026-05-02 新增 `domain/ai-command/guardian-teacher-message.ts`，家长 AI `sendTeacherMessage` 基于绑定学生、留言内容和候选老师生成中风险确认卡片；确认前复用 `executeConfirmedRequest` 阻断发送，确认后生成留言草稿且只包含对该学生有班级/校区授权的负责老师；家长无绑定学生权限或没有授权老师时直接拒绝。新增 `tests/unit/guardian-teacher-message.test.ts` 覆盖确认前不发送、确认后只发授权老师、非绑定学生/无授权老师拒绝。全量质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`。  
+  **提交记录：** 待本轮提交。
 
 - [ ] M7-10 家长 AI：服务有效期查询  
   **内容：** 只返回有效期和续费说明，不返回余额/欠费金额。  
