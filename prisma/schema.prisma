@@ -82,6 +82,14 @@ enum AiActionResultStatus {
   FAILED
 }
 
+enum ConfirmationRequestStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  EXPIRED
+  EXECUTED
+}
+
 enum AttendanceStatus {
   ARRIVED           @map("已到")
   LEAVE_REQUESTED   @map("请假")
@@ -175,6 +183,7 @@ model User {
   parentNotices      ParentNotice[] @relation("ParentNoticeGuardian")
   auditLogs          AuditLog[]
   aiActionLogs       AiActionLog[]
+  confirmationRequests ConfirmationRequest[]
 
   @@index([role])
   @@index([isActive])
@@ -342,6 +351,37 @@ model AiActionLog {
   @@index([risk])
   @@index([confirmationRequired])
   @@index([resultStatus])
+  @@index([createdAt])
+}
+
+model ConfirmationRequest {
+  id                String                    @id @default(cuid())
+  actorUserId       String
+  actorRole         Role
+  intent            AiIntent
+  risk              AiRiskLevel               @default(MEDIUM)
+  rawInput          String
+  payload           Json
+  summary           String
+  status            ConfirmationRequestStatus @default(PENDING)
+  confirmationRequired Boolean                @default(true)
+  confirmedByUserId String?
+  confirmedAt       DateTime?
+  cancelledAt       DateTime?
+  expiredAt         DateTime?
+  executedAt        DateTime?
+  expiresAt         DateTime
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+
+  actor User @relation(fields: [actorUserId], references: [id], onDelete: Restrict)
+
+  @@index([actorUserId])
+  @@index([actorRole])
+  @@index([intent])
+  @@index([risk])
+  @@index([status])
+  @@index([expiresAt])
   @@index([createdAt])
 }
 

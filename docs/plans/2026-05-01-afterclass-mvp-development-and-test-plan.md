@@ -904,9 +904,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/risk-classifier.test.ts`（RED 后 GREEN）、`npm run test:unit -- tests/unit/ai-intent-schema.test.ts tests/unit/risk-classifier.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 56 个文件/168 个测试）。  
   **提交记录：** 已提交到本地 Git：`3aa935a feat(ai): add intent schema and risk classifier`；计划状态补充提交 `b878860 docs(plan): record M7-03 M7-04 commit status`；GitHub push 已完成。
 
-- [ ] M7-05 创建 ConfirmationRequest 模型/服务  
+- [x] M7-05 创建 ConfirmationRequest 模型/服务  
   **内容：** 中风险动作生成确认卡片，确认后执行 domain service。  
-  **测试：** 未确认不能写入业务数据。
+  **测试：** 未确认不能写入业务数据。  
+  **完成记录：** 2026-05-02 新增 Prisma `ConfirmationRequestStatus` 枚举与 `ConfirmationRequest` 模型，记录 actor、意图、风险、原始输入、确认卡片 payload/summary、状态、确认人、确认时间、执行时间和过期时间；新增 `domain/ai-command/confirmation-request.ts`，支持构造中风险 AI 确认卡片、人工确认后执行 domain service，未确认状态会拒绝业务写入。  
+  **TDD 记录：** 先新增 `tests/unit/confirmation-request.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/confirmation-request` 不存在；实现模型与 service 后聚焦测试和 `prisma:validate` 通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/confirmation-request.test.ts`（RED 后 GREEN）、`npm run test:unit -- tests/unit/confirmation-request.test.ts && npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 57 个文件/171 个测试，E2E 31 个测试）。  
+  **提交记录：** 待本轮提交。
 
 - [ ] M7-06 家长 AI：查询考勤  
   **内容：** 返回绑定孩子到托状态和照片入口。  
