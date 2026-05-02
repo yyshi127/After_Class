@@ -56,6 +56,32 @@ enum AuditAction {
   UPDATE_BILLING
 }
 
+enum AiIntent {
+  queryAttendance
+  queryHomework
+  createLeaveRequest
+  queryBilling
+  sendTeacherMessage
+  recordHomeworkFeedback
+  suggestMistakeAreas
+  generateSimilarQuestions
+  queryClassSettlement
+}
+
+enum AiRiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum AiActionResultStatus {
+  DRAFTED
+  CONFIRMATION_REQUIRED
+  EXECUTED
+  REJECTED
+  FAILED
+}
+
 enum AttendanceStatus {
   ARRIVED           @map("已到")
   LEAVE_REQUESTED   @map("请假")
@@ -148,6 +174,7 @@ model User {
   uploadedFiles      PrivateFile[] @relation("PrivateFileUploader")
   parentNotices      ParentNotice[] @relation("ParentNoticeGuardian")
   auditLogs          AuditLog[]
+  aiActionLogs       AiActionLog[]
 
   @@index([role])
   @@index([isActive])
@@ -288,6 +315,33 @@ model AuditLog {
   @@index([actorUserId])
   @@index([action])
   @@index([targetType, targetId])
+  @@index([createdAt])
+}
+
+model AiActionLog {
+  id                   String               @id @default(cuid())
+  actorUserId          String
+  actorRole            Role
+  rawInput             String
+  intent               AiIntent?
+  entities             Json?
+  confidence           Float
+  risk                 AiRiskLevel
+  confirmationRequired Boolean
+  confirmedAt          DateTime?
+  resultStatus         AiActionResultStatus
+  resultSummary        String?
+  failureReason        String?
+  createdAt            DateTime             @default(now())
+
+  actor User @relation(fields: [actorUserId], references: [id], onDelete: Restrict)
+
+  @@index([actorUserId])
+  @@index([actorRole])
+  @@index([intent])
+  @@index([risk])
+  @@index([confirmationRequired])
+  @@index([resultStatus])
   @@index([createdAt])
 }
 
