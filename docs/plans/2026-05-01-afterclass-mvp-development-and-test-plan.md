@@ -858,7 +858,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `/admin/settlements` 管理端班级核算页面、`AdminClassSettlements` 组件和 `domain/admin/class-settlements.ts` projection；页面展示校区、日期、班级、托管类型、老师筛选入口，以及出勤统计、学生收入、老师课费、预留成本、毛利。总校长/总部管理员可汇总全部授权范围，校区管理员按 `canAccessCampus` 限定本校区，老师/家长不可查看。管理端侧边栏新增“班级核算”入口。  
   **TDD 记录：** 先新增 `tests/unit/admin-class-settlements.test.tsx` 和 `tests/e2e/admin-class-settlements.spec.ts`；聚焦单测 RED 失败于组件/domain 缺失；实现 domain、组件、页面和导航后聚焦单测/E2E 通过。曾遇到 Playwright `getByLabel('校区筛选')` 与顶部校区筛选重名导致 strict-mode 失败，已改为 exact locator。  
   **测试命令：** `npm run test:unit -- tests/unit/admin-class-settlements.test.tsx`（RED 后 GREEN）、`npm run test:unit -- tests/unit/admin-class-settlements.test.tsx && npm run test:e2e -- tests/e2e/admin-class-settlements.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 52 个文件/157 个测试，E2E 30 个测试）。  
-  **提交记录：** 已提交到本地 Git：`bdf9300 feat(admin): add class settlements page`；GitHub push 待完成.
+  **提交记录：** 已提交到本地 Git：`bdf9300 feat(admin): add class settlements page`；计划状态补充提交 `bff0084 docs(plan): record M6-09 commit status`；后续 M6-10/M7 计划提交已推送，GitHub push 已完成.
 
 - [x] M6-10 E2E：收费与核算可见性  
   **流程：** 管理员录入收费 → 家长看有效期 → 老师看到期提醒 → 管理员看毛利。  
@@ -878,7 +878,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 Prisma `AiActionLog` 模型、`AiIntent`、`AiRiskLevel`、`AiActionResultStatus` 枚举，并关联 `User.aiActionLogs`；新增 `domain/ai-command/ai-action-log.ts`，统一构造 AI 操作日志 payload，并提供 `withAiActionLogging` 包装器确保 AI 调用成功或失败都会持久化日志。  
   **TDD 记录：** 先新增 `tests/unit/ai-action-log.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/ai-action-log` 不存在；实现模型与 domain helper 后聚焦测试和 Prisma validate 通过。  
   **测试命令：** `npm run test:unit -- tests/unit/ai-action-log.test.ts && npm run prisma:validate`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 54 个文件/162 个测试）。  
-  **提交记录：** 已提交到本地 Git：`2998aab feat(ai): add action logging and provider foundation`；计划状态补充提交待生成。
+  **提交记录：** 已提交到本地 Git：`2998aab feat(ai): add action logging and provider foundation`；计划状态补充提交 `7f7e4f1 docs(plan): record M7-01 M7-02 commit status`；GitHub push 已完成。
 
 - [x] M7-02 创建 AiProvider 接口  
   **内容：** `generateJson`、`generateText`、`analyzeImage` 抽象。  
@@ -886,7 +886,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/ai-command/ai-provider.ts`，定义 `AiProvider` 的 `generateJson`、`generateText`、`analyzeImage` 三类可插拔能力，并提供记录调用参数的 `createMockAiProvider`，便于后续 AI Command Layer 在单元测试中不触碰外部 AI 服务。  
   **TDD 记录：** 先新增 `tests/unit/ai-provider.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/ai-provider` 不存在；实现接口与 mock provider 后聚焦测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/ai-provider.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 54 个文件/162 个测试）。  
-  **提交记录：** 已提交到本地 Git：`2998aab feat(ai): add action logging and provider foundation`；计划状态补充提交待生成。
+  **提交记录：** 已提交到本地 Git：`2998aab feat(ai): add action logging and provider foundation`；计划状态补充提交 `7f7e4f1 docs(plan): record M7-01 M7-02 commit status`；GitHub push 已完成。
 
 - [x] M7-03 创建意图识别 schema  
   **内容：** 9 个 MVP 意图：queryAttendance、queryHomework、createLeaveRequest、queryBilling、sendTeacherMessage、recordHomeworkFeedback、suggestMistakeAreas、generateSimilarQuestions、queryClassSettlement。  
@@ -894,7 +894,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/ai-command/ai-intent-schema.ts`，用 zod 定义 9 个 MVP 意图识别 schema 与各意图实体 schema；未知意图、低置信度和实体不完整统一降级到人工/传统页面，不执行业务写入。  
   **TDD 记录：** 先新增 `tests/unit/ai-intent-schema.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/ai-intent-schema` 不存在；实现 schema 与解析 helper 后聚焦测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/ai-intent-schema.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 56 个文件/168 个测试）。  
-  **提交记录：** 已提交到本地 Git：`3aa935a feat(ai): add intent schema and risk classifier`；计划状态补充提交待生成。
+  **提交记录：** 已提交到本地 Git：`3aa935a feat(ai): add intent schema and risk classifier`；计划状态补充提交 `b878860 docs(plan): record M7-03 M7-04 commit status`；GitHub push 已完成。
 
 - [x] M7-04 创建 RiskClassifier
   **内容：** 低风险查询、中风险确认、高风险拒绝。  
@@ -902,7 +902,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/ai-command/risk-classifier.ts`，将只读查询归为低风险，正常业务写入归为中风险并要求确认；识别修改收费/余额/欠费/课费、删除学生、批量通知等高风险指令并拒绝执行，引导传统页面人工复核。  
   **TDD 记录：** 先新增 `tests/unit/risk-classifier.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/risk-classifier` 不存在；实现最小风险分类器后聚焦测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/risk-classifier.test.ts`（RED 后 GREEN）、`npm run test:unit -- tests/unit/ai-intent-schema.test.ts tests/unit/risk-classifier.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate`（全部通过，unit 56 个文件/168 个测试）。  
-  **提交记录：** 已提交到本地 Git：`3aa935a feat(ai): add intent schema and risk classifier`；计划状态补充提交待生成。
+  **提交记录：** 已提交到本地 Git：`3aa935a feat(ai): add intent schema and risk classifier`；计划状态补充提交 `b878860 docs(plan): record M7-03 M7-04 commit status`；GitHub push 已完成。
 
 - [ ] M7-05 创建 ConfirmationRequest 模型/服务  
   **内容：** 中风险动作生成确认卡片，确认后执行 domain service。  
