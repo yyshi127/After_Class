@@ -960,9 +960,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/teacher-mistake-suggestion-ai.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 64 个文件/189 个测试，E2E 31 个测试）。  
   **提交记录：** 已提交到本地 Git：`8cdb6eb feat(ai): add teacher mistake suggestion command`；计划状态补充提交 `fd8c0fc docs(plan): record M7-12 commit status`；GitHub push 已完成。
 
-- [ ] M7-13 老师 AI：同类题生成  
+- [x] M7-13 老师 AI：同类题生成  
   **内容：** 生成同类题草稿。  
-  **测试：** 老师勾选后才加入练习单。
+  **测试：** 老师勾选后才加入练习单。  
+  **完成记录：** 2026-05-03 新增 `domain/ai-command/teacher-similar-question-draft.ts`，老师 AI `generateSimilarQuestions` 可基于老师负责学生的已收录错题生成 3 道同类题草稿；调用前复用 `canAccessStudent` 校验老师校区/班级授权，并校验错题与学生、校区、班级一致。AI 生成结果为中风险确认草稿，默认 `canAddToWorksheet=false`，只有老师在练习单草稿中勾选后才进入 Word 练习单候选。  
+  **TDD 记录：** 先新增 `tests/unit/teacher-similar-question-ai.test.ts` 并运行失败，失败原因为 `@/domain/ai-command/teacher-similar-question-draft` 不存在；最小实现后聚焦测试通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/teacher-similar-question-ai.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 65 个文件/192 个测试，E2E 31 个测试）。  
+  **提交记录：** 待提交。
 
 - [ ] M7-14 管理端 AI：班级核算查询  
   **内容：** 按权限查询校区、班级、毛利。  
