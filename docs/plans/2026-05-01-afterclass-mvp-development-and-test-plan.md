@@ -774,7 +774,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/parent/mistake-summary.ts` 和 `components/parent/parent-mistake-summary-card.tsx`，并接入 `/parent`；家长端仅展示绑定孩子的错题摘要、学科、知识点和订正状态，不展示 AI 置信度等内部字段。  
   **TDD 记录：** 先新增 `tests/unit/parent-mistake-summary.test.tsx` 并运行失败，失败原因为家长错题摘要 domain/component 尚不存在；最小实现后聚焦测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/parent-mistake-summary.test.tsx`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（首次 E2E 因新增家长错题摘要导致旧签到流 `王小明` 文本定位严格模式冲突，已将断言收敛到安全到达卡片；复跑 `npm run test:e2e` 通过，unit 45 个文件/140 个测试，E2E 26 个测试）。  
-  **提交记录：** 已提交到本地 Git：`8cb9ce8 feat(parent): add mistake summary card`；GitHub push 待完成.
+  **提交记录：** 已提交到本地 Git：`8cb9ce8 feat(parent): add mistake summary card`；计划状态补充提交 `ccf790e docs(plan): record M5-08 commit status`；GitHub push 已完成.
 
 - [ ] M5-09 E2E：错题到练习单流程  
   **流程：** 发布作业 → 错题收录 → AI 生成同类题 → 老师勾选 → 下载 Word。  
