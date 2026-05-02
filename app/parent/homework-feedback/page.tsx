@@ -103,7 +103,7 @@ const parentHomeworkDetail = demoGuardian && demoStudent
 
 export default function ParentHomeworkFeedbackPage() {
   return (
-    <main className="min-h-screen px-6 py-10 text-text">
+    <main aria-label="家长作业反馈详情页" className="min-h-screen overflow-x-hidden px-4 py-6 text-text sm:px-6 sm:py-10">
       <div className="mx-auto grid max-w-5xl gap-6">
         <ParentHomeworkFeedbackDetail detail={parentHomeworkDetail} />
       </div>

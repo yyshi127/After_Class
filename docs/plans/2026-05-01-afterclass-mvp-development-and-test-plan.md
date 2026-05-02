@@ -1068,9 +1068,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/parent-ai-assistant-card.test.tsx`、`npm run test:e2e -- tests/e2e/parent-ai-assistant-ui.spec.ts tests/e2e/ai-confirmation-and-refusal-flow.spec.ts`、`npm run test:e2e -- tests/e2e/parent-service-validity.spec.ts tests/e2e/billing-settlement-visibility-flow.spec.ts tests/e2e/parent-ai-assistant-ui.spec.ts tests/e2e/photo-check-in-notification-flow.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 73 个文件/211 个测试，E2E 42 个测试）。
   **提交记录：** 已提交并推送 GitHub：`fb9e054 feat(ui): add parent ai assistant`；计划状态补充提交 `f80eb07 docs(plan): record M8-08 completion`。
 
-- [ ] M8-09 家长端作业详情 UI  
-  **内容：** 原图、批改图、三类点评、错题摘要。  
-  **测试：** 不展示经营数据。
+- [x] M8-09 家长端作业详情 UI
+  **内容：** 原图、批改图、三类点评、错题摘要。
+  **测试：** 家长只能看已发布内容。
+  **完成记录：** 2026-05-03 强化 `/parent/homework-feedback` 移动端作业详情页，页面 main 增加家长作业反馈详情语义与横向溢出保护；详情组件补齐作业图片凭证、三类学习反馈、到托离校时间线、家长错题摘要等可定位区域，并对文件 ID/照片引用启用换行，保证 390px 家长 H5 端可读。
+  **隐私边界：** 家长端详情仍只展示老师已发布作业原图、批改图、三类点评、到离校记录和老师确认错题摘要；不展示 AI 内部置信度、老师内部备注、未确认 AI 草稿或经营/收费敏感字段。
+  **测试命令：** `npm run typecheck && npm run test:unit -- tests/unit/parent-homework-feedback-detail.test.tsx && npm run test:e2e -- tests/e2e/parent-homework-feedback-detail.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 73 个文件/211 个测试，E2E 42 个测试）。
+  **提交记录：** 待提交。
 
 - [ ] M8-10 家长端我的/服务 UI  
   **内容：** 孩子信息、通知设置、请假记录、服务有效期。  

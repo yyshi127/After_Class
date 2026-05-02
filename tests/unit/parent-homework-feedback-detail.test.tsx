@@ -135,17 +135,17 @@ describe('parent homework feedback detail', () => {
 
     render(<ParentHomeworkFeedbackDetail detail={detail} />);
 
+    expect(screen.getByRole('region', { name: '作业与考勤详情' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '作业与考勤详情' })).toBeInTheDocument();
     expect(screen.getByText('王小明 · 数学')).toBeInTheDocument();
-    expect(screen.getByText('作业原图：file-homework-original-wang')).toBeInTheDocument();
-    expect(screen.getByText('批改图：file-homework-corrected-wang')).toBeInTheDocument();
-    expect(screen.getByText('行为表现')).toBeInTheDocument();
-    expect(screen.getByText('作业完成')).toBeInTheDocument();
-    expect(screen.getByText('知识掌握')).toBeInTheDocument();
-    expect(screen.getByText('到托/离校时间线')).toBeInTheDocument();
-    expect(screen.getByText(/已到/)).toBeInTheDocument();
-    expect(screen.getByText(/已离校/)).toBeInTheDocument();
-    expect(screen.getByText('错题摘要')).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: '作业图片凭证' })).toHaveTextContent('作业原图：file-homework-original-wang');
+    expect(screen.getByRole('region', { name: '作业图片凭证' })).toHaveTextContent('批改图：file-homework-corrected-wang');
+    expect(screen.getByRole('region', { name: '三类学习反馈' })).toHaveTextContent('行为表现');
+    expect(screen.getByRole('region', { name: '三类学习反馈' })).toHaveTextContent('作业完成');
+    expect(screen.getByRole('region', { name: '三类学习反馈' })).toHaveTextContent('知识掌握');
+    expect(screen.getByRole('region', { name: '到托离校时间线' })).toHaveTextContent('已到');
+    expect(screen.getByRole('region', { name: '到托离校时间线' })).toHaveTextContent('已离校');
+    expect(screen.getByRole('region', { name: '家长错题摘要' })).toHaveTextContent('错题摘要');
     expect(screen.getByText('两位数乘法')).toBeInTheDocument();
     expect(screen.getByText(/进位步骤遗漏/)).toBeInTheDocument();
     expect(screen.queryByText(/internalAiConfidence|老师内部|置信度|课堂后单独跟进|未确认草稿/)).not.toBeInTheDocument();
