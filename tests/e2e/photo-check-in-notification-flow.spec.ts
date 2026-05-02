@@ -14,8 +14,9 @@ test('photo check-in notification flow from teacher to parent home', async ({ pa
   await expect(page.getByText('到托记录已生成，家长端安全到达卡片可查看照片引用。')).toBeVisible();
 
   await page.goto('/parent');
+  const safetyCard = page.getByRole('article').filter({ hasText: '到托时间：18:30' });
   await expect(page.getByRole('heading', { name: '安全到达' })).toBeVisible();
-  await expect(page.getByText('王小明')).toBeVisible();
-  await expect(page.getByText('已到托管中心')).toBeVisible();
-  await expect(page.getByText('photo://demo-arrival-wang')).toBeVisible();
+  await expect(safetyCard.getByRole('heading', { name: '王小明' })).toBeVisible();
+  await expect(safetyCard.getByText('已到托管中心')).toBeVisible();
+  await expect(safetyCard.getByText('photo://demo-arrival-wang')).toBeVisible();
 });

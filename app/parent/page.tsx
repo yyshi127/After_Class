@@ -1,11 +1,13 @@
 import { ParentHomeSafetyCard } from '@/components/parent/parent-home-safety-card';
 import { ParentHomeworkFeedbackCard } from '@/components/parent/parent-homework-feedback-card';
+import { ParentMistakeSummaryCard } from '@/components/parent/parent-mistake-summary-card';
 import { createEditableFeedbackDraft } from '@/domain/feedback/feedback';
 import {
   getGuardianVisibleHomeworkFeedback,
   publishHomeworkFeedback,
 } from '@/domain/feedback/homework-feedback-publishing';
 import { getParentSafetyArrivalCards } from '@/domain/parent/safety-arrival';
+import { getParentVisibleMistakeSummaries } from '@/domain/parent/mistake-summary';
 import { DEMO_SEED } from '@/prisma/seed-data';
 
 const demoGuardian = DEMO_SEED.users.find((user) => user.role === 'GUARDIAN');
@@ -85,6 +87,35 @@ const parentHomeworkFeedback = demoGuardian && publishedHomeworkFeedback
     })
   : null;
 
+const parentMistakeSummaries = demoGuardian
+  ? getParentVisibleMistakeSummaries({
+      guardian: {
+        id: demoGuardian.id,
+        role: demoGuardian.role,
+        guardianStudentIds: DEMO_SEED.guardianStudents
+          .filter((binding) => binding.guardianUserId === demoGuardian.id)
+          .map((binding) => binding.studentId),
+      },
+      mistakeItems: demoStudent
+        ? [
+            {
+              id: 'mistake-wang-1',
+              campusId: demoStudent.campusId,
+              classId: demoStudent.classId,
+              studentId: demoStudent.id,
+              studentName: demoStudent.name,
+              subject: '数学',
+              knowledgePoint: '两位数乘法',
+              mistakeReason: '进位步骤遗漏',
+              correctionStatus: 'PENDING_CORRECTION',
+              aiConfidence: 0.91,
+              createdAt: '2026-05-02T12:00:00.000Z',
+            },
+          ]
+        : [],
+    })
+  : [];
+
 export default function ParentPage() {
   return (
     <main className="min-h-screen px-6 py-10 text-text">
@@ -97,6 +128,7 @@ export default function ParentPage() {
 
         <ParentHomeSafetyCard cards={safetyCards} />
         <ParentHomeworkFeedbackCard feedback={parentHomeworkFeedback} />
+        <ParentMistakeSummaryCard summaries={parentMistakeSummaries} />
       </div>
     </main>
   );
