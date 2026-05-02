@@ -682,7 +682,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/feedback/homework-feedback-publishing.ts` 发布 service，发布前要求老师确认后的批改图和非空作业完成点评；发布后将作业反馈与三类点评设为 `PUBLISHED`，并通过家长绑定关系生成家长可见投影。新增 `ParentHomeworkFeedbackCard` 并接入 `/parent`，家长仅看到作业原图、批改图和三类点评，不展示 AI 内部置信度或老师内部备注。  
   **TDD 记录：** 先新增 `tests/unit/homework-feedback-publishing.test.tsx` 并运行失败，失败原因为家长作业反馈组件/发布 service 不存在；新增 `tests/e2e/parent-homework-feedback-publishing.spec.ts` 并确认 `/parent` 缺少“今日作业反馈”失败；实现 service、组件与页面接入后聚焦单元/E2E 测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/homework-feedback-publishing.test.tsx`、`npm run test:e2e -- tests/e2e/parent-homework-feedback-publishing.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 34 个文件/115 个测试，E2E 20 个测试）。  
-  **提交记录：** 待本轮提交并推送 GitHub。
+  **提交记录：** 已提交到本地 Git：`d00a31c feat(feedback): publish homework feedback to parents`；待推送 GitHub。
 
 - [ ] M4-09 家长端作业/考勤详情页  
   **内容：** 作业原图、批改图、三类点评、错题摘要。  
