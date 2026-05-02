@@ -706,7 +706,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `tests/e2e/homework-feedback-publish-flow.spec.ts`，覆盖 `/teacher/homework-upload` 上传入口 → `/teacher/homework-correction` AI 圈错确认与三类点评发布 → `/parent/homework-feedback` 家长查看已发布作业与错题摘要。为保持 MVP 演示闭环，上传页增加“上传后状态：待 AI 圈错”和“进入 AI 批改确认”入口，AI 圈错确认区展示老师确认状态，发布区增加“查看家长端发布结果”，家长详情页展示“发布状态：老师已确认发布”。  
   **TDD 记录：** 先新增 M4-11 E2E 并运行失败，失败原因为上传页缺少“上传后状态：待 AI 圈错”和流程入口；最小补齐流程提示/链接/发布状态后聚焦 E2E 通过。  
   **测试命令：** `npm run test:e2e -- tests/e2e/homework-feedback-publish-flow.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 36 个文件/121 个测试，E2E 23 个测试）。  
-  **提交记录：** 已提交到本地 Git：`30f1918 test(homework): cover feedback publish flow`；GitHub push 待执行。
+  **提交记录：** 已提交到本地 Git：`30f1918 test(homework): cover feedback publish flow`；计划状态补充提交 `3f4ad10 docs(plan): record M4-11 commit status`；GitHub push 已完成。
 
 ---
 
