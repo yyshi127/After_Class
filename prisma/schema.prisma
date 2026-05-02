@@ -40,6 +40,11 @@ enum BillingCycle {
   SEMESTER
 }
 
+enum TeacherFeeBillingMode {
+  CLASS_FIXED
+  DAILY_FIXED
+}
+
 enum CampusStatus {
   ACTIVE
   INACTIVE
@@ -139,6 +144,7 @@ model User {
   teacherAttendanceMakeups TeacherAttendance[] @relation("TeacherAttendanceMakeupActor")
   homeworkReviews    HomeworkReview[] @relation("HomeworkReviewTeacher")
   feedbacks          Feedback[] @relation("FeedbackTeacher")
+  teacherFeeRules    TeacherFeeRule[] @relation("TeacherFeeRuleTeacher")
   uploadedFiles      PrivateFile[] @relation("PrivateFileUploader")
   parentNotices      ParentNotice[] @relation("ParentNoticeGuardian")
   auditLogs          AuditLog[]
@@ -169,6 +175,8 @@ model Campus {
   feedbacks Feedback[]
   mistakeBookItems MistakeBookItem[]
   billingRecords BillingRecord[]
+  teacherFeeRules TeacherFeeRule[]
+  classSettlements ClassSettlement[]
 
   @@index([status])
 }
@@ -191,6 +199,8 @@ model CustodyClass {
   feedbacks Feedback[]
   mistakeBookItems MistakeBookItem[]
   billingRecords BillingRecord[]
+  teacherFeeRules TeacherFeeRule[]
+  classSettlements ClassSettlement[]
 
   @@index([campusId])
   @@unique([campusId, name])
@@ -465,6 +475,60 @@ model BillingRecord {
   @@index([serviceType])
   @@index([billingCycle])
   @@index([validUntil])
+}
+
+model TeacherFeeRule {
+  id            String                @id @default(cuid())
+  campusId      String
+  classId       String?
+  teacherUserId String
+  serviceType   ServiceType
+  billingMode   TeacherFeeBillingMode
+  feeAmount     Decimal
+  effectiveFrom DateTime
+  effectiveTo   DateTime?
+  isActive      Boolean               @default(true)
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+
+  campus  Campus        @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  class   CustodyClass? @relation(fields: [classId], references: [id], onDelete: SetNull)
+  teacher User          @relation("TeacherFeeRuleTeacher", fields: [teacherUserId], references: [id], onDelete: Cascade)
+
+  @@index([campusId])
+  @@index([classId])
+  @@index([teacherUserId])
+  @@index([serviceType])
+  @@index([isActive])
+  @@index([effectiveFrom, effectiveTo])
+}
+
+model ClassSettlement {
+  id                         String      @id @default(cuid())
+  campusId                   String
+  classId                    String
+  serviceType                ServiceType
+  settlementDate             DateTime
+  expectedCount              Int
+  arrivedCount               Int
+  leaveCount                 Int
+  absentCount                Int
+  studentRevenueAmount       Decimal
+  teacherFeeAmount           Decimal
+  reservedCostAmount         Decimal
+  estimatedGrossProfitAmount Decimal
+  teacherFeeRuleIds          String[]
+  createdAt                  DateTime    @default(now())
+  updatedAt                  DateTime    @updatedAt
+
+  campus Campus      @relation(fields: [campusId], references: [id], onDelete: Restrict)
+  class  CustodyClass @relation(fields: [classId], references: [id], onDelete: Restrict)
+
+  @@index([campusId])
+  @@index([classId])
+  @@index([serviceType])
+  @@index([settlementDate])
+  @@unique([campusId, classId, serviceType, settlementDate])
 }
 
 model ParentNotice {
