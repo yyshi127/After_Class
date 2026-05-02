@@ -976,9 +976,13 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run test:unit -- tests/unit/admin-class-settlement-ai-query.test.ts`（RED 后 GREEN）、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 66 个文件/195 个测试，E2E 31 个测试）。  
   **提交记录：** 已提交到本地 Git：`5500728 feat(ai): add admin class settlement query`；计划状态补充提交 `67b69c1 docs(plan): record M7-14 commit status`；GitHub push 已完成。
 
-- [ ] M7-15 高风险拒绝 UI  
+- [x] M7-15 高风险拒绝 UI  
   **内容：** 明确显示不能执行原因和传统页面入口。  
-  **测试：** “把欠费改成 0”必须拒绝。
+  **测试：** “把欠费改成 0”必须拒绝.  
+  **完成记录：** 2026-05-03 新增 `domain/ai-command/high-risk-refusal.ts` 高风险拒绝卡片投影、`AdminAiHighRiskRefusalCard` 管理端拒绝 UI 和 `/admin/ai-assistant` AI 经营助手页面；“把欠费改成 0”会被识别为高风险，页面明确展示不能执行原因、AI 不可执行说明，并引导到 `/admin/billing` 收费记录页人工复核。管理端侧边栏新增“AI 经营助手”入口。  
+  **TDD 记录：** 先新增 `tests/unit/admin-ai-high-risk-refusal.test.tsx` 并运行失败，失败原因为拒绝卡片组件/domain helper 不存在；新增 `tests/e2e/admin-ai-high-risk-refusal.spec.ts` 覆盖 `/admin/ai-assistant` 高风险拒绝卡片；最小实现 domain、组件、路由和导航后聚焦单测/E2E 通过。  
+  **测试命令：** `npm run test:unit -- tests/unit/admin-ai-high-risk-refusal.test.tsx`（RED 后 GREEN）、`npm run test:e2e -- tests/e2e/admin-ai-high-risk-refusal.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 67 个文件/196 个测试，E2E 32 个测试）。  
+  **提交记录：** 已提交到本地 Git：`efa1d6f feat(ai): add high risk refusal UI`；计划状态补充提交待完成。
 
 - [ ] M7-16 AI 操作日志页面  
   **内容：** 筛选时间、用户、意图、风险、确认状态、结果。  
