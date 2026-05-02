@@ -766,7 +766,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-02 新增 `domain/mistake-book/practice-sheet-docx.ts`，基于练习单草稿生成 Word `.docx` Buffer，内容包含学生、班级、学科、生成时间、错题摘要、同类题、答题区域和备注；同时生成 `PRACTICE_DOCX` 私有文件元数据与 trace，可追溯草稿、学生、班级、错题来源、练习题和生成老师。  
   **TDD 记录：** 先新增 `tests/unit/practice-sheet-docx.test.ts`，首次运行失败，失败原因为 `@/domain/mistake-book/practice-sheet-docx` 不存在；最小实现后聚焦测试通过。  
   **测试命令：** `npm run test:unit -- tests/unit/practice-sheet-docx.test.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 44 个文件/138 个测试，E2E 26 个测试）。  
-  **提交记录：** 待提交。
+  **提交记录：** 已提交到本地 Git：`1b340ee feat(mistake-book): generate practice sheet docx`；GitHub push 待完成。
 
 - [ ] M5-08 家长端错题摘要  
   **内容：** 家长可看孩子错题摘要，不看 AI 内部置信度细节。  
