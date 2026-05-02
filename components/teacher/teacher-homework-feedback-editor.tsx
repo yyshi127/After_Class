@@ -5,7 +5,7 @@ export function TeacherHomeworkFeedbackEditor({ draft }: { draft: FeedbackDraft 
   const publishState = canPublishFeedbackDraft(draft);
 
   return (
-    <section className="rounded-[2rem] bg-surface p-5 shadow-neu-sm" aria-labelledby="homework-feedback-heading">
+    <section className="rounded-[2rem] bg-surface p-5 shadow-neu-sm" aria-label="三类点评编辑区">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-muted">Daily Feedback Draft</p>
@@ -61,10 +61,10 @@ export function TeacherHomeworkFeedbackEditor({ draft }: { draft: FeedbackDraft 
           发布给家长
         </button>
         <p className="text-sm text-muted">老师确认发布后，家长端仅能查看已发布版本。</p>
-        <a className="rounded-full bg-lavender px-5 py-2 text-sm font-bold shadow-neu-sm" href="/parent/homework-feedback">
+        <a className="inline-flex min-h-11 items-center rounded-full bg-lavender px-5 py-2 text-sm font-bold shadow-neu-sm" href="/parent/homework-feedback">
           查看家长端发布结果
         </a>
-        <a className="rounded-full bg-surfaceAlt px-5 py-2 text-sm font-bold shadow-neu-sm" href="/teacher/mistake-book">
+        <a className="inline-flex min-h-11 items-center rounded-full bg-surfaceAlt px-5 py-2 text-sm font-bold shadow-neu-sm" href="/teacher/mistake-book">
           查看自动收录错题
         </a>
       </div>

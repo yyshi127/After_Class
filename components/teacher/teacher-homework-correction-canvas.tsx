@@ -13,7 +13,7 @@ export type TeacherHomeworkCorrectionReview = {
 
 export function TeacherHomeworkCorrectionCanvas({ review }: { review: TeacherHomeworkCorrectionReview }) {
   return (
-    <main className="min-h-screen bg-background px-6 py-8 text-foreground md:px-10">
+    <section aria-label="作业图片与圈错区" className="bg-background text-foreground">
       <section className="mx-auto max-w-6xl space-y-6">
         <div className="rounded-[2rem] bg-surface p-6 shadow-neu-sm">
           <p className="text-sm font-semibold text-muted">Homework Correction</p>
@@ -24,7 +24,7 @@ export function TeacherHomeworkCorrectionCanvas({ review }: { review: TeacherHom
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
-          <div className="rounded-[2rem] bg-surface p-5 shadow-neu-sm">
+          <div className="min-w-0 rounded-[2rem] bg-surface p-5 shadow-neu-sm">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h2 className="text-xl font-bold">{review.studentName} · {review.subject}</h2>
@@ -44,7 +44,7 @@ export function TeacherHomeworkCorrectionCanvas({ review }: { review: TeacherHom
             </div>
           </div>
 
-          <aside className="rounded-[2rem] bg-surface p-5 shadow-neu-sm">
+          <aside className="min-w-0 rounded-[2rem] bg-surface p-5 shadow-neu-sm">
             <h2 className="text-xl font-bold">批改区域</h2>
             <p className="mt-2 text-sm text-muted">老师可在画布上框选错题区域，MVP 先保存草稿坐标。</p>
             <div className="mt-5 space-y-3">
@@ -64,6 +64,6 @@ export function TeacherHomeworkCorrectionCanvas({ review }: { review: TeacherHom
           </aside>
         </div>
       </section>
-    </main>
+    </section>
   );
 }

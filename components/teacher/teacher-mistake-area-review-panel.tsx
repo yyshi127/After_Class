@@ -8,7 +8,7 @@ export function TeacherMistakeAreaReviewPanel({
   aiSuggestedAreas: AiMistakeSuggestionArea[];
 }) {
   return (
-    <section className="rounded-[2rem] bg-surface p-5 shadow-neu-sm" aria-labelledby="mistake-area-review-heading">
+    <section className="rounded-[2rem] bg-surface p-5 shadow-neu-sm" aria-label="AI 圈错确认区">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-muted">AI Suggestion Review</p>
