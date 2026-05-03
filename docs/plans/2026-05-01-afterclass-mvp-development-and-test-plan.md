@@ -1098,9 +1098,12 @@ storage: 本地 volume，后续迁移对象存储
   **验证：** 已通过 targeted 验证：`npm run typecheck && npm run test:unit -- tests/unit/student-mistake-book.test.tsx && npm run test:e2e -- tests/e2e/student-mistake-book.spec.ts`；已通过完整质量门禁：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（75 个 unit 文件 / 215 个测试通过，44 个 E2E 通过）。
   **提交记录：** 已提交并推送 GitHub：`2cff8bc feat(ui): enhance student mistake book entries`。
 
-- [ ] M8-13 全局状态页面  
-  **内容：** loading、empty、error、permission denied、AI thinking、voice recording。  
+- [x] M8-13 全局状态页面
+  **内容：** loading、empty、error、permission denied、AI thinking、voice recording。
   **测试：** 所有核心页面至少有空状态和错误状态。
+  **完成记录：** 2026-05-03 新增 `/status` 全局状态页面和 `AppStatusShowcasePage`/`AppStatusCard`，统一展示 loading、empty、error、permission denied、AI thinking、voice recording 六类状态；错误和无权限使用 `alert` 语义，其他状态使用 `status` 语义；重试、返回首页、结束录音等动作保持触控友好。
+  **验证：** 已按 TDD 先新增失败测试，再实现组件与路由；targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/app-status-showcase.test.tsx && npm run test:e2e -- tests/e2e/app-status-showcase.spec.ts`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（76 个 unit 文件 / 217 个测试通过，45 个 E2E 通过）。
+  **提交记录：** 待提交。
 
 - [ ] M8-14 可访问性检查  
   **内容：** 对比度、label、aria、键盘焦点、触控尺寸。  
