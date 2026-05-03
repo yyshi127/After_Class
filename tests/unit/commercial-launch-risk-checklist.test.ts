@@ -31,7 +31,7 @@ describe('commercial launch risk checklist', () => {
     expect(riskChecklist).toContain('AI 不执行欠费清零');
     expect(riskChecklist).toContain('家长端只展示服务有效期/续费指导');
     expect(riskChecklist).toContain('未授权学生不得使用照片/作业图片 AI 功能');
-    expect(riskChecklist).toContain('docker build');
+    expect(riskChecklist).toContain('npm run deploy:smoke');
     expect(riskChecklist).toContain('恢复演练');
   });
 });

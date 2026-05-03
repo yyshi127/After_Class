@@ -1306,10 +1306,11 @@ storage: 本地 volume，后续迁移对象存储
 - [x] 所有核心数据按校区权限隔离。
 - [x] 所有图片按授权访问。
 - [x] lint、typecheck、unit、integration、e2e、build 全部通过。
-- [ ] Docker Compose 可启动完整系统。环境当前无 Docker，已完成 Compose 静态校验和生产 build，真实 `docker compose up` 需在具备 Docker 的部署机上复核。
+- [ ] Docker Compose 可启动完整系统。环境当前无 Docker，已完成 Compose 静态校验、生产 build、部署机烟测脚本和失败前置检查；真实 `docker compose up` 仍需在具备 Docker 的部署机上复核。
 
 **完成记录：** 2026-05-03 新增 `tests/integration/mvp-acceptance-checklist-coverage.test.ts`，将第 5 章除 Docker 真实启动外的 22 项总体验收标准映射到现有可执行 E2E、unit、integration 与脚本覆盖：基础配置、固定托管类型、老师/学生考勤、拍照到托通知、作业 AI 圈错与三类点评、家长发布可见性、错题本与 Word 练习单、收费/服务有效期、班级核算、老师端经营字段隔离、AI 9 个意图、AI 确认/拒绝/审计日志、校区权限和私有图片授权。当前运行环境无 Docker CLI，因此 `Docker Compose 可启动完整系统` 保持未勾选，需在具备 Docker 的部署机执行真实 `docker compose up`/健康检查后再完成。
-**验证：** targeted 验证通过：`npm run typecheck && npm run test:integration -- tests/integration/mvp-acceptance-checklist-coverage.test.ts`（5 个 integration 文件 / 6 个测试通过）；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run test:integration && npm run prisma:validate && npm run build && npm run test:e2e && git diff --check`（85 个 unit 文件 / 238 个测试通过，5 个 integration 文件 / 6 个测试通过，50 个 E2E 通过）。
+**补充记录：** 2026-05-03 新增 `scripts/deploy-smoke.sh`、`npm run deploy:smoke`、`docs/operations/docker-compose-smoke-test.md`、`tests/unit/deploy-smoke-script.test.ts`，用于真实部署机执行 `docker compose config`、`docker compose build`、`docker compose up -d postgres web` 与首页 HTTP 烟测；脚本拒绝缺失 Docker 或生产占位密钥。
+**验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/deploy-smoke-script.test.ts tests/unit/commercial-launch-risk-checklist.test.ts`（因 `test:unit` 脚本默认包含 `tests/unit`，实际 86 个 unit 文件 / 240 个测试通过）；本地执行 `npm run deploy:smoke` 按预期失败并提示 `docker is required for deployment smoke verification`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run test:integration && npm run prisma:validate && npm run build && npm run test:e2e && git diff --check`（86 个 unit 文件 / 240 个测试通过，5 个 integration 文件 / 6 个测试通过，50 个 E2E 通过）。
 
 ---
 

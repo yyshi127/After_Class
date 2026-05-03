@@ -24,7 +24,8 @@
     "db:migrate": "bash scripts/db-migrate.sh",
     "db:seed": "tsx prisma/seed.ts",
     "db:backup": "bash scripts/backup.sh",
-    "backup": "bash scripts/backup.sh"
+    "backup": "bash scripts/backup.sh",
+    "deploy:smoke": "bash scripts/deploy-smoke.sh"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
