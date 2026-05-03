@@ -1276,7 +1276,7 @@ storage: 本地 volume，后续迁移对象存储
 - [x] 家长端 API 响应不包含经营字段。
 
 **完成记录：** 2026-05-03 新增 `tests/integration/mvp-security-checklist-coverage.test.ts`，将 4.5 安全测试清单映射到家长/老师/学生权限隔离、私有文件元数据、身份证审计、高风险 AI 拒绝和家长端经营字段隔离的可执行测试覆盖。
-**验证：** targeted 验证通过：`npm run typecheck && npm run test:integration -- tests/integration/mvp-security-checklist-coverage.test.ts`。
+**验证：** targeted 验证通过：`npm run typecheck && npm run test:integration -- tests/integration/mvp-security-checklist-coverage.test.ts`（4 个 integration 文件 / 5 个测试通过）；完整质量门禁初次因 Playwright dev server 偶发 `ERR_CONNECTION_REFUSED` 中断，完整重跑通过：`npm run typecheck && npm run lint && npm run test:unit && npm run test:integration && npm run prisma:validate && npm run build && npm run test:e2e`（85 个 unit 文件 / 238 个测试通过，4 个 integration 文件 / 5 个测试通过，50 个 E2E 通过）。
 
 ---
 
