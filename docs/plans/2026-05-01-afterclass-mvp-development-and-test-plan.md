@@ -1105,9 +1105,12 @@ storage: 本地 volume，后续迁移对象存储
   **验证：** 已按 TDD 先新增失败测试，再实现组件与路由；targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/app-status-showcase.test.tsx && npm run test:e2e -- tests/e2e/app-status-showcase.spec.ts`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（76 个 unit 文件 / 217 个测试通过，45 个 E2E 通过）。
   **提交记录：** 已提交并推送 GitHub：`4e82a1e feat(ui): add global status showcase`。
 
-- [ ] M8-14 可访问性检查  
-  **内容：** 对比度、label、aria、键盘焦点、触控尺寸。  
+- [x] M8-14 可访问性检查
+  **内容：** 对比度、label、aria、键盘焦点、触控尺寸。
   **测试：** Playwright/手工检查通过。
+  **完成记录：** 2026-05-03 新增 `tests/e2e/core-accessibility.spec.ts`，对 `/parent`、`/parent/profile`、`/student`、`/student/mistake-book`、`/status` 做 390px 移动端可访问性启发式检查：main 必须有 aria-label，产品控件必须有可访问名称，按钮/链接触控目标不小于 44px，键盘 Tab 可进入产品控件，无横向滚动。测试显式排除 Next.js Dev Tools 浮层，避免把开发工具按钮误判为产品控件。
+  **验证：** 已先运行新增 E2E 并发现触控/焦点检查受 Next.js Dev Tools 干扰，随后收敛为产品控件检查；targeted 验证通过：`npm run test:e2e -- tests/e2e/core-accessibility.spec.ts`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（76 个 unit 文件 / 217 个测试通过，50 个 E2E 通过）。
+  **提交记录：** 待提交。
 
 ---
 
