@@ -1082,7 +1082,7 @@ storage: 本地 volume，后续迁移对象存储
   **完成记录：** 2026-05-03 新增 `/parent/profile` 家长我的/服务页，包含绑定孩子信息、通知设置、请假记录和服务有效期。新增 `getParentProfileStudents` 家长可见投影，身份证默认脱敏为 `3101********3218`，服务信息只展示 `有效至 YYYY-MM-DD`。
   **隐私边界：** 家长端我的/服务页不展示完整身份证号、余额、欠费金额、应收、已收、课消、教师费用、毛利等内部字段；只展示绑定孩子与家长本人相关通知/服务有效期信息。
   **测试命令：** `npm run typecheck && npm run test:unit -- tests/unit/parent-profile-service-page.test.tsx && npm run test:e2e -- tests/e2e/parent-profile-service.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 74 个文件/213 个测试，E2E 43 个测试）。
-  **提交记录：** 待提交。
+  **提交记录：** 已提交并推送 GitHub：`cc0c65a feat(ui): add parent profile service page`。
 
 - [ ] M8-11 学生端今日任务 UI  
   **内容：** 完成进度、待订正、鼓励、AI 学习入口。  
