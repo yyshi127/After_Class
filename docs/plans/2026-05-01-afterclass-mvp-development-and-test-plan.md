@@ -1192,22 +1192,25 @@ storage: 本地 volume，后续迁移对象存储
 
 ### 4.1 单元测试清单
 
-- [ ] 权限：超级管理员可访问全部校区。
-- [ ] 权限：校区管理员只能访问授权校区。
-- [ ] 权限：老师只能访问负责班级/学生。
-- [ ] 权限：家长只能访问绑定孩子。
-- [ ] 权限：学生只能访问自己的任务和错题。
-- [ ] 脱敏：身份证号默认脱敏。
-- [ ] 审计：查看完整身份证号生成日志。
-- [ ] 托管类型：只允许四种固定类型。
-- [ ] 通知文案：晚辅导使用“已到托管中心”。
-- [ ] 家长金融隔离：家长端 DTO 不含余额/欠费/收入/课费/毛利。
-- [ ] AI 风险：低风险查询直接返回。
-- [ ] AI 风险：中风险必须确认。
-- [ ] AI 风险：高风险必须拒绝。
-- [ ] 错题收录：只收录老师确认区域。
-- [ ] Word 练习单：未选择题目不能生成。
-- [ ] 核算：班级毛利 = 学生收入 - 老师课费 - 成本预留。
+- [x] 权限：超级管理员可访问全部校区。
+- [x] 权限：校区管理员只能访问授权校区。
+- [x] 权限：老师只能访问负责班级/学生。
+- [x] 权限：家长只能访问绑定孩子。
+- [x] 权限：学生只能访问自己的任务和错题。
+- [x] 脱敏：身份证号默认脱敏。
+- [x] 审计：查看完整身份证号生成日志。
+- [x] 托管类型：只允许四种固定类型。
+- [x] 通知文案：晚辅导使用“已到托管中心”。
+- [x] 家长金融隔离：家长端 DTO 不含余额/欠费/收入/课费/毛利。
+- [x] AI 风险：低风险查询直接返回。
+- [x] AI 风险：中风险必须确认。
+- [x] AI 风险：高风险必须拒绝。
+- [x] 错题收录：只收录老师确认区域。
+- [x] Word 练习单：未选择题目不能生成。
+- [x] 核算：班级毛利 = 学生收入 - 老师课费 - 成本预留。
+
+**完成记录：** 2026-05-03 复核 4.1 单元测试清单，现有单测已覆盖 RBAC 校区/班级/学生权限、身份证脱敏、完整身份证查看审计日志、固定托管类型、晚辅导到托通知文案、家长金融隔离、AI 低/中/高风险、老师确认错题收录、Word 练习单空选择阻断和班级毛利公式。
+**验证：** targeted 复核通过：`npm run typecheck && npm run test:unit -- tests/unit/permissions-and-bindings.test.ts tests/unit/student-identity-masking.test.ts tests/unit/audit-log.test.ts tests/unit/domain-enums.test.ts tests/unit/risk-classifier.test.ts tests/unit/confirmation-request.test.ts tests/unit/homework-mistake-area-confirmation.test.tsx tests/unit/practice-sheet-draft.test.ts tests/unit/practice-sheet-docx.test.ts tests/unit/class-settlement.test.ts tests/unit/parent-service-validity-card.test.tsx tests/unit/guardian-service-validity-query.test.ts`（因 `test:unit` 脚本默认包含 `tests/unit`，实际 85 个 unit 文件 / 238 个测试通过）。
 
 ### 4.2 集成测试清单
 
