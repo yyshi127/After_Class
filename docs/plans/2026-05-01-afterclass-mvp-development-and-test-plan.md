@@ -1116,9 +1116,12 @@ storage: 本地 volume，后续迁移对象存储
 
 ### M9. 部署、监控与验收
 
-- [ ] M9-01 创建 Dockerfile  
-  **内容：** Next.js 生产镜像。  
+- [x] M9-01 创建 Dockerfile
+  **内容：** Next.js 生产镜像。
   **测试：** 镜像可构建。
+  **完成记录：** 2026-05-03 新增多阶段 `Dockerfile` 与 `.dockerignore`，使用 `node:24-alpine`、`npm ci`、`npm run prisma:generate && npm run build`、Next.js standalone 输出、非 root `nextjs` 用户和 `node server.js` 生产启动；`next.config.ts` 已启用 `output: 'standalone'`。当前环境未安装 Docker CLI，因此本轮用静态 Dockerfile 单测和 Next.js standalone build 验证替代真实镜像构建，后续在具备 Docker 的部署机上执行 `docker build`。
+  **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/dockerfile.test.ts && npm run build`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（77 个 unit 文件 / 219 个测试通过，50 个 E2E 通过）。
+  **提交记录：** 待提交。
 
 - [ ] M9-02 创建 docker-compose.yml  
   **内容：** web + postgres + volume。  

@@ -1,0 +1,17 @@
+node_modules
+.next
+.git
+.gitignore
+Dockerfile
+.dockerignore
+coverage
+playwright-report
+test-results
+*.log
+.env
+.env.*
+!.env.example
+README.md
+docs
+需求分析
+ui-design
