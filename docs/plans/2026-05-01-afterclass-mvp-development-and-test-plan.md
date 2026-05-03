@@ -1163,7 +1163,7 @@ storage: 本地 volume，后续迁移对象存储
   **测试：** 关键操作可追踪。
   **完成记录：** 2026-05-03 新增 `domain/operations/logging-policy.ts`，定义 `application`、`ai`、`audit`、`error` 四类日志策略、存储位置、保留期、必填字段与结构化应用/错误日志构造函数；新增 `docs/operations/logging-strategy.md`，明确应用日志走 stdout、AI 日志走 `AiActionLog`、审计日志走 `AuditLog`、错误日志走 stdout/平台日志，并规定不得在普通日志打印身份证号、家长手机号、学生照片 URL、私有文件路径、真实密钥、数据库连接串和内部财务字段。新增 `tests/unit/logging-strategy.test.ts`，覆盖四类策略、保留期、必填字段、结构化错误日志和既有数据库日志模型。
   **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/logging-strategy.test.ts`（83 个 unit 文件 / 232 个测试通过）；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（83 个 unit 文件 / 232 个测试通过，50 个 E2E 通过）。
-  **提交记录：** 待提交。
+  **提交记录：** 已提交并推送 GitHub：`f0925fe chore(ops): define logging strategy`。
 
 - [ ] M9-08 最终回归测试  
   **内容：** lint、typecheck、unit、integration、e2e、build。  
