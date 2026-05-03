@@ -1142,7 +1142,7 @@ storage: 本地 volume，后续迁移对象存储
   **测试：** 空库可迁移成功。
   **完成记录：** 2026-05-03 新增 Prisma 初始迁移 `prisma/migrations/20260503090000_init/migration.sql`，覆盖当前 MVP schema 的枚举、核心业务表、权限/审计/AI/收费/错题/文件等关系与索引；新增 `scripts/db-migrate.sh` 部署脚本，先执行 Prisma Client 生成，再执行 `prisma migrate deploy`；`package.json` 补充 `prisma:migrate:deploy`、`prisma:migrate:status`、`db:migrate` 脚本。当前数据库用户无 `CREATE DATABASE` 权限，因此用同一 PostgreSQL 实例中的全新空 schema 执行 `prisma migrate deploy` 与 `prisma migrate status`，验证迁移可从空 schema 成功落表并处于 up-to-date 状态。
   **验证：** targeted 验证通过：`npm run test:unit -- tests/unit/db-migration.test.ts`；空 schema 迁移验证通过：`DATABASE_URL=<临时 schema URL> npx prisma migrate deploy && DATABASE_URL=<临时 schema URL> npx prisma migrate status`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（80 个 unit 文件 / 225 个测试通过，50 个 E2E 通过）。
-  **提交记录：** 待提交。
+  **提交记录：** 已提交到本地 Git：`5d2c5f4 build: add prisma migration deploy scripts`；GitHub push 待完成。
 
 - [ ] M9-05 创建 demo seed 脚本  
   **内容：** 多角色、多校区、完整样例链路。  
