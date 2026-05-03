@@ -1260,7 +1260,7 @@ storage: 本地 volume，后续迁移对象存储
 - [x] 高风险拒绝卡片有传统页面入口。
 
 **完成记录：** 2026-05-03 新增 `tests/integration/mvp-ui-ux-checklist-coverage.test.ts`，将 4.4 UI/UX 清单映射到移动端无横向滚动、老师平板/手机、管理端 1024/1440 响应式、触控尺寸、表单 label、状态语义、按钮交互态、AI 确认主次操作和高风险拒绝传统页面入口的可执行覆盖。
-**验证：** targeted 验证通过：`npm run typecheck && npm run test:integration -- tests/integration/mvp-ui-ux-checklist-coverage.test.ts`。
+**验证：** targeted 验证通过：`npm run typecheck && npm run test:integration -- tests/integration/mvp-ui-ux-checklist-coverage.test.ts`（3 个 integration 文件 / 4 个测试通过）；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run test:integration && npm run prisma:validate && npm run build && npm run test:e2e`（85 个 unit 文件 / 238 个测试通过，3 个 integration 文件 / 4 个测试通过，50 个 E2E 通过）。
 
 ### 4.5 安全测试清单
 
