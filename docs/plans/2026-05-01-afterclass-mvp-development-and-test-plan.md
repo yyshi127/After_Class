@@ -1165,9 +1165,12 @@ storage: 本地 volume，后续迁移对象存储
   **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/logging-strategy.test.ts`（83 个 unit 文件 / 232 个测试通过）；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（83 个 unit 文件 / 232 个测试通过，50 个 E2E 通过）。
   **提交记录：** 已提交并推送 GitHub：`f0925fe chore(ops): define logging strategy`。
 
-- [ ] M9-08 最终回归测试  
-  **内容：** lint、typecheck、unit、integration、e2e、build。  
+- [x] M9-08 最终回归测试
+  **内容：** lint、typecheck、unit、integration、e2e、build。
   **测试：** 全部通过。
+  **完成记录：** 2026-05-03 新增 `tests/integration/mvp-final-regression.test.ts`，补齐 `npm run test:integration` 的最小集成冒烟覆盖，检查四端入口 `/admin`、`/teacher`、`/parent`、`/student`、全局状态页 `/status` 以及部署运维资产 `Dockerfile`、`docker-compose.yml`、`scripts/db-migrate.sh`、`scripts/backup.sh`、初始 Prisma migration、备份/日志运维文档均存在。
+  **验证：** 最终回归命令通过：`npm run typecheck && npm run lint && npm run test:unit && npm run test:integration && npm run prisma:validate && npm run build && npm run test:e2e`；结果：83 个 unit 文件 / 232 个测试通过，1 个 integration 文件 / 2 个测试通过，Prisma schema valid，Next.js build passed，50 个 E2E 通过。
+  **提交记录：** 待提交。
 
 - [ ] M9-09 MVP 验收演示脚本  
   **内容：** 校区建档到 AI 日志追溯完整演示路径。  
