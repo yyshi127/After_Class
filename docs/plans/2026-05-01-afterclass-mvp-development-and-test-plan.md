@@ -1156,7 +1156,7 @@ storage: 本地 volume，后续迁移对象存储
   **测试：** 本地执行生成备份文件。
   **完成记录：** 2026-05-03 新增 `scripts/backup.sh` 与 `npm run backup`，脚本自动加载 `.env`，要求 `DATABASE_URL`，使用 `pg_dump --format=custom --no-owner --no-privileges` 生成 `postgres.dump`，归档 `STORAGE_PATH` 到 `storage.tar.gz`，并写入 `backup-manifest.txt`；兼容 Prisma `?schema=...` URL，会将 schema query 转为 `pg_dump --schema`，避免 `pg_dump` 不识别 Prisma schema 参数。新增 `docs/operations/backup-and-restore.md` 说明备份范围、执行命令、数据库/文件恢复命令与运营建议；`.gitignore` 增加 `/backups` 与 `/storage`，避免提交真实备份和学生私有文件。
   **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/backup-script.test.ts`；本地执行生成备份文件通过：`BACKUP_DIR=/tmp/afterclass-backup-output STORAGE_PATH=/tmp/afterclass-backup-test-storage bash scripts/backup.sh` 并确认生成 `postgres.dump`、`storage.tar.gz`、`backup-manifest.txt`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（82 个 unit 文件 / 229 个测试通过，50 个 E2E 通过）。
-  **提交记录：** 待提交。
+  **提交记录：** 已提交并推送 GitHub：`64a5c1c chore(ops): add backup and restore workflow`。
 
 - [ ] M9-07 创建日志策略  
   **内容：** 应用日志、AI 日志、审计日志、错误日志。  
