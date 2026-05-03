@@ -1179,9 +1179,12 @@ storage: 本地 volume，后续迁移对象存储
   **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/mvp-acceptance-demo-script.test.ts`（84 个 unit 文件 / 235 个测试通过）；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run test:integration && npm run prisma:validate && npm run build && npm run test:e2e`（84 个 unit 文件 / 235 个测试通过，1 个 integration 文件 / 2 个测试通过，50 个 E2E 通过）。
   **提交记录：** 已提交并推送 GitHub：`7957002 docs(ops): add MVP acceptance demo script`。
 
-- [ ] M9-10 商用上线风险清单  
-  **内容：** 数据备份、隐私、图片授权、AI 限制、收费人工复核。  
+- [x] M9-10 商用上线风险清单
+  **内容：** 数据备份、隐私、图片授权、AI 限制、收费人工复核。
   **测试：** 风险均有处理或明确暂缓说明。
+  **完成记录：** 2026-05-03 新增 `docs/operations/commercial-launch-risk-checklist.md`，按已处理/人工复核/暂缓三类状态梳理上线风险，覆盖数据备份、未成年人隐私、图片/作业资料授权、AI 自动化误判、家长端财务字段误展示、收费调整/退费/欠费清零人工复核、跨校区越权、Docker 目标服务器实测、日志采集、AI Provider 成本与稳定性、生产备份外泄、合同/SLA/售后流程。新增 `tests/unit/commercial-launch-risk-checklist.test.ts`，校验风险清单覆盖必需风险类别、每项风险有处理状态、明确 MVP 安全边界。
+  **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/commercial-launch-risk-checklist.test.ts`（85 个 unit 文件 / 238 个测试通过）；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run test:integration && npm run prisma:validate && npm run build && npm run test:e2e`（85 个 unit 文件 / 238 个测试通过，1 个 integration 文件 / 2 个测试通过，50 个 E2E 通过）。
+  **提交记录：** 待提交。
 
 ---
 
