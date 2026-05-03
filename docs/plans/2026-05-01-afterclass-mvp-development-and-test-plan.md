@@ -1144,9 +1144,12 @@ storage: 本地 volume，后续迁移对象存储
   **验证：** targeted 验证通过：`npm run test:unit -- tests/unit/db-migration.test.ts`；空 schema 迁移验证通过：`DATABASE_URL=<临时 schema URL> npx prisma migrate deploy && DATABASE_URL=<临时 schema URL> npx prisma migrate status`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（80 个 unit 文件 / 225 个测试通过，50 个 E2E 通过）。
   **提交记录：** 已提交并推送 GitHub：`5d2c5f4 build: add prisma migration deploy scripts`；计划状态补充提交 `f3cf534 docs(plan): record M9-04 commit status`。
 
-- [ ] M9-05 创建 demo seed 脚本  
-  **内容：** 多角色、多校区、完整样例链路。  
+- [x] M9-05 创建 demo seed 脚本
+  **内容：** 多角色、多校区、完整样例链路。
   **测试：** seed 后可直接演示四端。
+  **完成记录：** 2026-05-03 扩展 `prisma/seed-data.ts` 与 `prisma/seed.ts`，新增可执行 `db:seed`/Prisma seed 命令；demo seed 覆盖总部/校区管理员/老师/家长/学生、多校区、班级、学生绑定、老师分配、私有照片/作业/练习单文件、学生到托与老师考勤、家长通知、已发布作业反馈、错题本、收费有效期、老师课费、班级核算和 AI 操作日志。seed 脚本使用事务和 `ON CONFLICT` 幂等 upsert，支持 `DATABASE_URL?schema=...` 的临时 schema 验证。
+  **验证：** TDD targeted 验证通过：先新增 `tests/unit/demo-seed-script.test.ts` 并确认缺少 `db:seed` 与完整 demo 链路数据失败；实现后 `npm run typecheck && npm run test:unit -- tests/unit/demo-seed-script.test.ts` 通过。临时空 schema 实测通过：先执行 `prisma migrate deploy`，再执行 `DATABASE_URL=<临时 schema URL> npm run db:seed`，验证核心表计数为 `5,2,1,2`（用户、校区、作业反馈、AI 日志）。完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（81 个 unit 文件 / 227 个测试通过，50 个 E2E 通过）。
+  **提交记录：** 待提交。
 
 - [ ] M9-06 创建备份脚本  
   **内容：** PostgreSQL dump + 文件目录备份说明。  
