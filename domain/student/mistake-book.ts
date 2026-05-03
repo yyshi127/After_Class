@@ -18,6 +18,8 @@ export type StudentMistakeBookRecord = {
 export type StudentMistakeBookItem = StudentMistakeBookRecord & {
   correctionStatusLabel: string;
   aiExplanationEntryLabel: string;
+  similarPracticeEntryLabel: string;
+  photoQuestionEntryLabel: string;
   createdDate: string;
 };
 
@@ -41,6 +43,8 @@ export function getStudentMistakeBookItems({
       ...item,
       correctionStatusLabel: formatCorrectionStatus(item.correctionStatus),
       aiExplanationEntryLabel: 'AI 讲解入口',
+      similarPracticeEntryLabel: '同类题练习',
+      photoQuestionEntryLabel: '拍照提问',
       createdDate: item.createdAt.slice(0, 10),
     }));
 }

@@ -1091,9 +1091,12 @@ storage: 本地 volume，后续迁移对象存储
   **验证：** 已通过 targeted 验证：`npm run typecheck && npm run test:unit -- tests/unit/student-today-tasks-page.test.tsx && npm run test:e2e -- tests/e2e/student-today-tasks.spec.ts`；已通过完整质量门禁：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（75 个 unit 文件 / 215 个测试通过，44 个 E2E 通过）。
   **提交记录：** 已提交并推送 GitHub：`271dbe7 feat(ui): add student today tasks page`。
 
-- [ ] M8-12 学生端错题本 UI  
-  **内容：** 错题卡片、同类题练习、拍照提问入口。  
+- [x] M8-12 学生端错题本 UI
+  **内容：** 错题卡片、同类题练习、拍照提问入口。
   **测试：** 移动端触控可用。
+  **完成记录：** 2026-05-03 强化 `/student/mistake-book` 学生端错题本：保留只展示当前学生错题的权限投影，错题卡片新增 `AI 讲解入口`、`同类题练习`、`拍照提问` 三个触控友好入口；页面增加移动端 padding 与 `overflow-x-hidden`，390px 宽度无横向滚动。
+  **验证：** 已通过 targeted 验证：`npm run typecheck && npm run test:unit -- tests/unit/student-mistake-book.test.tsx && npm run test:e2e -- tests/e2e/student-mistake-book.spec.ts`；已通过完整质量门禁：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（75 个 unit 文件 / 215 个测试通过，44 个 E2E 通过）。
+  **提交记录：** 待提交。
 
 - [ ] M8-13 全局状态页面  
   **内容：** loading、empty、error、permission denied、AI thinking、voice recording。  

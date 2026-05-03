@@ -49,6 +49,8 @@ describe('student mistake book page', () => {
         knowledgePoint: '两位数乘法',
         correctionStatusLabel: '待订正',
         aiExplanationEntryLabel: 'AI 讲解入口',
+        similarPracticeEntryLabel: '同类题练习',
+        photoQuestionEntryLabel: '拍照提问',
       }),
     );
   });
@@ -61,6 +63,8 @@ describe('student mistake book page', () => {
     expect(screen.getByText('进位步骤遗漏')).toBeInTheDocument();
     expect(screen.getByText('待订正')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'AI 讲解入口' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '同类题练习' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '拍照提问' })).toBeInTheDocument();
     expect(screen.queryByText('病句修改')).not.toBeInTheDocument();
   });
 });
