@@ -1177,7 +1177,7 @@ storage: 本地 volume，后续迁移对象存储
   **测试：** 按脚本走查一次。
   **完成记录：** 2026-05-03 新增 `docs/operations/mvp-acceptance-demo-script.md`，提供 20–30 分钟 MVP 验收演示流程，覆盖演示前准备、管理员端运营配置、老师端晚辅执行、家长端安全与学习反馈、学生端学习入口、运营追溯与合规收口，以及四端入口、到托拍照通知、作业 AI 建议/老师确认/家长反馈、错题本与 Word 练习单、服务有效期/核算、AI 日志和审计日志追溯。新增 `tests/unit/mvp-acceptance-demo-script.test.ts`，静态校验演示脚本覆盖完整运营闭环、关键路由、隐私边界、AI 人工确认和备份/日志运维说明。
   **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/mvp-acceptance-demo-script.test.ts`（84 个 unit 文件 / 235 个测试通过）；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run test:integration && npm run prisma:validate && npm run build && npm run test:e2e`（84 个 unit 文件 / 235 个测试通过，1 个 integration 文件 / 2 个测试通过，50 个 E2E 通过）。
-  **提交记录：** 待提交。
+  **提交记录：** 已提交并推送 GitHub：`7957002 docs(ops): add MVP acceptance demo script`。
 
 - [ ] M9-10 商用上线风险清单  
   **内容：** 数据备份、隐私、图片授权、AI 限制、收费人工复核。  
