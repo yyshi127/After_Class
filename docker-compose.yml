@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-afterclass}
+      POSTGRES_USER: ${POSTGRES_USER:-afterclass}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-afterclass_dev_password}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-afterclass} -d ${POSTGRES_DB:-afterclass}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: ${DATABASE_URL:-postgresql://afterclass:afterclass_dev_password@postgres:5432/afterclass?schema=public}
+      AUTH_SECRET: ${AUTH_SECRET:-change-me-in-production}
+      AI_PROVIDER: ${AI_PROVIDER:-disabled}
+      STORAGE_PATH: ${STORAGE_PATH:-/app/storage}
+    volumes:
+      - app-storage:/app/storage
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+
+volumes:
+  postgres-data:
+  app-storage:

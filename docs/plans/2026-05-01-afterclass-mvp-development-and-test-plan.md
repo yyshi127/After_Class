@@ -1123,9 +1123,12 @@ storage: 本地 volume，后续迁移对象存储
   **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/dockerfile.test.ts && npm run build`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（77 个 unit 文件 / 219 个测试通过，50 个 E2E 通过）。
   **提交记录：** 已提交并推送 GitHub：`63ea57b build: add production Dockerfile`。
 
-- [ ] M9-02 创建 docker-compose.yml  
-  **内容：** web + postgres + volume。  
+- [x] M9-02 创建 docker-compose.yml
+  **内容：** web + postgres + volume。
   **测试：** `docker compose up` 可启动。
+  **完成记录：** 2026-05-03 新增 `docker-compose.yml`，包含 `web` 与 `postgres` 两个服务，PostgreSQL 使用 `postgres:17-alpine`、健康检查和 `postgres-data` 持久化卷；Web 服务从本地 `Dockerfile` 构建，等待数据库健康后启动，配置 `DATABASE_URL`、`AUTH_SECRET`、`AI_PROVIDER`、`STORAGE_PATH` 和 `app-storage` 文件卷，端口通过 `WEB_PORT`/`POSTGRES_PORT` 可配置。当前环境未安装 Docker CLI，因此用静态 compose 单测替代真实 `docker compose up`，后续在部署机执行真实启动验证。
+  **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/docker-compose.test.ts`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（78 个 unit 文件 / 221 个测试通过，50 个 E2E 通过）。
+  **提交记录：** 待提交。
 
 - [ ] M9-03 创建 `.env.example`  
   **内容：** DATABASE_URL、AUTH_SECRET、AI_PROVIDER、STORAGE_PATH 等。  
