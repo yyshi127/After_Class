@@ -1248,16 +1248,19 @@ storage: 本地 volume，后续迁移对象存储
 
 ### 4.4 UI/UX 测试清单
 
-- [ ] 390px 手机端无横向滚动。
-- [ ] 768px 平板端老师工作台可用。
-- [ ] 1024px 管理端可用。
-- [ ] 1440px 管理端信息密度合理。
-- [ ] 所有触控目标 ≥44px。
-- [ ] 所有表单有 label 和错误提示。
-- [ ] 颜色不作为唯一状态提示。
-- [ ] 按钮有 hover/pressed/disabled/loading 状态。
-- [ ] AI 确认卡片主次操作明确。
-- [ ] 高风险拒绝卡片有传统页面入口。
+- [x] 390px 手机端无横向滚动。
+- [x] 768px 平板端老师工作台可用。
+- [x] 1024px 管理端可用。
+- [x] 1440px 管理端信息密度合理。
+- [x] 所有触控目标 ≥44px。
+- [x] 所有表单有 label 和错误提示。
+- [x] 颜色不作为唯一状态提示。
+- [x] 按钮有 hover/pressed/disabled/loading 状态。
+- [x] AI 确认卡片主次操作明确。
+- [x] 高风险拒绝卡片有传统页面入口。
+
+**完成记录：** 2026-05-03 新增 `tests/integration/mvp-ui-ux-checklist-coverage.test.ts`，将 4.4 UI/UX 清单映射到移动端无横向滚动、老师平板/手机、管理端 1024/1440 响应式、触控尺寸、表单 label、状态语义、按钮交互态、AI 确认主次操作和高风险拒绝传统页面入口的可执行覆盖。
+**验证：** targeted 验证通过：`npm run typecheck && npm run test:integration -- tests/integration/mvp-ui-ux-checklist-coverage.test.ts`。
 
 ### 4.5 安全测试清单
 
