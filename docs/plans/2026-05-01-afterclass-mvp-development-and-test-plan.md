@@ -1135,7 +1135,7 @@ storage: 本地 volume，后续迁移对象存储
   **测试：** 新环境按说明可配置。
   **完成记录：** 2026-05-03 扩展 `.env.example`，覆盖数据库连接、应用 URL/认证密钥、AI Provider/API/Base URL/Model、私有文件存储、本地/S3 兼容存储、Docker Compose 端口与 Postgres 变量、日志/审计开关；所有敏感值均使用 `replace-with-*` 或空值占位，未提交真实密钥或生产连接串。
   **验证：** targeted 验证通过：`npm run typecheck && npm run test:unit -- tests/unit/env-example.test.ts`；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（79 个 unit 文件 / 223 个测试通过，50 个 E2E 通过）。
-  **提交记录：** 待提交。
+  **提交记录：** 已提交并推送 GitHub：`d379871 chore: expand environment example`。
 
 - [ ] M9-04 创建数据库迁移脚本  
   **内容：** Prisma migrate。  
