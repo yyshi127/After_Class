@@ -1084,9 +1084,12 @@ storage: 本地 volume，后续迁移对象存储
   **测试命令：** `npm run typecheck && npm run test:unit -- tests/unit/parent-profile-service-page.test.tsx && npm run test:e2e -- tests/e2e/parent-profile-service.spec.ts`、本轮质量门禁 `npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（全部通过，unit 74 个文件/213 个测试，E2E 43 个测试）。
   **提交记录：** 已提交并推送 GitHub：`cc0c65a feat(ui): add parent profile service page`。
 
-- [ ] M8-11 学生端今日任务 UI  
-  **内容：** 完成进度、待订正、鼓励、AI 学习入口。  
+- [x] M8-11 学生端今日任务 UI
+  **内容：** 完成进度、待订正、鼓励、AI 学习入口。
   **测试：** 学生只能看自己。
+  **完成记录：** 2026-05-03 新增 `/student` 学生端今日任务页，包含今日完成进度、待办任务、待订正错题、鼓励语和 AI 学习入口/拍照提问按钮。新增 `getStudentTodayTaskSummary` 学生可见投影，按 `canAccessStudent` 过滤当前学生任务和错题，避免展示其他同学数据；移动端页面增加 `overflow-x-hidden` 和触控友好按钮。
+  **验证：** 已通过 targeted 验证：`npm run typecheck && npm run test:unit -- tests/unit/student-today-tasks-page.test.tsx && npm run test:e2e -- tests/e2e/student-today-tasks.spec.ts`；已通过完整质量门禁：`npm run typecheck && npm run lint && npm run test:unit && npm run prisma:validate && npm run build && npm run test:e2e`（75 个 unit 文件 / 215 个测试通过，44 个 E2E 通过）。
+  **提交记录：** 待提交。
 
 - [ ] M8-12 学生端错题本 UI  
   **内容：** 错题卡片、同类题练习、拍照提问入口。  
