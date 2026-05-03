@@ -1284,29 +1284,32 @@ storage: 本地 volume，后续迁移对象存储
 
 当以下条件全部满足，才认为 MVP 开发完成：
 
-- [ ] 管理员可以完成校区、班级、学生、家长、老师基础配置。
-- [ ] 系统固定支持中午托、下午托、晚辅导、晚全托四种托管类型。
-- [ ] 老师可以完成老师签到/签退。
-- [ ] 老师可以完成学生拍照签到。
-- [ ] 家长可以收到或查看孩子到托通知和照片。
-- [ ] 老师可以上传作业图片并看到 AI 圈错建议。
-- [ ] 老师可以确认/修改/忽略 AI 圈错区域。
-- [ ] 老师可以填写或生成三类点评草稿。
-- [ ] 老师确认发布后，家长可以查看作业原图、批改图、三类点评。
-- [ ] 老师确认过的错题自动进入错题本。
-- [ ] AI 可以生成同类题草稿，老师确认后生成 Word 练习单。
-- [ ] 管理端可以记录收费和服务有效期。
-- [ ] 家长端只展示服务有效期和续费提示，不展示余额/欠费金额。
-- [ ] 管理端可以查看班级核算、老师课费和预估毛利。
-- [ ] 老师端可以查看服务到期提醒，但不展示班级毛利。
-- [ ] AI Command Layer 覆盖 9 个 MVP 意图。
-- [ ] 中风险 AI 动作必须确认。
-- [ ] 高风险 AI 动作必须拒绝。
-- [ ] AI 操作日志完整记录。
-- [ ] 所有核心数据按校区权限隔离。
-- [ ] 所有图片按授权访问。
-- [ ] lint、typecheck、unit、integration、e2e、build 全部通过。
-- [ ] Docker Compose 可启动完整系统。
+- [x] 管理员可以完成校区、班级、学生、家长、老师基础配置。
+- [x] 系统固定支持中午托、下午托、晚辅导、晚全托四种托管类型。
+- [x] 老师可以完成老师签到/签退。
+- [x] 老师可以完成学生拍照签到。
+- [x] 家长可以收到或查看孩子到托通知和照片。
+- [x] 老师可以上传作业图片并看到 AI 圈错建议。
+- [x] 老师可以确认/修改/忽略 AI 圈错区域。
+- [x] 老师可以填写或生成三类点评草稿。
+- [x] 老师确认发布后，家长可以查看作业原图、批改图、三类点评。
+- [x] 老师确认过的错题自动进入错题本。
+- [x] AI 可以生成同类题草稿，老师确认后生成 Word 练习单。
+- [x] 管理端可以记录收费和服务有效期。
+- [x] 家长端只展示服务有效期和续费提示，不展示余额/欠费金额。
+- [x] 管理端可以查看班级核算、老师课费和预估毛利。
+- [x] 老师端可以查看服务到期提醒，但不展示班级毛利。
+- [x] AI Command Layer 覆盖 9 个 MVP 意图。
+- [x] 中风险 AI 动作必须确认。
+- [x] 高风险 AI 动作必须拒绝。
+- [x] AI 操作日志完整记录。
+- [x] 所有核心数据按校区权限隔离。
+- [x] 所有图片按授权访问。
+- [x] lint、typecheck、unit、integration、e2e、build 全部通过。
+- [ ] Docker Compose 可启动完整系统。环境当前无 Docker，已完成 Compose 静态校验和生产 build，真实 `docker compose up` 需在具备 Docker 的部署机上复核。
+
+**完成记录：** 2026-05-03 新增 `tests/integration/mvp-acceptance-checklist-coverage.test.ts`，将第 5 章除 Docker 真实启动外的 22 项总体验收标准映射到现有可执行 E2E、unit、integration 与脚本覆盖：基础配置、固定托管类型、老师/学生考勤、拍照到托通知、作业 AI 圈错与三类点评、家长发布可见性、错题本与 Word 练习单、收费/服务有效期、班级核算、老师端经营字段隔离、AI 9 个意图、AI 确认/拒绝/审计日志、校区权限和私有图片授权。当前运行环境无 Docker CLI，因此 `Docker Compose 可启动完整系统` 保持未勾选，需在具备 Docker 的部署机执行真实 `docker compose up`/健康检查后再完成。
+**验证：** targeted 验证通过：`npm run typecheck && npm run test:integration -- tests/integration/mvp-acceptance-checklist-coverage.test.ts`（5 个 integration 文件 / 6 个测试通过）；完整质量门禁通过：`npm run typecheck && npm run lint && npm run test:unit && npm run test:integration && npm run prisma:validate && npm run build && npm run test:e2e && git diff --check`（85 个 unit 文件 / 238 个测试通过，5 个 integration 文件 / 6 个测试通过，50 个 E2E 通过）。
 
 ---
 
